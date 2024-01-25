@@ -1,0 +1,27 @@
+##############################
+# ✨ feat: 
+# 🐛 fix: 
+# 📝 docs: 
+# 💅 design: 
+# 💄 style: 
+# 🫧 refactor: 
+# 🔧 chore: 
+# 🚚 move: 
+# 🚚 rename: 
+# 👷 ci: 
+# 🚧 wip: 
+# ✅ test: 
+
+##############################
+# ✨ feat	새로운 기능 추가
+# 🐛 fix	버그를 고친 경우
+# 📝 docs	리드미 수정
+# 💅 design	UI, UX 관련 코드 수정
+# 💄 style	코드 format 수정 (not production, UI,UX code)
+# 🫧 refactor	코드 리팩토링 작업
+# 🔧 chore	작은 범위 수정 (ex. 코멘트, 주석)
+# 🚚 move	파일 및 폴더 이름 변경
+# 🚚 rename	파일 및 폴더 삭제
+# 👷 ci	CI/CD 관련 수정사항
+# 🚧 wip	작업중인 사항
+# ✅ test	테스트 코드 관련
