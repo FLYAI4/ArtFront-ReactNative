@@ -5,11 +5,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 type UploadModeModalProps = {
     visible: boolean; // 컴포넌트 노출 여부
     onClose: () => void;
-    onLaunchCamera: any;
+    onLaunchCamera: any; // TODO 타입수정
     onLaunchImageLibrary: any;
 };
-
-// android 용?
 
 const UploadModeModal = ({ visible, onClose, onLaunchCamera, onLaunchImageLibrary }:UploadModeModalProps) => {
     return (
