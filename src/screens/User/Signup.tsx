@@ -30,7 +30,7 @@ const Signup = () => {
     <View style={{backgroundColor: '#ffffff', width: '100%', height: '100%'}}>
       <Header />
       <ScrollView>
-        <View style={{display: 'flex', flexDirection: 'column', marginLeft: 20, marginRight: 20}}>
+        <View style={{display: 'flex', flexDirection: 'column',marginTop:20,  marginLeft: 20, marginRight: 20}}>
           <View style={{marginBottom: 13}}>
             <Text style={{fontSize: 22, fontWeight: '700'}}>회원 정보를 입력해 주세요!</Text>
             <Text style={{fontSize: 14 }}>수집된 개인정보는 <Text style={{fontWeight: '600'}}>서비스 운영의 목적으로만</Text> 사용됩니다.</Text>
