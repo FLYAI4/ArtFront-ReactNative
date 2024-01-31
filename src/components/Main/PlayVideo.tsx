@@ -8,13 +8,7 @@ const PlayVideo = () => {
     const video = require('../../assets/video/output.mp4');
 
   return (
-    <View style={{
-        width: '100%',
-        height:'100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+    <View>
         { opPress ? (
             <Video 
             source={video}

@@ -2,7 +2,7 @@ import { Image, View, Platform, ActionSheetIOS, TouchableOpacity} from 'react-na
 import { useState } from 'react';
 import { launchImageLibrary, launchCamera, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
-import UploadModeModal from '../../components/UploadModeModal';
+import UploadModeModal from '../Common/UploadModeModal';
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
   mediaType: 'photo',
@@ -61,13 +61,7 @@ const UploadImage = () => {
 
   return (
     <>
-      <View style={{
-        width: '100%',
-        height:'100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+      <View>
        {selectedImageUri ? (
           <Image source={{ uri: selectedImageUri }} style={{ width: 200, height: 200}} />
         ) : (
