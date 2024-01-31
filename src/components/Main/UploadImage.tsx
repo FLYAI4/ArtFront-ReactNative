@@ -61,7 +61,7 @@ const UploadImage = () => {
 
   return (
     <>
-      <View>
+      <View style={{marginBottom: 50, alignItems: 'center'}}>
        {selectedImageUri ? (
           <Image source={{ uri: selectedImageUri }} style={{ width: 200, height: 200}} />
         ) : (
