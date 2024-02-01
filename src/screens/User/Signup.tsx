@@ -18,19 +18,21 @@ const Signup = () => {
 
   const [selectedAgeOption, setSelectedAgeOption] = useState("");
   const [selectedGenderOption, setSelectedGenderOption] = useState("");
+
+  const [agree, setAgree] = useState([false, false, false]);
   const [buttonOpacity, setButtonOpacity] = useState(0.2);
 
   useEffect(() => {
-    if (name && id && password && passwordCheck && gender && age) {
+    if (name && id && password && passwordCheck && gender && age && agree[0]) {
       setButtonOpacity(1.0);
     } else {
       setButtonOpacity(0.2);
     }
-  }, [name, id, password, passwordCheck, gender, age]);
+  }, [name, id, password, passwordCheck, gender, age, agree[0]]);
 
   // TODO 서버에 전송하는 함수로 
   const handleSubmit = () => {
-    if (!id.includes('@')) {
+    if (!id.includes('@') || !/^[a-zA-Z0-9@.]+$/.test(id)) {
       Alert.alert('이메일 형식이 올바르지 않습니다. 이메일 주소를 다시 확인해주세요.');
       return;
     }
@@ -44,11 +46,16 @@ const Signup = () => {
       Alert.alert('비밀번호와 비밀번호 확인이 동일하지 않습니다. 다시 확인해주세요.');
       return;
     }
+    
+    if (agree[0] !== true) {
+      Alert.alert('이용약관과 개인정보 수집에 동의해야 회원가입이 진행됩니다.');
+      return;
+    }
 
     if (Platform.OS === 'android') {
       ToastAndroid.show(id, ToastAndroid.SHORT);
     } else {
-      Alert.alert(`확인: ${id}, ${name}, ${password}, ${passwordCheck}, ${gender}, ${age}`);
+      Alert.alert(`${name}님 회원가입이 성공적으로 완료되었습니다!`);
     }
 
     setName("");
@@ -59,8 +66,8 @@ const Signup = () => {
     setAge("");
     setSelectedAgeOption("");
     setSelectedGenderOption("");
+    setAgree([false, false, false]);
   };
-
 
   return (
     <>
@@ -80,10 +87,10 @@ const Signup = () => {
           <GenderSelectBox setValue={setAge} selectedOption={selectedGenderOption} setSelectedOption={setSelectedGenderOption} />
           <AgeSelectBox options={['10대 이하', '20대', '30대', '40대', '50대', '60대 이하']} setValue={setGender} selectedOption={selectedAgeOption} setSelectedOption={setSelectedAgeOption}/>
 
-          <AgreeBox />
+          <AgreeBox agree={agree} setAgree={setAgree} />
 
-          <TouchableOpacity style={{marginTop: 24, marginBottom: 27, borderRadius: 8, backgroundColor: '#333333', padding: 16, opacity: buttonOpacity, pointerEvents: buttonOpacity === 0.2 ? 'none' : 'auto',}}>
-            <Text style={{textAlign: 'center', width: '100%', fontSize: 18, color: '#FFFFFF'}} onPress={handleSubmit}>회원가입</Text>
+          <TouchableOpacity style={{marginTop: 24, marginBottom: 27, borderRadius: 8, backgroundColor: '#333333', padding: 16, opacity: buttonOpacity, pointerEvents: buttonOpacity === 0.2 ? 'none' : 'auto',}} onPress={handleSubmit}>
+            <Text style={{textAlign: 'center', width: '100%', fontSize: 18, color: '#FFFFFF'}}>회원가입</Text>
           </TouchableOpacity>
           
         </View>
