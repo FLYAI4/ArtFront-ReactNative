@@ -1,7 +1,8 @@
-import { View, Text, Image, Dimensions, StyleSheet, SafeAreaView, LayoutChangeEvent, NativeSyntheticEvent, ImageLoadEventData } from 'react-native';
+import { View, Text, Image, Dimensions, StyleSheet, SafeAreaView, LayoutChangeEvent, NativeSyntheticEvent, ImageLoadEventData, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 
 const Coordinates = () => {
+  // image resize 
   const imageSource = require('../../../assets/image/image1.png');
   const [imageSize, setImageSize] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const originalWidth = 517;
@@ -9,6 +10,42 @@ const Coordinates = () => {
   const screenWidth = Dimensions.get('window').width;
   const resizeWidth = screenWidth*0.9;
   const resizeHeight = (screenWidth*originalHeight*0.9) / originalWidth;
+
+  // keyword, context 
+  const [clickIdx, setClickIdx] = useState(0); // keyword 의 idx
+  const [keyword, setKeyword] = useState("");
+  const [context, setContext] = useState("");
+
+  const dict = {
+    "trees": [
+        [
+            134,
+            96,
+            391,
+            466
+        ],
+        "It features a row of tall, slender poplar trees set against a light blue sky with wispy clouds. The greenery of the trees contrasts with the muted tones of the sky and the golden-green hue of the field in the foreground, suggesting a season like late spring or early summer. Below the trees at the center of the composition is a small white building, perhaps a house or shed, which introduces a human element into the otherwise natural landscape"
+    ],
+    "sky": [
+        [
+            0,
+            0,
+            517,
+            96
+        ],
+        "It features a row of tall, slender poplar trees set against a light blue sky with wispy clouds. The greenery of the trees contrasts with the muted tones of the sky and the golden-green hue of the field in the foreground, suggesting a season like late spring or early summer"
+    ],
+    "field": [
+        [
+            3,
+            466,
+            514,
+            673
+        ],
+        "The greenery of the trees contrasts with the muted tones of the sky and the golden-green hue of the field in the foreground, suggesting a season like late spring or early summer"
+    ]
+  }
+
 
   const handleImageLayout = (event: LayoutChangeEvent) => {
     const { x, y, width, height } = event.nativeEvent.layout;
@@ -24,33 +61,35 @@ const Coordinates = () => {
     return [x1_, y1_, x2_, y2_];
   }
 
-  const coordinates = calculateCoordinates([0, 0, 517, 96]);
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
 
+  const renderBoundingBoxes = () => {
+    return Object.values(dict).map((item: any, index: number) => {
+      const coordinates = calculateCoordinates(item[0]);
+      return (
+        <View key={index} style={{position: 'absolute', borderWidth: 3, borderColor: getRandomColor(), left: coordinates[0], top: coordinates[1], width: coordinates[2] - coordinates[0], height: coordinates[3] - coordinates[1] }} />
+      );
+    });
+  }
 
   return (
     <SafeAreaView>
-        <View style={styles.container}>
+        <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Text>
                 width: {imageSize.width}px, height: {imageSize.height}px, x: {imageSize.x}, y: {imageSize.y}
             </Text>
             <Image source={imageSource} style={{ marginTop:30, width: resizeWidth, height: resizeHeight }} onLayout={handleImageLayout}/>
-            <View style={[styles.box, { left: coordinates[0], top: coordinates[1], width: coordinates[2] - coordinates[0], height: coordinates[3] - coordinates[1] }]} />
+            {renderBoundingBoxes()}
         </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  box: {
-    position: 'absolute',
-    borderWidth: 2,
-    borderColor: 'red',
-  },
-});
 
 export default Coordinates;
