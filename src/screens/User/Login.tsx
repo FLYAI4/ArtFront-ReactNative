@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Platform, ToastAndroid, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, Platform, ToastAndroid, Alert, Image } from 'react-native'
 import React, { useState } from 'react'
 import Entypo from 'react-native-vector-icons/Entypo'
 import TextInputBox from '../../components/User/TextInputBox'
@@ -11,14 +11,18 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
-  const handleLogin = () => {
-    if (Platform.OS === 'android') {
-      ToastAndroid.show(id, ToastAndroid.SHORT);
-    } else {
-      Alert.alert(id);
-    }
+  const logoSource = require('../../assets/image/logo.png')
 
-    navigation.push('MainScreen');
+
+  const handleLogin = () => {
+    // if (Platform.OS === 'android') {
+    //   ToastAndroid.show(id, ToastAndroid.SHORT);
+    // } else {
+    //   Alert.alert(id);
+    // }
+
+    // navigation.push('MainScreen');
+    navigation.push('Coordinates');
     setId('');
     setPassword('')
   }
@@ -27,7 +31,7 @@ const Login = () => {
     <>
     <View style={{width:'100%', height:'100%', backgroundColor: 'white', display: 'flex', alignItems: 'center' }}>
       <View style={{marginTop: 100, marginBottom: 50} }>
-        <Entypo name="air" size={80}/>
+        <Image source={logoSource} style={{width: 100, height: 100}} />
       </View>
       <View style={{width: '100%', display: 'flex', flexDirection:'column', paddingLeft: 20, paddingRight: 20}}>
         <TextInputBox text="이메일" placeholder="artvisionxperience@gmail.com" value={id} setValue={setId} />
