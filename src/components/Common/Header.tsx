@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import React from 'react'
 import Entypo from 'react-native-vector-icons/Entypo'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -7,6 +7,7 @@ import type {StackNavigationProp} from '@react-navigation/stack';
 
 const Header = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+  const logoSource = require('../../assets/image/logo.png')
 
   return (
     <SafeAreaView>
@@ -15,8 +16,9 @@ const Header = () => {
             <MaterialIcons name='keyboard-arrow-left' size={40} />
           </TouchableOpacity>
       
-          <TouchableOpacity>
-            <Entypo name='air' size={30} /> 
+          <TouchableOpacity onPress={()=>navigation.push('MainScreen')}>
+            <Image source={logoSource} style={{width: 40, height: 40}} /> 
+            {/* TODO signup에선 메인스크린 이동안함 */}
           </TouchableOpacity>
       </View>
     </SafeAreaView>
