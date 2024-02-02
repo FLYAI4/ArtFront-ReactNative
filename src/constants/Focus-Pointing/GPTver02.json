@@ -1,0 +1,47 @@
+{
+	"hot_air_balloons": {
+		"coord": [
+			[
+				47,
+				38,
+				94,
+				83
+			],
+			[
+				131,
+				24,
+				171,
+				63
+			],
+			[
+				585,
+				9,
+				610,
+				31
+			]
+		],
+		"context": "The presence of hot air balloons adds a sense of whimsy and peacefulness to the scene, suggesting it might be a popular spot for leisure and tourism. "
+	},
+	"terraced_fields": {
+		"coord": [
+			[
+				181,
+				312,
+				800,
+				600
+			]
+		],
+		"context": "The artwork seems to depict a lush, rolling green landscape with terraced fields, possibly a tea plantation, which is a common sight in certain regions of Asia like China or Japan. "
+	},
+	"winding_river": {
+		"coord": [
+			[
+				192,
+				223,
+				458,
+				307
+			]
+		],
+		"context": ""
+	}
+}

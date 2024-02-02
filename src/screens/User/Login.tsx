@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, Platform, ToastAndroid, Alert, Image } from 'react-native'
 import React, { useState } from 'react'
-import Entypo from 'react-native-vector-icons/Entypo'
 import TextInputBox from '../../components/User/TextInputBox'
 import PasswordInputBox from '../../components/User/PasswordInputBox'
 import {ParamListBase, useNavigation} from '@react-navigation/native';
