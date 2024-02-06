@@ -30,7 +30,7 @@ const MainScreen = () => {
         ): (
             <View>
                 <Header />
-                <View style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', marginTop: 50}}>
+                <View style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column'}}>
                     <UploadImage/>
                     <TouchableOpacity onPress={()=>setOnPress(true)} style={{alignItems: 'center'}}>
                         <Entypo name="video" color="black" size={60} />

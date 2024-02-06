@@ -20,8 +20,7 @@ const Login = () => {
     //   Alert.alert(id);
     // }
 
-    // navigation.push('MainScreen');
-    navigation.push('Coordinates');
+    navigation.push('MainScreen');
     setId('');
     setPassword('')
   }
