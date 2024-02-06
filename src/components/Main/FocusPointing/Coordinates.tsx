@@ -5,13 +5,13 @@ import ImageEditor from "@react-native-community/image-editor";
 
 type CoordinatesProps = {
   uri: string;
+  originalWidth: number;
+  originalHeight: number;
 }
 
-const Coordinates = ({ uri }: CoordinatesProps) => {
+const Coordinates = ({ uri, originalWidth, originalHeight }: CoordinatesProps) => {
   // image resize 
   const [imageSize, setImageSize] = useState({ x: 0, y: 0, width: 0, height: 0 });
-  const originalWidth = 517;
-  const originalHeight = 673;
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
   const ratio = 0.9;

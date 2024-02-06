@@ -69,10 +69,10 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
   return ( 
     <>
       <View style={{marginBottom: 50, alignItems: 'center'}}>
-       {selectedImageUri ? (
-          <View style={{width: '100%', height: '100%'}}>
-            <Description uri={selectedImageUri} originalWidth={originalWidth} originalHeight={originalHeight}/>
-            {/* <Coordinates uri={selectedImageUri} /> */}
+       { selectedImageUri ? (
+          <View>
+            {/* <Description uri={selectedImageUri} originalWidth={originalWidth} originalHeight={originalHeight}/> */}
+            <Coordinates uri={selectedImageUri} originalWidth={originalWidth} originalHeight={originalHeight} />
             {/* <ImageVideo uri={selectedImageUri} /> */}
           </View>
           // <Coordinates uri={selectedImageUri} />
