@@ -13,8 +13,8 @@ const Header = ({nextPage}: HeaderProps) => {
   const logoSource = require('../../assets/image/logo.png')
 
   return (
-    <SafeAreaView>
-      <View style={{ marginLeft: 20, marginRight:20, height: 50,  display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+    <SafeAreaView style={{backgroundColor: 'white'}}>
+      <View style={{ marginLeft: 20, marginRight:20, height: 50,  display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
           <TouchableOpacity onPress={()=>navigation.goBack()}>
             <MaterialIcons name='keyboard-arrow-left' size={40} />
           </TouchableOpacity>

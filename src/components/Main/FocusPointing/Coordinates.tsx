@@ -20,8 +20,8 @@ const Coordinates = () => {
   const [position, setPosition] = useState({left: 0, top: 0});
 
   // keyword, context 
-  const [keyword, setKeyword] = useState("Bounding Box를 클릭해주세요!");
-  const [context, setContext] = useState("ArtVisionXperience에서 선정한 핵심포인트입니다");
+  const [keyword, setKeyword] = useState("Box를 클릭해주세요!");
+  const [context, setContext] = useState("ArtVisionXperience이 선정한 핵심포인트입니다");
 
   const [cropPath, setCropPath] = useState("");
   const [cropData, setCropData] = useState({
@@ -123,8 +123,8 @@ const Coordinates = () => {
         displaySize: { width: 0, height: 0 },
       });
 
-      setKeyword("")
-      setContext("")
+      setKeyword("Box를 클릭해주세요!")
+      setContext("ArtVisionXperience이 선정한 핵심포인트입니다")
     }
   }, [focusBox])
 

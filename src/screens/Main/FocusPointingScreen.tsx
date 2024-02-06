@@ -5,7 +5,7 @@ import Coordinates from '../../components/Main/FocusPointing/Coordinates'
 
 const FocusPointingScreen = () => {
   return (
-    <View>
+    <View style={{backgroundColor: 'white'}}>
         <Header nextPage="Image2VideoScreen" /> 
         <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}> 
           <Coordinates />

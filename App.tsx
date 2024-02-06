@@ -7,6 +7,7 @@ import DescriptionScreen from './src/screens/Main/DescriptionScreen';
 import FocusPointingScreen from './src/screens/Main/FocusPointingScreen';
 import Image2VideoScreen from './src/screens/Main/Image2VideoScreen';
 import { RecoilRoot } from 'recoil';
+import { View } from 'react-native';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
