@@ -10,7 +10,7 @@ const MainScreen = () => {
     const video = require('../../assets/video/output.mp4');
 
     return (
-        <View style={{position: 'relative', width: '100%', height: '100%'}}>
+        <View style={{position: 'relative', width: '100%', height: '100%', backgroundColor: 'white'}}>
             { onPress ? (
                 <Video 
                 source={video}
@@ -30,7 +30,7 @@ const MainScreen = () => {
         ): (
             <View>
                 <Header />
-                <View style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', marginTop: 50}}>
+                <View style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: 'white'}}>
                     <UploadImage/>
                     <TouchableOpacity onPress={()=>setOnPress(true)} style={{alignItems: 'center'}}>
                         <Entypo name="video" color="black" size={60} />
