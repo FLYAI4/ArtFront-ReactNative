@@ -1,10 +1,15 @@
 import { Dimensions, Image, Text, View, Platform, ActionSheetIOS, TouchableOpacity} from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { launchImageLibrary, launchCamera, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
 import UploadModeModal from '../Common/UploadModeModal';
 import Coordinates from './FocusPointing/Coordinates';
 import Description from './Description/Description';
+import { NavigationContainer, ParamListBase, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { imageState } from '../../recoil/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
   mediaType: 'photo',
@@ -23,6 +28,17 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
   const originalWidth = 517;
   const originalHeight = 673;
 
+  const [image, setImage] = useRecoilState(imageState);
+  const handleImageChange = () => {
+    setImage({
+      uri: selectedImageUri,
+      width: originalWidth,
+      height: originalHeight
+    })
+  }
+
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
   // 선택 사진 또는 촬영된 사진 정보
   const onPickImage = (res: any) => {
     if (res.didCancel || !res) {
@@ -30,7 +46,12 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
     }
     setSelectedImageUri(res.assets[0].uri);
     console.log('PickImage', res);
+    navigation.push('DescriptionScreen')
   };
+
+  useEffect(()=>{
+    handleImageChange()
+  }, [selectedImageUri])
 
   // 카메라 촬영
   const onLaunchCamera = () => {
@@ -69,20 +90,11 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
   return ( 
     <>
       <View style={{marginBottom: 50, alignItems: 'center'}}>
-       { selectedImageUri ? (
-          <View>
-            {/* <Description uri={selectedImageUri} originalWidth={originalWidth} originalHeight={originalHeight}/> */}
-            <Coordinates uri={selectedImageUri} originalWidth={originalWidth} originalHeight={originalHeight} />
-            {/* <ImageVideo uri={selectedImageUri} /> */}
-          </View>
-          // <Coordinates uri={selectedImageUri} />
-        ) : (
-          <View style={{width: '100%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <TouchableOpacity onPress={modalOpen} >
-              <Entypo name="camera" color="black" size={60} />
-            </TouchableOpacity>
-          </View>
-        )}
+        <View style={{width: '100%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity onPress={modalOpen} >
+            <Entypo name="camera" color="black" size={60} />
+          </TouchableOpacity>
+        </View>
       </View>
       <UploadModeModal
         visible={modalVisible}

@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import UploadImage from '../../components/Main/UploadImage'
 import Header from '../../components/Common/Header'
 import Video from 'react-native-video';
-import Entypo from 'react-native-vector-icons/Entypo';
 
 const MainScreen = () => {
     const [onPress, setOnPress] = useState(false);
@@ -31,7 +30,7 @@ const MainScreen = () => {
                 />
         ): (
             <View>
-                <Header />
+                <Header nextPage='DescriptionScreen'/>
                 <View style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: 'white'}}>
                     <UploadImage selectedImageUri={selectedImageUri} setSelectedImageUri={setSelectedImageUri} />
 

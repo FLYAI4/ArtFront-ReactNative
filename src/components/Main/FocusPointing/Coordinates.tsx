@@ -2,14 +2,14 @@ import { View, Text, Image, Dimensions, SafeAreaView, LayoutChangeEvent, Touchab
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import ImageEditor from "@react-native-community/image-editor";
+import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
+import { useRecoilValue } from 'recoil';
 
-type CoordinatesProps = {
-  uri: string;
-  originalWidth: number;
-  originalHeight: number;
-}
+const Coordinates = () => {
+  const uri = useRecoilValue(uriSelector);
+  const originalWidth = useRecoilValue(widthSelector);
+  const originalHeight = useRecoilValue(heightSelector);
 
-const Coordinates = ({ uri, originalWidth, originalHeight }: CoordinatesProps) => {
   // image resize 
   const [imageSize, setImageSize] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const screenWidth = Dimensions.get('window').width;
@@ -122,6 +122,9 @@ const Coordinates = ({ uri, originalWidth, originalHeight }: CoordinatesProps) =
         size: { width: 0, height: 0 },
         displaySize: { width: 0, height: 0 },
       });
+
+      setKeyword("")
+      setContext("")
     }
   }, [focusBox])
 
