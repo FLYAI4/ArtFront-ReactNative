@@ -7,6 +7,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 const MainScreen = () => {
     const [onPress, setOnPress] = useState(false);
+    const [selectedImageUri, setSelectedImageUri] = useState('');
+
     const video = require('../../assets/video/output.mp4');
 
     return (
@@ -31,10 +33,11 @@ const MainScreen = () => {
             <View>
                 <Header />
                 <View style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: 'white'}}>
-                    <UploadImage/>
-                    <TouchableOpacity onPress={()=>setOnPress(true)} style={{alignItems: 'center'}}>
+                    <UploadImage selectedImageUri={selectedImageUri} setSelectedImageUri={setSelectedImageUri} />
+
+                    {/* <TouchableOpacity onPress={()=>setOnPress(true)} style={{alignItems: 'center'}}>
                         <Entypo name="video" color="black" size={60} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         )}

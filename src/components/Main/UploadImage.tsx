@@ -4,6 +4,7 @@ import { launchImageLibrary, launchCamera, ImageLibraryOptions, CameraOptions } 
 import Entypo from 'react-native-vector-icons/Entypo';
 import UploadModeModal from '../Common/UploadModeModal';
 import Coordinates from './FocusPointing/Coordinates';
+import Description from './Description/Description';
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
   mediaType: 'photo',
@@ -13,8 +14,14 @@ const imagePickerOption: ImageLibraryOptions & CameraOptions = {
   cameraType: 'back',
 };
 
-const UploadImage = () => {
-  const [selectedImageUri, setSelectedImageUri] = useState('');
+type UploadImageProps = {
+  selectedImageUri: string;
+  setSelectedImageUri: (value: string) => void;
+}
+
+const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) => {
+  const originalWidth = 517;
+  const originalHeight = 673;
 
   // 선택 사진 또는 촬영된 사진 정보
   const onPickImage = (res: any) => {
@@ -59,20 +66,22 @@ const UploadImage = () => {
     }
   };
 
-
-  return (
+  return ( 
     <>
       <View style={{marginBottom: 50, alignItems: 'center'}}>
        {selectedImageUri ? (
-          <>
-            <Coordinates uri={selectedImageUri} />
-            
-          </>
+          <View style={{width: '100%', height: '100%'}}>
+            <Description uri={selectedImageUri} originalWidth={originalWidth} originalHeight={originalHeight}/>
+            {/* <Coordinates uri={selectedImageUri} /> */}
+            {/* <ImageVideo uri={selectedImageUri} /> */}
+          </View>
           // <Coordinates uri={selectedImageUri} />
         ) : (
-          <TouchableOpacity onPress={modalOpen}>
-            <Entypo name="camera" color="black" size={60} />
-          </TouchableOpacity>
+          <View style={{width: '100%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableOpacity onPress={modalOpen} >
+              <Entypo name="camera" color="black" size={60} />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
       <UploadModeModal

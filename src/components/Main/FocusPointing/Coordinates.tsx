@@ -2,7 +2,6 @@ import { View, Text, Image, Dimensions, SafeAreaView, LayoutChangeEvent, Touchab
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import ImageEditor from "@react-native-community/image-editor";
-import ImageResizer from '@bam.tech/react-native-image-resizer';
 
 type CoordinatesProps = {
   uri: string;
@@ -33,6 +32,7 @@ const Coordinates = ({ uri }: CoordinatesProps) => {
 
   const [focusBox, setFocusBox] = useState(false);
 
+  // TODO 서버에서 받아옴 
   const dict = {
     "나무": {
         "coord": [
