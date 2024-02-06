@@ -130,8 +130,12 @@ const Coordinates = () => {
 
   useEffect(()=>{
     const fetchData = async () => {
-      const url = await ImageEditor.cropImage(uri, cropData);
-      setCropPath(url);
+      try { 
+        const url = await ImageEditor.cropImage(uri, cropData);
+        setCropPath(url);
+      } catch (error) {
+        console.log("cropImage 오류:", error);
+      }
     }
 
     fetchData();
@@ -151,6 +155,7 @@ const Coordinates = () => {
         const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(dict[key as keyof typeof dict]['coord']);
         return (
             <TouchableOpacity 
+                key={index}
                 style={{position: 'absolute',left: coordinates[0], top: coordinates[1], width: coordinates[2] - coordinates[0], height: coordinates[3] - coordinates[1], borderWidth: 3, borderColor: getRandomColor(),  opacity: focusBox ? 0.2 : 1.0 }}
                 onPress={()=> handleClickBounding(key, coordinates)}>
                 <View key={index}/>

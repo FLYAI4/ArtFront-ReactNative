@@ -1,15 +1,12 @@
-import { Dimensions, Image, Text, View, Platform, ActionSheetIOS, TouchableOpacity} from 'react-native';
+import { View, Platform, ActionSheetIOS, TouchableOpacity} from 'react-native';
 import { useEffect, useState } from 'react';
 import { launchImageLibrary, launchCamera, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
 import UploadModeModal from '../Common/UploadModeModal';
-import Coordinates from './FocusPointing/Coordinates';
-import Description from './Description/Description';
-import { NavigationContainer, ParamListBase, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { imageState } from '../../recoil/atoms';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
   mediaType: 'photo',
@@ -30,11 +27,13 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
 
   const [image, setImage] = useRecoilState(imageState);
   const handleImageChange = () => {
-    setImage({
-      uri: selectedImageUri,
-      width: originalWidth,
-      height: originalHeight
-    })
+    if (selectedImageUri) {
+      setImage({
+        uri: selectedImageUri,
+        width: originalWidth,
+        height: originalHeight
+      })
+    }
   }
 
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
