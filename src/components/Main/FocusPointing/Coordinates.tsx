@@ -2,17 +2,16 @@ import { View, Text, Image, Dimensions, SafeAreaView, LayoutChangeEvent, Touchab
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import ImageEditor from "@react-native-community/image-editor";
-import ImageResizer from '@bam.tech/react-native-image-resizer';
+import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
+import { useRecoilValue } from 'recoil';
 
-type CoordinatesProps = {
-  uri: string;
-}
+const Coordinates = () => {
+  const uri = useRecoilValue(uriSelector);
+  const originalWidth = useRecoilValue(widthSelector);
+  const originalHeight = useRecoilValue(heightSelector);
 
-const Coordinates = ({ uri }: CoordinatesProps) => {
   // image resize 
   const [imageSize, setImageSize] = useState({ x: 0, y: 0, width: 0, height: 0 });
-  const originalWidth = 517;
-  const originalHeight = 673;
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
   const ratio = 0.9;
@@ -21,8 +20,8 @@ const Coordinates = ({ uri }: CoordinatesProps) => {
   const [position, setPosition] = useState({left: 0, top: 0});
 
   // keyword, context 
-  const [keyword, setKeyword] = useState("Bounding Box를 클릭해주세요!");
-  const [context, setContext] = useState("ArtVisionXperience에서 선정한 핵심포인트입니다");
+  const [keyword, setKeyword] = useState("Box를 클릭해주세요!");
+  const [context, setContext] = useState("ArtVisionXperience이 선정한 핵심포인트입니다");
 
   const [cropPath, setCropPath] = useState("");
   const [cropData, setCropData] = useState({
@@ -33,6 +32,7 @@ const Coordinates = ({ uri }: CoordinatesProps) => {
 
   const [focusBox, setFocusBox] = useState(false);
 
+  // TODO 서버에서 받아옴 
   const dict = {
     "나무": {
         "coord": [
@@ -122,13 +122,20 @@ const Coordinates = ({ uri }: CoordinatesProps) => {
         size: { width: 0, height: 0 },
         displaySize: { width: 0, height: 0 },
       });
+
+      setKeyword("Box를 클릭해주세요!")
+      setContext("ArtVisionXperience이 선정한 핵심포인트입니다")
     }
   }, [focusBox])
 
   useEffect(()=>{
     const fetchData = async () => {
-      const url = await ImageEditor.cropImage(uri, cropData);
-      setCropPath(url);
+      try { 
+        const url = await ImageEditor.cropImage(uri, cropData);
+        setCropPath(url);
+      } catch (error) {
+        console.log("cropImage 오류:", error);
+      }
     }
 
     fetchData();
@@ -148,6 +155,7 @@ const Coordinates = ({ uri }: CoordinatesProps) => {
         const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(dict[key as keyof typeof dict]['coord']);
         return (
             <TouchableOpacity 
+                key={index}
                 style={{position: 'absolute',left: coordinates[0], top: coordinates[1], width: coordinates[2] - coordinates[0], height: coordinates[3] - coordinates[1], borderWidth: 3, borderColor: getRandomColor(),  opacity: focusBox ? 0.2 : 1.0 }}
                 onPress={()=> handleClickBounding(key, coordinates)}>
                 <View key={index}/>

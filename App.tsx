@@ -1,26 +1,32 @@
-import { View, Text, Button } from 'react-native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from './src/screens/User/Login'
 import Signup from './src/screens/User/Signup'
 import MainScreen from './src/screens/Main/MainScreen';
-import Coordinates from './src/components/Main/FocusPointing/Coordinates';
+import DescriptionScreen from './src/screens/Main/DescriptionScreen';
+import FocusPointingScreen from './src/screens/Main/FocusPointingScreen';
+import Image2VideoScreen from './src/screens/Main/Image2VideoScreen';
+import { RecoilRoot } from 'recoil';
+import { View } from 'react-native';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
 
-
   return (
-    <>
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup} />
-        
-        <Stack.Screen name="MainScreen" component={MainScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-    </>
+    <RecoilRoot>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Signup" component={Signup} />
+          
+          <Stack.Screen name="MainScreen" component={MainScreen} />
+          <Stack.Screen name='DescriptionScreen' component={DescriptionScreen} />
+          <Stack.Screen name="FocusPointingScreen" component={FocusPointingScreen} />
+          <Stack.Screen name="Image2VideoScreen" component={Image2VideoScreen} />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </RecoilRoot>
   )
 }
 

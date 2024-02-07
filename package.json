@@ -32,6 +32,7 @@
     "react-native-vector-icons": "^10.0.3",
     "react-native-video": "^5.2.1",
     "react-navigation": "^5.0.0",
+    "recoil": "^0.7.7",
     "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {
