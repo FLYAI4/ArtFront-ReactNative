@@ -1,32 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-native';
+import { View } from 'react-native';
 import DocumentScanner from 'react-native-document-scanner-plugin';
+import { useRecoilState } from 'recoil';
+import { imageState } from '../../../recoil/atoms';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { height, width } from '../../../constants/imageInfo';
 
 const ScanImage = () => {
-    const [scannedImage, setScannedImage] = useState<string | undefined>();
-  
+    const [image, setImage] = useRecoilState(imageState);
+    const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+    // TODO: original width, height 
+    const originalWidth = width;
+    const originalHeight = height;
+
     const scanDocument = async () => {
-      // 문서 스캐너 시작
-      const { scannedImages }: any = await DocumentScanner.scanDocument();
+      const { scannedImages }: any  = await DocumentScanner.scanDocument({
+        maxNumDocuments: 1
+      });
   
-      // 스캔된 이미지 파일 경로의 배열을 받아옵니다.
       if (scannedImages.length > 0) {
-        // 첫 번째 스캔된 이미지를 보기 위해 이미지 소스를 설정합니다.
-        setScannedImage(scannedImages[0]);
+        const scannedImage = scannedImages[scannedImages.length-1];
+        setImage(({
+          uri: scannedImage,
+          width: originalWidth,
+          height: originalHeight
+        }));
+        console.log(`PickImage: ${image.uri}`);
+        console.log(`ScanImage: ${scannedImage}`);
+        navigation.push('DescriptionScreen');
       }
     };
   
     useEffect(() => {
-      // 로드 시 scanDocument 호출
       scanDocument();
     }, []);
-  
+
     return (
-      <Image
-        resizeMode="contain"
-        style={{ width: '100%', height: '100%' }}
-        source={{ uri: scannedImage }}
-      />
+      <View />
     );
 }
 

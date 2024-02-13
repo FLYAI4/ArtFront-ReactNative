@@ -72,7 +72,7 @@ const Signup = () => {
   return (
     <>
     <View style={{backgroundColor: '#ffffff', width: '100%', height: '100%'}}>
-      <Header />
+      <Header nextPage='MainScreen'/>
       <ScrollView>
         <View style={{display: 'flex', flexDirection: 'column',marginTop:20,  marginLeft: 20, marginRight: 20}}>
           <View style={{marginBottom: 13}}>

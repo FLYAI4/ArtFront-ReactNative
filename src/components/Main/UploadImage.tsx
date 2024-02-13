@@ -1,12 +1,13 @@
 import { View, Platform, ActionSheetIOS, TouchableOpacity} from 'react-native';
 import { useEffect, useState } from 'react';
-import { launchImageLibrary, launchCamera, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
+import { launchImageLibrary, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
 import UploadModeModal from '../Common/UploadModeModal';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { imageState } from '../../recoil/atoms';
 import { useRecoilState } from 'recoil';
+import { height, width } from '../../constants/imageInfo';
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
   mediaType: 'photo',
@@ -22,8 +23,9 @@ type UploadImageProps = {
 }
 
 const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) => {
-  const originalWidth = 517;
-  const originalHeight = 673;
+  // TODO: original width, height 
+  const originalWidth = width;
+  const originalHeight = height;
 
   const [image, setImage] = useRecoilState(imageState);
   const handleImageChange = () => {
@@ -54,7 +56,7 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
 
   // 카메라 촬영
   const onLaunchCamera = () => {
-    launchCamera(imagePickerOption, onPickImage);
+    navigation.push('ScanImage')
   };
 
   // 갤러리에서 사진 선택
@@ -64,7 +66,6 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
 
   // 안드로이드를 위한 모달 visible 상태값
   const [modalVisible, setModalVisible] = useState(false);
-
 
   const modalOpen = () => {
     if (Platform.OS === 'android') { // 안드로이드
