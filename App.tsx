@@ -7,7 +7,7 @@ import DescriptionScreen from './src/screens/Main/DescriptionScreen';
 import FocusPointingScreen from './src/screens/Main/FocusPointingScreen';
 import Image2VideoScreen from './src/screens/Main/Image2VideoScreen';
 import { RecoilRoot } from 'recoil';
-import { View } from 'react-native';
+import ScanImage from './src/components/Main/Crop/ScanImage';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -20,6 +20,7 @@ const App = () => {
           <Stack.Screen name="Signup" component={Signup} />
           
           <Stack.Screen name="MainScreen" component={MainScreen} />
+          <Stack.Screen name="ScanImage" component={ScanImage} />
           <Stack.Screen name='DescriptionScreen' component={DescriptionScreen} />
           <Stack.Screen name="FocusPointingScreen" component={FocusPointingScreen} />
           <Stack.Screen name="Image2VideoScreen" component={Image2VideoScreen} />

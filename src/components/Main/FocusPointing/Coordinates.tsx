@@ -4,6 +4,7 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import ImageEditor from "@react-native-community/image-editor";
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
 import { useRecoilValue } from 'recoil';
+import { treeDict } from '../../../constants/imageInfo';
 
 const Coordinates = () => {
   const uri = useRecoilValue(uriSelector);
@@ -33,41 +34,7 @@ const Coordinates = () => {
   const [focusBox, setFocusBox] = useState(false);
 
   // TODO 서버에서 받아옴 
-  const dict = {
-    "나무": {
-        "coord": [
-            [
-                134,
-                96,
-                391,
-                566
-            ]
-        ], 
-        "context" : "스타일은 약간 단순화되어 있으며, 넓은 색상 영역이 하늘, 초목, 나무의 수직 형태를 구분합니다. 그림은 눈길을 위로 끌어올리는 높고 가느다란 포플러 나무들이 지배하는 풍경을 그립니다. 나무들 아래에는 거의 성숙하기 직전의 농작물을 암시할 수 있는 초록색 필드가 보입니다. 나무들 사이에는 작은 집이나 건물이 있어, 아니면 자연적인 장면에 인간 요소를 추가합니다. 작가는 나무의 수직선과 하늘과 필드의 수평선 사이의 대조를 이용합니다."
-    },
-    "하늘": {
-        "coord": [
-            [
-                0,
-                0,
-                517,
-                96
-            ],
-        ],
-        "context": "스타일은 약간 단순화되어 있으며, 넓은 색상 영역이 하늘, 초목, 나무의 수직 형태를 구분합니다. 배경은 미묘한 구름 디테일이 있는 연하늘로, 평온한 대기 조건을 암시합니다. 작가는 나무의 수직선과 하늘과 필드의 수평선 사이의 대조를 이용합니다."
-    },
-    "필드": {
-        "coord": [
-            [
-                3,
-                566,
-                514,
-                673
-            ],
-        ],
-        "context": "나무들 아래에는 거의 성숙하기 직전의 농작물을 암시할 수 있는 초록색 필드가 보입니다. 작가는 나무의 수직선과 하늘과 필드의 수평선 사이의 대조를 이용합니다."
-    }
-}
+  const dict = treeDict
 
   const handleImageLayout = (event: LayoutChangeEvent) => {
     const { x, y, width, height } = event.nativeEvent.layout;
