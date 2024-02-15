@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
+    "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/image-editor": "^3.1.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -24,6 +25,8 @@
     "react-native-config": "^1.5.1",
     "react-native-document-scanner-plugin": "^0.9.1",
     "react-native-dotenv": "^3.4.9",
+    "react-native-fast-image": "^8.6.3",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.14.1",
     "react-native-image-picker": "^7.1.0",
     "react-native-reanimated": "^3.6.1",
