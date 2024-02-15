@@ -22,6 +22,10 @@ const Image2VideoScreen = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const loadingGif = 'file:///Users/heehminh/src/ArtFront-ReactNative/src/assets/gif/landscape0.gif';
+  
+  // TODO 서버연결 로딩 컴포넌트
+  // const filePath = storeGifRNFS({ response })
+  // const loadingGif = `file://${filePath}`;
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
