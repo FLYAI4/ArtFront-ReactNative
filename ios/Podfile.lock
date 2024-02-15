@@ -950,6 +950,9 @@ PODS:
     - React-Core
   - react-native-document-scanner-plugin (0.9.1):
     - React-Core
+  - react-native-gif (1.4.3):
+    - React-Core
+    - SDWebImage (~> 5.14.2)
   - react-native-image-editor (3.1.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1156,6 +1159,9 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
+  - SDWebImage (5.14.3):
+    - SDWebImage/Core (= 5.14.3)
+  - SDWebImage/Core (5.14.3)
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
 
@@ -1214,6 +1220,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-document-scanner-plugin (from `../node_modules/react-native-document-scanner-plugin`)
+  - "react-native-gif (from `../node_modules/@lowkeychat/react-native-gif`)"
   - "react-native-image-editor (from `../node_modules/@react-native-community/image-editor`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-image-resizer (from `../node_modules/@bam.tech/react-native-image-resizer`)"
@@ -1261,6 +1268,7 @@ SPEC REPOS:
     - fmt
     - libevent
     - OpenSSL-Universal
+    - SDWebImage
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -1323,6 +1331,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-document-scanner-plugin:
     :path: "../node_modules/react-native-document-scanner-plugin"
+  react-native-gif:
+    :path: "../node_modules/@lowkeychat/react-native-gif"
   react-native-image-editor:
     :path: "../node_modules/@react-native-community/image-editor"
   react-native-image-picker:
@@ -1430,6 +1440,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
   react-native-document-scanner-plugin: bcb4b5a6770ebb10080c8f051de1e9c1bb81afac
+  react-native-gif: e5e12b9c4c00ee4d8ccba0c62ba2e434fe950427
   react-native-image-editor: 02eded49bbd0e6b12ad0d1512d4a5e0820115221
   react-native-image-picker: 6c51359eca7a7df9f07e297218c25696eb9da976
   react-native-image-resizer: 681f7607418b97c084ba2d0999b153b103040d8a
@@ -1461,6 +1472,7 @@ SPEC CHECKSUMS:
   RNReanimated: 57f436e7aa3d277fbfed05e003230b43428157c0
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   RNVectorIcons: 210f910e834e3485af40693ad4615c1ec22fc02b
+  SDWebImage: 9c36e66c8ce4620b41a7407698dda44211a96764
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 13c8ef87792450193e117976337b8527b49e8c03
 
