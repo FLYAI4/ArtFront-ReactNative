@@ -23,7 +23,7 @@ const PasswordInputBox = ({text, placeholder, value, setValue}: PasswordInputBox
       <View>
         <TextInput 
           secureTextEntry={!showPassword} placeholder={placeholder || text} 
-          style={{ borderWidth: 1, borderColor: isFocused ? 'black' : '#CECECE', borderRadius: 8, padding: 13}}
+          style={{ color: 'white', borderWidth: 1, borderColor: isFocused ? '#CECECE' : 'gray' , borderRadius: 8, padding: 13}}
           value={value}
           onChangeText={setValue}
           onFocus={()=>setIsFocused(true)}
