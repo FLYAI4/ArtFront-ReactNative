@@ -1,10 +1,11 @@
-import { View, TouchableOpacity, Dimensions, Image } from 'react-native'
-import React, { useState } from 'react'
+import { View, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/Common/Header'
 import Video from 'react-native-video';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { heightSelector, uriSelector, widthSelector } from '../../recoil/selector';
 import { useRecoilValue } from 'recoil';
+import OpenCV from '../../components/Main/Loading/OpenCV';
 
 const Image2VideoScreen = () => {
   const video = require('../../assets/video/output2.mp4');
@@ -18,6 +19,14 @@ const Image2VideoScreen = () => {
   const ratio = 0.9;
   const resizeWidth = screenWidth*ratio;
   const resizeHeight = (screenWidth*originalHeight*ratio) / originalWidth;
+
+  const [isLoading, setIsLoading] = useState(true);
+  
+  if (isLoading) {
+    return (
+      <OpenCV setIsLoading={setIsLoading} />
+    )
+  }
 
   return (
     <View style={{backgroundColor: 'white'}}>
