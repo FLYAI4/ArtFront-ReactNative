@@ -20,7 +20,7 @@ const App = () => {
           <Stack.Screen name="Signup" component={Signup} />
           
           <Stack.Screen name="MainScreen" component={MainScreen} />
-          <Stack.Screen name="ScanImage" component={ScanImage} />
+          <Stack.Screen name="ScanImage" component={ScanImage} /> 
           <Stack.Screen name='DescriptionScreen' component={DescriptionScreen} />
           <Stack.Screen name="FocusPointingScreen" component={FocusPointingScreen} />
           <Stack.Screen name="Image2VideoScreen" component={Image2VideoScreen} />
