@@ -16,7 +16,7 @@ const TextInputBox = ({text, placeholder, value, setValue}: TextInputBoxProps) =
       <Text style={{fontSize: 16, marginBottom: 8}}>{text}</Text>
       <TextInput 
         placeholder={placeholder || text} 
-        style={{ borderWidth: 1, borderColor: isFocused ? 'black' : '#CECECE', borderRadius: 8, padding: 13}}
+        style={{ color: 'white', borderWidth: 1, borderColor: isFocused  ? '#CECECE' : 'gray', borderRadius: 8, padding: 13}}
         value={value}
         onChangeText={setValue}
         onFocus={()=>setIsFocused(true)}

@@ -10,27 +10,21 @@ type HeaderProps = {
 
 const Header = ({nextPage}: HeaderProps) => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  const logoSource = require('../../assets/image/logo.png')
+  const logoSource = require('../../assets/image/logo-dark.png')
 
   return (
-    <SafeAreaView style={{backgroundColor: 'white'}}>
-      <View style={{ marginLeft: 20, marginRight:20, height: 50,  display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
+    <SafeAreaView style={{backgroundColor: 'black'}}>
+      <View style={{ marginLeft: 20, marginRight:20, height: 60,  display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
           <TouchableOpacity onPress={()=>navigation.goBack()}>
-            <MaterialIcons name='keyboard-arrow-left' size={40} />
+            <MaterialIcons name='keyboard-arrow-left' size={40} color='white' />
           </TouchableOpacity>
-      
-          <TouchableOpacity onPress={()=>navigation.push('MainScreen')}>
-            <Image source={logoSource} style={{width: 40, height: 40}} /> 
-            {/* TODO signup에선 메인스크린 이동안함 */}
-          </TouchableOpacity>
-
         { nextPage !== 'DescriptionScreen' ? (
           <TouchableOpacity onPress={()=>navigation.push(nextPage)}>
-            <MaterialIcons name='keyboard-arrow-right' size={40}/>
+            <MaterialIcons name='keyboard-arrow-right' size={40} color='white' />
           </TouchableOpacity>
         ) : (
           <View>
-            <MaterialIcons name='keyboard-arrow-right' size={40} color="white" />
+            <MaterialIcons name='keyboard-arrow-right' size={40} color="black" />
           </View>
         )}
       </View>
