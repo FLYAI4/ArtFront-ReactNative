@@ -2,6 +2,7 @@ import { View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Common/Header'
 import Description from '../../components/Main/Description/Description'
+import OpenCV from '../../components/Main/Loading/OpenCV'
 
 const imagePath = [
   require('../../assets/image/LoadingImage/Group3058.png'),
@@ -17,9 +18,11 @@ const imagePath = [
 ]
 
 const DescriptionScreen = () => {
-  const [firstLoading, setFirstLoading] = useState(true)
-  const [secondLoading, setSecondLoading] = useState(true)
+  const [firstLoading, setFirstLoading] = useState(false)
+  const [secondLoading, setSecondLoading] = useState(false)
   const [imageNumber, setImageNumber] = useState(0)
+
+  const [play, setPlay] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,21 +35,26 @@ const DescriptionScreen = () => {
     }
   }, [firstLoading, imageNumber])
 
-  useEffect(()=> {
-    const timer = setTimeout(()=>{
-      setFirstLoading(false)
-    }, 10000);
+  // useEffect(()=> {
+  //   const timer = setTimeout(()=>{
+  //     setFirstLoading(false)
+  //     setSecondLoading(true)
+  //   }, 10000);
 
-    return ()=>clearTimeout(timer);
-  }, []);
+  //   return ()=>clearTimeout(timer);
+  // }, []);
 
-  if (firstLoading) {
-    return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
-  }
+  // if (firstLoading) {
+  //   return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
+  // }
+
+  // if (secondLoading) {
+  //   return <OpenCV setIsLoading={setSecondLoading} />
+  // }
 
   return (
     <View style={{backgroundColor: 'white'}}>
-        <Header nextPage='FocusPointingScreen'/>
+        <Header nextPage='FocusPointingScreen' />
         <Description /> 
     </View>
   )
