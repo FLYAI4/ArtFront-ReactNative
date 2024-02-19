@@ -1,6 +1,6 @@
 import { Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
-import { GestureHandlerRootView, ScrollView as GestureHandlerScrollView} from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
 import { useRecoilValue } from 'recoil';
 import { treeContent } from '../../../constants/imageInfo';

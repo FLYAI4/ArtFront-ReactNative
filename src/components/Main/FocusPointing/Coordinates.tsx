@@ -135,7 +135,7 @@ const Coordinates = () => {
     <SafeAreaView>
         <GestureHandlerRootView>
           <View 
-            style={{width: '100%', height: screenHeight-55, display: 'flex', alignItems: 'center', marginTop: 20, marginBottom: 100,}}>
+            style={{width: '100%', height: '95%', display: 'flex', alignItems: 'center', marginTop: 20, marginBottom: 100,}}>
               { cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
               <TouchableOpacity onPress={()=>setFocusBox(false)} activeOpacity={1}>
                 <Image source={{uri: uri}} style={{  width: resizeWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
@@ -143,8 +143,12 @@ const Coordinates = () => {
               {renderBoundingBoxes()}
               <Text style={{marginTop: 10, marginBottom: 10, fontSize: 24, fontWeight: '600'}} >{keyword}</Text>
               
-              <ScrollView style={{width: resizeWidth }}>
-                  <Text style={{"fontSize":16 }}>{context}</Text>
+              <ScrollView 
+                contentContainerStyle={{ marginBottom: 20, width: resizeWidth, height: 700 }}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+              >
+                <Text style={{"fontSize":16 }}>{context}</Text>
               </ScrollView>
               
           </View>

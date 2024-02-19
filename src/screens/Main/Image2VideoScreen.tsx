@@ -8,7 +8,7 @@ import { useRecoilValue } from 'recoil';
 import OpenCV from '../../components/Main/Loading/OpenCV';
 
 const Image2VideoScreen = () => {
-  const video = require('../../assets/video/output2.mp4');
+  const video = require('../../assets/video/2.mp4');
   const [onPress, setOnPress] = useState(false);
 
   const uri = useRecoilValue(uriSelector);
