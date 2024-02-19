@@ -16,8 +16,8 @@ const App = () => {
     <RecoilRoot>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
-          {/* <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} /> */}
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Signup" component={Signup} />
           
           <Stack.Screen name="MainScreen" component={MainScreen} />
           <Stack.Screen name="ScanImage" component={ScanImage} /> 

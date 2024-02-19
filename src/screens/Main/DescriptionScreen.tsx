@@ -18,8 +18,8 @@ const imagePath = [
 ]
 
 const DescriptionScreen = () => {
-  const [firstLoading, setFirstLoading] = useState(false)
-  const [secondLoading, setSecondLoading] = useState(false)
+  const [firstLoading, setFirstLoading] = useState(true)
+  const [secondLoading, setSecondLoading] = useState(true)
   const [imageNumber, setImageNumber] = useState(0)
 
   const [play, setPlay] = useState(false);
@@ -35,22 +35,22 @@ const DescriptionScreen = () => {
     }
   }, [firstLoading, imageNumber])
 
-  // useEffect(()=> {
-  //   const timer = setTimeout(()=>{
-  //     setFirstLoading(false)
-  //     setSecondLoading(true)
-  //   }, 10000);
+  useEffect(()=> {
+    const timer = setTimeout(()=>{
+      setFirstLoading(false)
+      setSecondLoading(true)
+    }, 10000);
 
-  //   return ()=>clearTimeout(timer);
-  // }, []);
+    return ()=>clearTimeout(timer);
+  }, []);
 
-  // if (firstLoading) {
-  //   return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
-  // }
+  if (firstLoading) {
+    return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
+  }
 
-  // if (secondLoading) {
-  //   return <OpenCV setIsLoading={setSecondLoading} />
-  // }
+  if (secondLoading) {
+    return <OpenCV setIsLoading={setSecondLoading} />
+  }
 
   return (
     <View style={{backgroundColor: 'white'}}>

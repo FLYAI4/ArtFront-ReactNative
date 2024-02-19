@@ -1,10 +1,11 @@
-import { Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableWithoutFeedback, NativeSyntheticEvent, NativeScrollEvent, TouchableOpacity } from 'react-native'
+import { Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
 import { useRecoilValue } from 'recoil';
 import { treeContent } from '../../../constants/imageInfo';
 import SoundPlayer from 'react-native-sound-player'
+import { useIsFocused } from '@react-navigation/native';
 
 const Description = () => {
   const uri = useRecoilValue(uriSelector);
@@ -21,25 +22,41 @@ const Description = () => {
   const [play, setPlay] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null); 
   const [currentTime, setCurrentTime] = useState(0);
+  const [durationTime, setDurationTime] = useState(0);
   const [height, setHeight] = useState(0)
+  const [isEnd, setIsEnd] = useState(false);
 
   const measureTextLayout = async (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
     setHeight(height);
   }
+  
+  const isFocused = useIsFocused(); // goBack으로 이전 페이지 돌아왔는지 체크 
+
+  useEffect(()=>{
+    if (isFocused || isEnd) {
+      setPlay(false)
+    }
+  }, [isFocused, isEnd]);
 
   const scrollView = async () => {
+    if (isEnd && !play) {
+      return;
+    }
+    
     if (scrollViewRef.current) {
       const { duration } = await SoundPlayer.getInfo();
-      const scrollPosition = (currentTime / duration) * (height + 220); 
-      // console.log('scrollPosition', scrollPosition);
-      scrollViewRef.current.scrollTo({ y:1000, animated: false });
+      setDurationTime(duration);
+
+      const scrollY = (currentTime / durationTime) * height - 10
+      const scrollPosition = (scrollY > 0) ? scrollY : 0;
+      scrollViewRef.current.scrollTo({ y:scrollPosition, animated: false });
     }
   }
 
   useEffect(()=>{
-    scrollView()
-  }, [currentTime]);
+    scrollView() 
+  }, [play, currentTime]);
 
   useEffect(()=>{
     const playSound = async () => {
@@ -54,17 +71,18 @@ const Description = () => {
 
     SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
       if (success) {
-        SoundPlayer.pause();
+        setPlay(false)
+        setIsEnd(true)
       }
     });
 
-    SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
-      console.log('finished loading', success)
-    });
+    // SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
+    //   console.log('finished loading', success)
+    // });
 
-    SoundPlayer.addEventListener('FinishedLoadingFile', ({ success }) => {
-      console.log('finished loading file', success)
-    });
+    // SoundPlayer.addEventListener('FinishedLoadingFile', ({ success }) => {
+    //   console.log('finished loading file', success)
+    // });
 
     return () => {
       setPlay(false);
@@ -78,7 +96,6 @@ const Description = () => {
   }
 
   useEffect(()=>{
-
     const updateCurrentTime = async () => {
       try { 
         const { currentTime } = await SoundPlayer.getInfo();
@@ -88,31 +105,46 @@ const Description = () => {
       }
     };
 
-    const interval = setInterval(updateCurrentTime, 1000);
+    const interval = setInterval(updateCurrentTime, 100);
 
     return () => {
       clearInterval(interval);
     }
   });
 
+  // const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+  //   const isEndReached =
+  //     layoutMeasurement.height + contentOffset.y >= contentSize.height;
+
+  //   console.log('isEndReached', layoutMeasurement.height, contentOffset.y, contentSize.height);
+
+  //   if (isEndReached && isEnd) {
+  //     setIsEnd(true)
+  //   }
+  // };
+
   return (
     <SafeAreaView>  
       <GestureHandlerRootView>
-        <View style={{ width: '100%', display: 'flex', alignItems: 'center', marginTop: 20 }}>
+        <View style={{  width: '100%', height: '95%', display: 'flex', alignItems: 'center', marginTop: 20 }}>
           <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
           <View style={{ display: 'flex', flexDirection: 'row' }}>
-            <TouchableOpacity>
-              <Button title={play ? '일시중지' : '재생'} onPress={onClickButton} />
+            <TouchableOpacity >
+              <Button title={play ? '일시중지' : '재생'}  onPress={onClickButton}/>
             </TouchableOpacity>
           </View>
+          <View> 
             <ScrollView 
               ref={scrollViewRef}
-              style={{ marginTop: 10, width: resizeWidth }} 
+              contentContainerStyle={{ marginTop: 10, marginBottom: 20, width: resizeWidth, height: 800}} 
               showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
             >
               <Text style={{ fontSize: 16 }} onLayout={measureTextLayout}>{content}</Text>
-            </ScrollView>
+          </ScrollView>
           </View>
+        </View>
       </GestureHandlerRootView>    
     </SafeAreaView>
   );
