@@ -40,6 +40,9 @@ const Description = () => {
   }, [isFocused, isEnd]);
 
   const scrollView = async () => {
+    if (isEnd && !play) {
+      return;
+    }
     
     if (scrollViewRef.current) {
       const { duration } = await SoundPlayer.getInfo();
@@ -53,7 +56,6 @@ const Description = () => {
 
   useEffect(()=>{
     scrollView() 
-       
   }, [play, currentTime]);
 
   useEffect(()=>{
@@ -100,27 +102,27 @@ const Description = () => {
         setCurrentTime(currentTime);
       } catch (error) {
         console.log(`currentTime error`, error);
-    }
+      }
     };
 
-    const interval = setInterval(updateCurrentTime, 1000);
+    const interval = setInterval(updateCurrentTime, 100);
 
     return () => {
       clearInterval(interval);
     }
   });
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const isEndReached =
-      layoutMeasurement.height + contentOffset.y >= contentSize.height;
+  // const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+  //   const isEndReached =
+  //     layoutMeasurement.height + contentOffset.y >= contentSize.height;
 
-    console.log('isEndReached', layoutMeasurement.height, contentOffset.y, contentSize.height);
+  //   console.log('isEndReached', layoutMeasurement.height, contentOffset.y, contentSize.height);
 
-    if (isEndReached && (durationTime - currentTime > 1)) {
-      setIsEnd(isEndReached)
-    }
-  };
+  //   if (isEndReached && isEnd) {
+  //     setIsEnd(true)
+  //   }
+  // };
 
   return (
     <SafeAreaView>  
@@ -138,7 +140,6 @@ const Description = () => {
               contentContainerStyle={{ marginTop: 10, marginBottom: 20, width: resizeWidth, height: 800}} 
               showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="handled"
-              onScroll={handleScroll}
             >
               <Text style={{ fontSize: 16 }} onLayout={measureTextLayout}>{content}</Text>
           </ScrollView>
