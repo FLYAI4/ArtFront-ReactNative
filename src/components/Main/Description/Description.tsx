@@ -31,9 +31,14 @@ const Description = () => {
   const scrollView = async () => {
     if (scrollViewRef.current) {
       const { duration } = await SoundPlayer.getInfo();
+
+      if ( duration - currentTime < 1) {
+        setPlay(false);
+      }
+
+
       const scrollPosition = ((currentTime / duration) * height - 10) > 0 ? (currentTime/duration) * height - 10 : 0;
       scrollViewRef.current.scrollTo({ y:scrollPosition, animated: false });
-
     }
   }
 
@@ -78,7 +83,6 @@ const Description = () => {
   }
 
   useEffect(()=>{
-
     const updateCurrentTime = async () => {
       try { 
         const { currentTime } = await SoundPlayer.getInfo();
