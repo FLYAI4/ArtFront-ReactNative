@@ -24,6 +24,7 @@ const Description = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [durationTime, setDurationTime] = useState(0);
   const [height, setHeight] = useState(0)
+  const [isEnd, setIsEnd] = useState(false);
 
   const measureTextLayout = async (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
@@ -31,32 +32,31 @@ const Description = () => {
   }
   
   const isFocused = useIsFocused(); // goBack으로 이전 페이지 돌아왔는지 체크 
-  
+
   useEffect(()=>{
-    setPlay(false)
-  }, [isFocused]);
+    if (isFocused || isEnd) {
+      setPlay(false)
+    }
+  }, [isFocused, isEnd]);
 
   const scrollView = async () => {
+    
     if (scrollViewRef.current) {
       const { duration } = await SoundPlayer.getInfo();
       setDurationTime(duration);
 
-      if ( durationTime - currentTime < 1 ) {
-        setPlay(false);
-      } 
-
-      const scrollPosition = ((currentTime / durationTime) * height - 10) > 0 ? (currentTime/durationTime) * height - 10 : 0;
+      const scrollY = (currentTime / durationTime) * height - 10
+      const scrollPosition = (scrollY > 0) ? scrollY : 0;
       scrollViewRef.current.scrollTo({ y:scrollPosition, animated: false });
     }
   }
 
   useEffect(()=>{
-    scrollView()    
+    scrollView() 
+       
   }, [play, currentTime]);
 
   useEffect(()=>{
-    console.log('sound load')
-
     const playSound = async () => {
       try {
         SoundPlayer.loadSoundFile('main', 'mp3')
@@ -67,11 +67,12 @@ const Description = () => {
 
     playSound();
 
-    // SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
-    //   if (success) {
-    //     SoundPlayer.pause();
-    //   }
-    // });
+    SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
+      if (success) {
+        setPlay(false)
+        setIsEnd(true)
+      }
+    });
 
     // SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
     //   console.log('finished loading', success)
@@ -99,7 +100,7 @@ const Description = () => {
         setCurrentTime(currentTime);
       } catch (error) {
         console.log(`currentTime error`, error);
-      }
+    }
     };
 
     const interval = setInterval(updateCurrentTime, 1000);
@@ -114,8 +115,10 @@ const Description = () => {
     const isEndReached =
       layoutMeasurement.height + contentOffset.y >= contentSize.height;
 
-    if (isEndReached) {
-      console.log('finish')
+    console.log('isEndReached', layoutMeasurement.height, contentOffset.y, contentSize.height);
+
+    if (isEndReached && (durationTime - currentTime > 1)) {
+      setIsEnd(isEndReached)
     }
   };
 
