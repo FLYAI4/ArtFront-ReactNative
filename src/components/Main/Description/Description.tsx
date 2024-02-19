@@ -1,6 +1,6 @@
-import { Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableWithoutFeedback, NativeSyntheticEvent, NativeScrollEvent, TouchableOpacity } from 'react-native'
+import { Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, ScrollView as GestureHandlerScrollView} from 'react-native-gesture-handler';
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
 import { useRecoilValue } from 'recoil';
 import { treeContent } from '../../../constants/imageInfo';
@@ -31,9 +31,9 @@ const Description = () => {
   const scrollView = async () => {
     if (scrollViewRef.current) {
       const { duration } = await SoundPlayer.getInfo();
-      const scrollPosition = (currentTime / duration) * (height + 220); 
-      // console.log('scrollPosition', scrollPosition);
-      scrollViewRef.current.scrollTo({ y:1000, animated: false });
+      const scrollPosition = ((currentTime / duration) * height - 10) > 0 ? (currentTime/duration) * height - 10 : 0;
+      scrollViewRef.current.scrollTo({ y:scrollPosition, animated: false });
+
     }
   }
 
@@ -95,24 +95,38 @@ const Description = () => {
     }
   });
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const isEndReached =
+      layoutMeasurement.height + contentOffset.y >= contentSize.height;
+
+    if (isEndReached) {
+      console.log('finish')
+    }
+  };
+
   return (
     <SafeAreaView>  
       <GestureHandlerRootView>
-        <View style={{ width: '100%', display: 'flex', alignItems: 'center', marginTop: 20 }}>
+        <View style={{  width: '100%', height: '95%', display: 'flex', alignItems: 'center', marginTop: 20 }}>
           <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
           <View style={{ display: 'flex', flexDirection: 'row' }}>
-            <TouchableOpacity>
-              <Button title={play ? '일시중지' : '재생'} onPress={onClickButton} />
+            <TouchableOpacity >
+              <Button title={play ? '일시중지' : '재생'}  onPress={onClickButton}/>
             </TouchableOpacity>
           </View>
+          <View> 
             <ScrollView 
               ref={scrollViewRef}
-              style={{ marginTop: 10, width: resizeWidth }} 
+              contentContainerStyle={{ marginTop: 10, marginBottom: 20, width: resizeWidth, height: 800}} 
               showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              onScroll={handleScroll}
             >
               <Text style={{ fontSize: 16 }} onLayout={measureTextLayout}>{content}</Text>
-            </ScrollView>
+          </ScrollView>
           </View>
+        </View>
       </GestureHandlerRootView>    
     </SafeAreaView>
   );
