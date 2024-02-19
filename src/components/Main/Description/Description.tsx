@@ -5,6 +5,7 @@ import { heightSelector, uriSelector, widthSelector } from '../../../recoil/sele
 import { useRecoilValue } from 'recoil';
 import { treeContent } from '../../../constants/imageInfo';
 import SoundPlayer from 'react-native-sound-player'
+import { useIsFocused } from '@react-navigation/native';
 
 const Description = () => {
   const uri = useRecoilValue(uriSelector);
@@ -21,32 +22,41 @@ const Description = () => {
   const [play, setPlay] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null); 
   const [currentTime, setCurrentTime] = useState(0);
+  const [durationTime, setDurationTime] = useState(0);
   const [height, setHeight] = useState(0)
 
   const measureTextLayout = async (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
     setHeight(height);
   }
+  
+  const isFocused = useIsFocused(); // goBack으로 이전 페이지 돌아왔는지 체크 
+  
+  useEffect(()=>{
+    setPlay(false)
+  }, [isFocused]);
 
   const scrollView = async () => {
     if (scrollViewRef.current) {
       const { duration } = await SoundPlayer.getInfo();
+      setDurationTime(duration);
 
-      if ( duration - currentTime < 1) {
+      if ( durationTime - currentTime < 1 ) {
         setPlay(false);
-      }
+      } 
 
-
-      const scrollPosition = ((currentTime / duration) * height - 10) > 0 ? (currentTime/duration) * height - 10 : 0;
+      const scrollPosition = ((currentTime / durationTime) * height - 10) > 0 ? (currentTime/durationTime) * height - 10 : 0;
       scrollViewRef.current.scrollTo({ y:scrollPosition, animated: false });
     }
   }
 
   useEffect(()=>{
-    scrollView()
-  }, [currentTime]);
+    scrollView()    
+  }, [play, currentTime]);
 
   useEffect(()=>{
+    console.log('sound load')
+
     const playSound = async () => {
       try {
         SoundPlayer.loadSoundFile('main', 'mp3')
@@ -57,19 +67,19 @@ const Description = () => {
 
     playSound();
 
-    SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
-      if (success) {
-        SoundPlayer.pause();
-      }
-    });
+    // SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
+    //   if (success) {
+    //     SoundPlayer.pause();
+    //   }
+    // });
 
-    SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
-      console.log('finished loading', success)
-    });
+    // SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
+    //   console.log('finished loading', success)
+    // });
 
-    SoundPlayer.addEventListener('FinishedLoadingFile', ({ success }) => {
-      console.log('finished loading file', success)
-    });
+    // SoundPlayer.addEventListener('FinishedLoadingFile', ({ success }) => {
+    //   console.log('finished loading file', success)
+    // });
 
     return () => {
       setPlay(false);
