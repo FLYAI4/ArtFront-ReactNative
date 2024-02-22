@@ -29,11 +29,11 @@ const Login = () => {
     setPassword('')
   }
 
-  // if (splash) {
-  //   return (
-  //     <Splash setSplash={setSplash} />
-  //   )
-  // }
+  if (splash) {
+    return (
+      <Splash setSplash={setSplash} />
+    )
+  }
 
   return (
     <View style={{ width:'100%', height:'100%', backgroundColor: 'black', display: 'flex', alignItems: 'center' }}>
