@@ -1,16 +1,18 @@
-import { View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import React from 'react'
 import Header from '../../components/Common/Header'
 import Coordinates from '../../components/Main/FocusPointing/Coordinates'
+import GoBack from '../../components/Common/GoBack'
+import NextPage from '../../components/Common/NextPage'
+import theme from '../../../theme'
 
 const FocusPointingScreen = () => {
   return (
-    <View style={{backgroundColor: 'white'}}>
-        <Header nextPage="Image2VideoScreen" /> 
-        <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}> 
-          <Coordinates />
-        </View>
-    </View>
+    <SafeAreaView style={{backgroundColor: theme.backgroundWhite}}>
+      <GoBack />
+      <Coordinates />
+      <NextPage nextPage='Image2VideoScreen' />
+    </SafeAreaView>
   )
 }
 
