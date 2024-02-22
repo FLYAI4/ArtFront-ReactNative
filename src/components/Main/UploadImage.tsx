@@ -47,7 +47,7 @@ const UploadImage = ({selectedImageUri, setSelectedImageUri}: UploadImageProps) 
     }
     setSelectedImageUri(res.assets[0].uri);
     console.log('PickImage', res);
-    navigation.push('DescriptionScreen')
+    navigation.push('NDescriptionScreen')
   };
 
   useEffect(()=>{

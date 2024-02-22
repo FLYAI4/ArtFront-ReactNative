@@ -28,7 +28,7 @@ const ScanImage = () => {
         }));
         console.log(`PickImage: ${image.uri}`);
         console.log(`ScanImage: ${scannedImage}`);
-        navigation.push('DescriptionScreen');
+        navigation.push('NDescriptionScreen');
       }
     };
   

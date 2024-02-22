@@ -16,7 +16,6 @@ const Login = () => {
 
   const logoSource = require('../../assets/image/logo-full-dark.png')
 
-
   const handleLogin = () => {
     // if (Platform.OS === 'android') {
     //   ToastAndroid.show(id, ToastAndroid.SHORT);
