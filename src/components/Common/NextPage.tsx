@@ -15,7 +15,7 @@ const NextPage = ({nextPage}:NextPageProps) => {
     if (nextPage !== 'NDescriptionScreen') {
         return (
             <TouchableOpacity 
-                style={{zIndex: 2, position: 'absolute', bottom: 20, right: 20}}
+                style={{zIndex: 1, position: 'absolute', bottom: 20, right: 20}}
                 onPress={()=>navigation.push(nextPage)}
             >
                 <View style={{backgroundColor: theme.cocoa, width: 40, height: 40, display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: 100}} >

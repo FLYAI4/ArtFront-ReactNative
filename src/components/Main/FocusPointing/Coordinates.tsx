@@ -4,7 +4,10 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import ImageEditor from "@react-native-community/image-editor";
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
 import { useRecoilValue } from 'recoil';
-import { treeDict } from '../../../constants/imageInfo';
+import { infoDict } from '../../../constants/imageInfo';
+import { removeUnderScore } from '../../../utils/utils';
+import AppText from '../../Common/Text/AppText';
+import NextPage from '../../Common/NextPage';
 
 const Coordinates = () => {
   const uri = useRecoilValue(uriSelector);
@@ -15,9 +18,7 @@ const Coordinates = () => {
   const [imageSize, setImageSize] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
-  const ratio = 0.9;
-  const resizeWidth = screenWidth*ratio;
-  const resizeHeight = (screenWidth*originalHeight*ratio) / originalWidth;
+  const resizeHeight = (screenWidth*originalHeight) / originalWidth;
   const [position, setPosition] = useState({left: 0, top: 0});
 
   // keyword, context 
@@ -34,7 +35,7 @@ const Coordinates = () => {
   const [focusBox, setFocusBox] = useState(false);
 
   // TODO 서버에서 받아옴 
-  const dict = treeDict
+  const dict = infoDict
 
   const handleImageLayout = (event: LayoutChangeEvent) => {
     const { x, y, width, height } = event.nativeEvent.layout;
@@ -64,9 +65,9 @@ const Coordinates = () => {
     const top =  coordinates[1]
     setPosition({left, top});
 
-    const x1 = coordinates[0] * (originalWidth / resizeWidth);
+    const x1 = coordinates[0] * (originalWidth / screenWidth);
     const y1 = coordinates[1] * (originalHeight / resizeHeight);
-    const x2 = coordinates[2] * (originalWidth / resizeWidth);
+    const x2 = coordinates[2] * (originalWidth / screenWidth);
     const y2 = coordinates[3] * (originalHeight / resizeHeight);
 
     setCropData({
@@ -91,7 +92,7 @@ const Coordinates = () => {
       });
 
       setKeyword("Box를 클릭해주세요!")
-      setContext("ArtVisionXperience이 선정한 핵심포인트입니다")
+      setContext("당신만의 AI 도슨트 Acent가 선정한 작품의 핵심포인트입니다. Box를 눌러 설명을 확인하세요.")
     }
   }, [focusBox])
 
@@ -135,22 +136,18 @@ const Coordinates = () => {
     <SafeAreaView>
         <GestureHandlerRootView>
           <View 
-            style={{width: '100%', height: '95%', display: 'flex', alignItems: 'center', marginTop: 20, marginBottom: 100,}}>
+            style={{width: '100%', height: '100%' }}>
               { cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
               <TouchableOpacity onPress={()=>setFocusBox(false)} activeOpacity={1}>
-                <Image source={{uri: uri}} style={{  width: resizeWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
+                <Image source={{uri: uri}} style={{  width: screenWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
               </TouchableOpacity>
-              {renderBoundingBoxes()}
-              <Text style={{marginTop: 10, marginBottom: 10, fontSize: 24, fontWeight: '600'}} >{keyword}</Text>
-              
-              <ScrollView 
-                contentContainerStyle={{ marginBottom: 20, width: resizeWidth, height: 700 }}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-              >
-                <Text style={{"fontSize":16 }}>{context}</Text>
-              </ScrollView>
-              
+              {renderBoundingBoxes()}              
+              <View style={{ marginLeft: 20, marginTop: 20}} >
+                <AppText style={{fontSize: 32, fontWeight: 600, marginBottom: 25 }}>{removeUnderScore({keyword: keyword})}</AppText>
+                <ScrollView>
+                  <AppText style={{ fontSize: 16}}>{context}</AppText>
+                </ScrollView>
+              </View>
           </View>
         </GestureHandlerRootView>
     </SafeAreaView>
