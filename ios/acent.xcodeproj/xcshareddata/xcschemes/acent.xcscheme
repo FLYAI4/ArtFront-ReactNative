@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "art.app"
-               BlueprintName = "art"
-               ReferencedContainer = "container:art.xcodeproj">
+               BuildableName = "acent.app"
+               BlueprintName = "acent"
+               ReferencedContainer = "container:acent.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "artTests.xctest"
-               BlueprintName = "artTests"
-               ReferencedContainer = "container:art.xcodeproj">
+               BuildableName = "acentTests.xctest"
+               BlueprintName = "acentTests"
+               ReferencedContainer = "container:acent.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "art.app"
-            BlueprintName = "art"
-            ReferencedContainer = "container:art.xcodeproj">
+            BuildableName = "acent.app"
+            BlueprintName = "acent"
+            ReferencedContainer = "container:acent.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "art.app"
-            BlueprintName = "art"
-            ReferencedContainer = "container:art.xcodeproj">
+            BuildableName = "acent.app"
+            BlueprintName = "acent"
+            ReferencedContainer = "container:acent.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
