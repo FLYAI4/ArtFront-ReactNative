@@ -23,7 +23,7 @@ const Header = ({nextPage}: HeaderProps) => {
           <TouchableOpacity onPress={()=>navigation.goBack()}>
             <MaterialIcons name='keyboard-arrow-left' size={40} color='white' />
           </TouchableOpacity>
-        { nextPage !== 'DescriptionScreen' ? (
+        { nextPage !== 'NDescriptionScreen' ? (
           <TouchableOpacity onPress={()=>navigation.push(nextPage)}>
             <MaterialIcons name='keyboard-arrow-right' size={40} color='white' />
           </TouchableOpacity>
