@@ -40,7 +40,8 @@
     "react-native-video": "^5.2.1",
     "react-navigation": "^5.0.0",
     "recoil": "^0.7.7",
-    "rn-fetch-blob": "^0.12.0"
+    "rn-fetch-blob": "^0.12.0",
+    "rn-statusbar-height": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -10,7 +10,6 @@ import AppText from '../../Common/Text/AppText';
 import * as Progress from 'react-native-progress';
 import theme from '../../../../theme';
 import Feather from 'react-native-vector-icons/Feather'
-import NextPage from '../../Common/NextPage';
 
 const Contents = () => {
     const uri = useRecoilValue(uriSelector);
@@ -30,7 +29,6 @@ const Contents = () => {
     const [height, setHeight] = useState(0)
     const [isEnd, setIsEnd] = useState(false);
     const [progressTime, setProgressTime] = useState(0);
-    // const progressTime = (!isEnd && currentTime>0) ? (currentTime/durationTime) : durationTime;
 
     const measureTextLayout = async (e: LayoutChangeEvent) => {
         const { height } = e.nativeEvent.layout;
