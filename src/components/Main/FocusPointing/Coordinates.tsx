@@ -8,6 +8,7 @@ import { infoDict } from '../../../constants/imageInfo';
 import { removeUnderScore } from '../../../utils/utils';
 import AppText from '../../Common/Text/AppText';
 import NextPage from '../../Common/NextPage';
+import theme from '../../../../theme';
 
 const Coordinates = () => {
   const uri = useRecoilValue(uriSelector);
@@ -143,9 +144,9 @@ const Coordinates = () => {
               </TouchableOpacity>
               {renderBoundingBoxes()}              
               <View style={{ marginHorizontal: 20, marginTop: 20}} >
-                <AppText style={{fontSize: 32, fontWeight: 600, marginBottom: 25 }}>{removeUnderScore({keyword: keyword})}</AppText>
-                <ScrollView>
-                  <AppText style={{ fontSize: 16}}>{context}</AppText>
+                <AppText style={{color: theme.olive, fontSize: 28, fontWeight: 600, marginBottom: 20 }}>{removeUnderScore({keyword: keyword})}</AppText>
+                <ScrollView style={{ height: 500 }}>
+                  <AppText style={{ color: theme.olive, fontSize: 16}}>{context}</AppText>
                 </ScrollView>
               </View>
           </View>
