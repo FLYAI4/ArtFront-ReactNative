@@ -142,7 +142,7 @@ const Coordinates = () => {
                 <Image source={{uri: uri}} style={{  width: screenWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
               </TouchableOpacity>
               {renderBoundingBoxes()}              
-              <View style={{ marginLeft: 20, marginTop: 20}} >
+              <View style={{ marginHorizontal: 20, marginTop: 20}} >
                 <AppText style={{fontSize: 32, fontWeight: 600, marginBottom: 25 }}>{removeUnderScore({keyword: keyword})}</AppText>
                 <ScrollView>
                   <AppText style={{ fontSize: 16}}>{context}</AppText>
