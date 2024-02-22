@@ -10,6 +10,7 @@ import AppText from '../../Common/Text/AppText';
 import * as Progress from 'react-native-progress';
 import theme from '../../../../theme';
 import Feather from 'react-native-vector-icons/Feather'
+import NextPage from '../../Common/NextPage';
 
 const Contents = () => {
     const uri = useRecoilValue(uriSelector);
@@ -124,7 +125,7 @@ const Contents = () => {
   return (
     <SafeAreaView>
       <GestureHandlerRootView>
-        <View  style={{  width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
+        <View  style={{  zIndex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
             <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
                 <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
@@ -138,7 +139,7 @@ const Contents = () => {
             <View> 
                 <ScrollView 
                 ref={scrollViewRef}
-                contentContainerStyle={{ width: resizeWidth-40, height: 820}} 
+                contentContainerStyle={{ width: resizeWidth-40, height: 830}} 
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="handled"
                 >
@@ -146,6 +147,7 @@ const Contents = () => {
             </ScrollView>
           </View>
         </View>
+        
       </GestureHandlerRootView>
     </SafeAreaView>
   )

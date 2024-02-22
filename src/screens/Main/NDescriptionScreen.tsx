@@ -9,8 +9,8 @@ const NDescriptionScreen = () => {
   return (
     <SafeAreaView style={{backgroundColor: theme.backgroundWhite}}>
       <GoBack />
-      <NextPage nextPage='FocusPointingScreen'/>
       <Contents />
+      <NextPage nextPage='FocusPointingScreen' />
     </SafeAreaView>
   )
 }
