@@ -20,13 +20,13 @@ const Image2VideoScreen = () => {
   const resizeWidth = screenWidth*ratio;
   const resizeHeight = (screenWidth*originalHeight*ratio) / originalWidth;
 
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   
-  if (isLoading) {
-    return (
-      <OpenCV setIsLoading={setIsLoading} />
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <OpenCV setIsLoading={setIsLoading} />
+  //   )
+  // }
 
   return (
     <View style={{backgroundColor: 'white'}}>
@@ -37,7 +37,7 @@ const Image2VideoScreen = () => {
         { onPress ? (
           <>
             <View style={{position: 'absolute', width: '100%', top: 0, left: 0, zIndex: 1}}>
-              <Header nextPage="MainScreen" /> 
+              <Header nextPage="ReviewScreen" /> 
             </View>
             <Video 
             source={video}
@@ -58,7 +58,7 @@ const Image2VideoScreen = () => {
         ): (
           <>
             <View style={{ position: 'absolute', width: '100%', top: 0, left: 0, zIndex: 1 }}>
-              <Header nextPage="MainScreen" />
+              <Header nextPage="ReviewScreen" />
             </View>
             <View style={{ flex: 1, alignItems: 'center', marginTop: 20, backgroundColor: 'white' ,position: 'absolute', alignSelf: 'center',justifyContent: 'center', left: 0, right: 0, top: 0, bottom: 0 }}>
               <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight, opacity: 0.5 }} />
