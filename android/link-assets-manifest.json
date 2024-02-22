@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/NanumMyeongjo-Bold.ttf",
+      "sha1": "8baf69da80267531bcfdb1de2a1aa627202ec1f2"
+    },
+    {
+      "path": "src/assets/fonts/NanumMyeongjo-ExtraBold.ttf",
+      "sha1": "5d097414542f9dbb7a97227b5df9e6c33abe9323"
+    },
+    {
+      "path": "src/assets/fonts/NanumMyeongjo-Regular.ttf",
+      "sha1": "3b43f237f492c0a689067d305f4cd208ad79f8ef"
+    }
+  ]
+}

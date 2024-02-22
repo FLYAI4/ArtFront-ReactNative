@@ -5,6 +5,7 @@ import PasswordInputBox from '../../components/User/PasswordInputBox'
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import Splash from '../../components/Main/Loading/Splash';
+import AppText from '../../components/Common/Text/AppText';
 
 const Login = () => {
   const [id, setId] = useState('')
@@ -28,15 +29,14 @@ const Login = () => {
     setPassword('')
   }
 
-  if (splash) {
-    return (
-      <Splash setSplash={setSplash} />
-    )
-  }
+  // if (splash) {
+  //   return (
+  //     <Splash setSplash={setSplash} />
+  //   )
+  // }
 
   return (
-    <>
-    <View style={{width:'100%', height:'100%', backgroundColor: 'black', display: 'flex', alignItems: 'center' }}>
+    <View style={{ width:'100%', height:'100%', backgroundColor: 'black', display: 'flex', alignItems: 'center' }}>
       <View style={{marginTop: 100, marginBottom: 50} }>
         <Image source={logoSource} style={{width: 250, height: 200}} resizeMode='contain'/>
       </View>
@@ -46,7 +46,7 @@ const Login = () => {
         <PasswordInputBox text="비밀번호" placeholder='password' value={password} setValue={setPassword} />
         
         <TouchableOpacity style={{marginTop: 70,  borderRadius: 8, backgroundColor: 'black', padding: 16, borderWidth: 1, borderColor: '#CECECE'}} onPress={handleLogin}>
-          <Text style={{textAlign: 'center', width: '100%', fontSize: 18, color: '#CECECE'}}>로그인</Text>
+          <AppText style={{textAlign: 'center', width: '100%', fontSize: 18, color: '#CECECE'}}>로그인</AppText>
         </TouchableOpacity>
 
         <TouchableOpacity 
@@ -57,7 +57,6 @@ const Login = () => {
         </TouchableOpacity>
       </View>
     </View>
-    </>
   )
 }
 
