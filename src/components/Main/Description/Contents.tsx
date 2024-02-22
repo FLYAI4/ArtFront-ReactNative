@@ -1,4 +1,4 @@
-import {  Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, } from 'react-native'
+import {  Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, } from 'react-native'
 import React,  { useEffect, useState, useRef }  from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
@@ -7,6 +7,9 @@ import { treeContent } from '../../../constants/imageInfo';
 import SoundPlayer from 'react-native-sound-player'
 import { useIsFocused } from '@react-navigation/native';
 import AppText from '../../Common/Text/AppText';
+import * as Progress from 'react-native-progress';
+import theme from '../../../../theme';
+import Feather from 'react-native-vector-icons/Feather'
 
 const Contents = () => {
     const uri = useRecoilValue(uriSelector);
@@ -25,6 +28,8 @@ const Contents = () => {
     const [durationTime, setDurationTime] = useState(0);
     const [height, setHeight] = useState(0)
     const [isEnd, setIsEnd] = useState(false);
+    const [progressTime, setProgressTime] = useState(0);
+    // const progressTime = (!isEnd && currentTime>0) ? (currentTime/durationTime) : durationTime;
 
     const measureTextLayout = async (e: LayoutChangeEvent) => {
         const { height } = e.nativeEvent.layout;
@@ -56,6 +61,10 @@ const Contents = () => {
 
     useEffect(()=>{
         scrollView() 
+        if (currentTime>0) {
+            setProgressTime(currentTime / durationTime);
+        }
+        
     }, [play, currentTime]);
 
     useEffect(()=>{
@@ -117,15 +126,19 @@ const Contents = () => {
       <GestureHandlerRootView>
         <View  style={{  width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
+                <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+                    <Progress.Bar progress={progressTime} width={resizeWidth-75} height={15} color={theme.cocoa}/>
+                </View>
+                
                 <TouchableOpacity onPress={onClickButton}>
-                    <AppText>{play ? '일시중지' : '재생'}</AppText>
+                    <Feather name={play ? 'pause' : 'play'} size={35} color={theme.cocoa}/>
                 </TouchableOpacity>
             </View>
             <View> 
                 <ScrollView 
                 ref={scrollViewRef}
-                contentContainerStyle={{ margin:20, width: resizeWidth-40, height: 800}} 
+                contentContainerStyle={{ width: resizeWidth-40, height: 820}} 
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="handled"
                 >
