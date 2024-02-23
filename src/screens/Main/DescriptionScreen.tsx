@@ -4,13 +4,14 @@ import theme from '../../../theme'
 import Contents from '../../components/Main/Description/Contents'
 import GoBack from '../../components/Common/GoBack'
 import NextPage from '../../components/Common/NextPage'
+import OpenCV from '../../components/Main/Loading/OpenCV'
 
 const imagePath = [
-  require('../../assets/image/LoadingImage/Group3058.png'),
-  require('../../assets/image/LoadingImage/Group3061.png'),
-  require('../../assets/image/LoadingImage/Group3062.png'),
-  require('../../assets/image/LoadingImage/Group3064.png'),
-  require('../../assets/image/LoadingImage/Group3067.png'),
+  require('../../assets/image/LoadingImage/Group3076.png'),
+  require('../../assets/image/LoadingImage/Group3078.png'),
+  require('../../assets/image/LoadingImage/Group3079.png'),
+  require('../../assets/image/LoadingImage/Group3081.png'),
+  require('../../assets/image/LoadingImage/Group3082.png'),
 ]
 
 const DescriptionScreen = () => {
@@ -20,8 +21,8 @@ const DescriptionScreen = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const randomGroup = Math.floor(Math.random() * 10); 
-      randomGroup !== imageNumber ? setImageNumber(randomGroup) : setImageNumber(10)
+      const randomGroup = Math.floor(Math.random() * 5); 
+      randomGroup !== imageNumber ? setImageNumber(randomGroup) : setImageNumber(1)
     }, 4000)
 
     return () => {
@@ -38,13 +39,13 @@ const DescriptionScreen = () => {
     return ()=>clearTimeout(timer);
   }, []);
 
-  // if (firstLoading) {
-  //   return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
-  // }
+  if (firstLoading) {
+    return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
+  }
 
-  // if (secondLoading) {
-  //   return <OpenCV setIsLoading={setSecondLoading} />
-  // }
+  if (secondLoading) {
+    return <OpenCV setIsLoading={setSecondLoading} />
+  }
 
   return (
     <SafeAreaView style={{backgroundColor: theme.backgroundWhite}}>
