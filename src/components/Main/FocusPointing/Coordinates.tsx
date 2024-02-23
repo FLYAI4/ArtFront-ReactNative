@@ -1,16 +1,32 @@
-import { View, Text, Image, Dimensions, SafeAreaView, LayoutChangeEvent, TouchableOpacity } from 'react-native';
+import { View, Image, Dimensions, SafeAreaView, LayoutChangeEvent, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import ImageEditor from "@react-native-community/image-editor";
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
 import { useRecoilValue } from 'recoil';
-import { infoDict } from '../../../constants/imageInfo';
 import { removeUnderScore } from '../../../utils/utils';
 import AppText from '../../Common/Text/AppText';
-import NextPage from '../../Common/NextPage';
 import theme from '../../../../theme';
+import { useQuery } from 'react-query';
+import { getContentCoord } from '../../../api/contents';
+
+type Dict = {
+  [key: string]: {
+    내용: string;
+    좌표: number[];
+  }
+}
 
 const Coordinates = () => {
+  const { data, isLoading, isError } = useQuery('contentCoord', getContentCoord);
+  const [dict, setDict] = useState<Dict>({});
+
+  useEffect(()=>{
+    if (data && data.data) {
+      setDict(data.data)
+    }
+  }, [data])
+
   const uri = useRecoilValue(uriSelector);
   const originalWidth = useRecoilValue(widthSelector);
   const originalHeight = useRecoilValue(heightSelector);
@@ -35,22 +51,20 @@ const Coordinates = () => {
 
   const [focusBox, setFocusBox] = useState(false);
 
-  // TODO 서버에서 받아옴 
-  const dict = infoDict
-
   const handleImageLayout = (event: LayoutChangeEvent) => {
     const { x, y, width, height } = event.nativeEvent.layout;
     setImageSize({ x, y, width, height });
   }
 
-  const calculateCoordinates = (list: number[][]) => {
-    const [x1, y1, x2, y2] = list[0];
-    const x1_ = imageSize.width / originalWidth  * x1 + imageSize.x;
-    const y1_ = imageSize.height / originalHeight  * y1 + imageSize.y;
+  const calculateCoordinates = (list: number[]) => {
+    const [x1, y1, x2, y2] = list;
+    
+    const x1_ = imageSize.width / originalWidth * x1 + imageSize.x;
+    const y1_ = imageSize.height / originalHeight * y1 + imageSize.y;
     const x2_ = imageSize.width / originalWidth * x2 + imageSize.x;
-    const y2_ = imageSize.height / originalHeight  * y2 + imageSize.y;
+    const y2_ = imageSize.height / originalHeight * y2 + imageSize.y;
     return [x1_, y1_, x2_, y2_];
-  }
+  };
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -99,12 +113,8 @@ const Coordinates = () => {
 
   useEffect(()=>{
     const fetchData = async () => {
-      try { 
-        const url = await ImageEditor.cropImage(uri, cropData);
-        setCropPath(url);
-      } catch (error) {
-        console.log("cropImage 오류:", error);
-      }
+      const url = await ImageEditor.cropImage(uri, cropData);
+      setCropPath(url);
     }
 
     fetchData();
@@ -114,14 +124,14 @@ const Coordinates = () => {
   const handleClickBounding = (key: string, coordinates: number[]) => {
     setFocusBox(true);
     setKeyword(key);
-    setContext(dict[key as keyof typeof dict]['context']);
+    setContext(dict[key as keyof typeof dict]['내용']); // TODO
 
     cropImage(coordinates);
   };
 
   const renderBoundingBoxes = () => {
     return Object.keys(dict).map((key: string, index: number) => {
-        const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(dict[key as keyof typeof dict]['coord']);
+        const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(dict[key as keyof typeof dict]['좌표']); // TOOD
         return (
             <TouchableOpacity 
                 key={index}
@@ -132,6 +142,16 @@ const Coordinates = () => {
         )
     })
   }
+
+  if (isLoading  || !data ) {
+    return (
+      <Image source={require('../../../assets/image/loading.png')} style={{ zIndex: 1, width: '100%', height: '100%'}} resizeMode='cover' />
+    )
+  }
+
+  if (isError) {
+    return <AppText>Error</AppText>
+  } 
 
   return (
     <SafeAreaView>
@@ -145,7 +165,7 @@ const Coordinates = () => {
               {renderBoundingBoxes()}              
               <View style={{ marginHorizontal: 20, marginTop: 20}} >
                 <AppText style={{color: theme.olive, fontSize: 28, fontWeight: 600, marginBottom: 20 }}>{removeUnderScore({keyword: keyword})}</AppText>
-                <ScrollView style={{ height: 600, width: screenWidth-90}}>
+                <ScrollView style={{ height: 600, width: screenWidth-40}}>
                   <AppText style={{ color: theme.olive, fontSize: 16}}>{context}</AppText>
                 </ScrollView>
               </View>
