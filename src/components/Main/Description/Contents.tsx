@@ -66,10 +66,12 @@ const Contents = () => {
         
     }, [play, currentTime]);
 
+    // mp3 파일 저장
+
     useEffect(()=>{
         const playSound = async () => {
             try {
-                SoundPlayer.loadSoundFile('main', 'mp3')
+                SoundPlayer.loadSoundFile('main_content', 'mp3')
             } catch (e) {
                 console.log('사운드 파일 재생 오류', e)
             }
@@ -137,11 +139,11 @@ const Contents = () => {
             <View> 
                 <ScrollView 
                 ref={scrollViewRef}
-                contentContainerStyle={{ width: resizeWidth-40, height: 830}} 
+                contentContainerStyle={{ width: resizeWidth-40, height: content.length*2 }} 
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="handled"
                 >
-                <AppText style={{ fontSize: 16 }} onLayout={measureTextLayout}>{content}</AppText>
+                <AppText style={{ color: theme.olive, fontSize: 16 }} onLayout={measureTextLayout}>{content}</AppText>
             </ScrollView>
           </View>
         </View>

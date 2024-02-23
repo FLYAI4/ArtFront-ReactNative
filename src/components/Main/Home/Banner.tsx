@@ -17,32 +17,34 @@ const Banner = () => {
     Linking.openURL(url)
   }
 
+  const url = 'https://www.sktelecom.com/';
+
 
   return (
     <Swiper loop autoplay autoplayTimeout={3} dotColor={theme.backgroundWhite} activeDotColor={theme.olive} >
-        <TouchableOpacity onPress={()=>handleImagePress('https://www.sktelecom.com/')}>
-          <View>
-            <Image source={banner1} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
-          </View>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={()=>handleImagePress(url)}>
+        <View>
+          <Image source={banner1} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+        </View>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>handleImagePress('https://www.skttechacademy.com/')}>
-          <View>
-            <Image source={banner2} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
-          </View>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={()=>handleImagePress('https://www.skttechacademy.com/')}>
+        <View>
+          <Image source={banner2} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+        </View>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>handleImagePress('https://www.skttechacademy.com/')}>
-          <View>
-            <Image source={banner3} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
-          </View>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={()=>handleImagePress(url)}>
+        <View>
+          <Image source={banner3} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+        </View>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>handleImagePress('https://www.skttechacademy.com/')}>
-          <View>
-            <Image source={banner4} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
-          </View>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={()=>handleImagePress(url)}>
+        <View>
+          <Image source={banner4} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+        </View>
+      </TouchableOpacity>
     </Swiper>
   )
 }
