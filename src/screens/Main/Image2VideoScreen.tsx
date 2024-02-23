@@ -8,6 +8,7 @@ import GoBack from '../../components/Common/GoBack';
 import theme from '../../../theme';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getStatusBarHeight } from 'rn-statusbar-height';
+import NextPage from '../../components/Common/NextPage';
 // import OpenCV from '../../components/Main/Loading/OpenCV';
 
 const Image2VideoScreen = () => {
@@ -35,7 +36,7 @@ const Image2VideoScreen = () => {
                 style={{ zIndex:1, position: 'absolute', top: top+10, left :15, }} 
                 onPress={()=>setOnPress(false)}
             >
-                <AntDesign name="arrowleft" size={30} color={theme.cocoa} />
+              <AntDesign name="arrowleft" size={30} color={theme.cocoa} />
             </TouchableOpacity>
             <View style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <Video 
@@ -64,6 +65,7 @@ const Image2VideoScreen = () => {
                 <MaterialCommunityIcons name="movie-open-play" color={theme.cocoa} size={80} />
               </TouchableOpacity>
             </View>
+            <NextPage nextPage='ReviewScreen' />
           </>
       )}
       </View>
