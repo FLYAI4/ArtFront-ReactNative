@@ -25,10 +25,10 @@ const Image2VideoScreen = () => {
   const top = getStatusBarHeight();
 
   return (
-    <View style={{backgroundColor: 'white'}}>
+    <View style={{backgroundColor: theme.backgroundWhite}}>
 
       <View style={{
-          position: 'relative', width: '100%', height: '100%', backgroundColor: 'white'
+          position: 'relative', width: '100%', height: '100%', backgroundColor: theme.backgroundWhite
         }}>
         { onPress ? (
           <>
@@ -45,7 +45,7 @@ const Image2VideoScreen = () => {
                   width: screenWidth,
                   height: resizeHeight,
               }}
-              resizeMode={'cover'}
+              resizeMode={'stretch'}
               repeat={true}
               controls={true} 
               paused={false}
@@ -56,10 +56,11 @@ const Image2VideoScreen = () => {
         ): (
           <>
             <GoBack cocoa/>
-            <View style={{ width: screenWidth, height: resizeHeight, backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
-              <Image source={{ uri: uri }} style={{ width: screenWidth, height: resizeHeight, opacity: 0.3, position: 'absolute', top: top, left: 0, right: 0, bottom:0 }} />
+            <View style={{ width: '100%', height: '100%', backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+              <Image source={{ uri: uri }} style={{ width: screenWidth, height: resizeHeight, opacity: 0.3, display:'flex', justifyContent: 'center', alignItems: 'center'}} />
               <TouchableOpacity
                 onPress={() => setOnPress(true)}
+                style={{position: 'absolute' }}
               >
                 <MaterialCommunityIcons name="movie-open-play" color={theme.cocoa} size={80} />
               </TouchableOpacity>
