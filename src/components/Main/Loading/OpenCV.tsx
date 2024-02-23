@@ -31,7 +31,7 @@ const OpenCV = ({setIsLoading}: OpenCVtypes) => {
 
   return (
     <View style={{backgroundColor:'white', display: 'flex',  width: '100%', height: '100%'}}>
-        <Header nextPage='MainScreen' />
+        <Header nextPage='HomeScreen' />
         <View style={{paddingBottom: 75, backgroundColor: 'white', width: "100%", height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <FastImage source={ loadingGif as Source } style={{zIndex:1, width: 400, height: 400 }} resizeMode={FastImage.resizeMode.contain}/>
           <Text style={{marginTop: 30}}>그림에 생명을 불어넣는 중..</Text>
