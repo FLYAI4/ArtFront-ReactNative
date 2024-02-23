@@ -4,7 +4,6 @@ import theme from '../../../theme'
 import Contents from '../../components/Main/Description/Contents'
 import GoBack from '../../components/Common/GoBack'
 import NextPage from '../../components/Common/NextPage'
-import OpenCV from '../../components/Main/Loading/OpenCV'
 
 const imagePath = [
   require('../../assets/image/LoadingImage/Group3058.png'),
