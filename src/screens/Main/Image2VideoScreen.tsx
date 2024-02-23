@@ -2,13 +2,17 @@ import { View, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Header from '../../components/Common/Header'
 import Video from 'react-native-video';
-import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { heightSelector, uriSelector, widthSelector } from '../../recoil/selector';
 import { useRecoilValue } from 'recoil';
-import OpenCV from '../../components/Main/Loading/OpenCV';
+import GoBack from '../../components/Common/GoBack';
+import theme from '../../../theme';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import { getStatusBarHeight } from 'rn-statusbar-height';
+// import OpenCV from '../../components/Main/Loading/OpenCV';
 
 const Image2VideoScreen = () => {
-  const video = require('../../assets/video/2.mp4');
+  const video = require('../../assets/video/18.mp4');
   const [onPress, setOnPress] = useState(false);
 
   const uri = useRecoilValue(uriSelector);
@@ -16,17 +20,9 @@ const Image2VideoScreen = () => {
   const originalHeight = useRecoilValue(heightSelector);
 
   const screenWidth = Dimensions.get('window').width;
-  const ratio = 0.9;
-  const resizeWidth = screenWidth*ratio;
-  const resizeHeight = (screenWidth*originalHeight*ratio) / originalWidth;
+  const resizeHeight = (screenWidth*originalHeight) / originalWidth;
 
-  // const [isLoading, setIsLoading] = useState(true);
-  
-  // if (isLoading) {
-  //   return (
-  //     <OpenCV setIsLoading={setIsLoading} />
-  //   )
-  // }
+  const top = getStatusBarHeight();
 
   return (
     <View style={{backgroundColor: 'white'}}>
@@ -36,37 +32,36 @@ const Image2VideoScreen = () => {
         }}>
         { onPress ? (
           <>
-            <View style={{position: 'absolute', width: '100%', top: 0, left: 0, zIndex: 1}}>
-              <Header nextPage="ReviewScreen" /> 
+            <TouchableOpacity 
+                style={{ zIndex:1, position: 'absolute', top: top+10, left :15, }} 
+                onPress={()=>setOnPress(false)}
+            >
+                <AntDesign name="arrowleft" size={30} color={theme.cocoa} />
+            </TouchableOpacity>
+            <View style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <Video 
+              source={video}
+              style={{
+                  width: screenWidth,
+                  height: resizeHeight,
+              }}
+              resizeMode={'cover'}
+              repeat={true}
+              controls={true} 
+              paused={false}
+              onEnd={()=>setOnPress(false)}
+              />
             </View>
-            <Video 
-            source={video}
-            style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0
-            }}
-            resizeMode={'contain'}
-            repeat={true}
-            controls={false} // TODO 논의 필요
-            paused={false}
-            onEnd={()=>setOnPress(false)}
-            />
           </>
         ): (
           <>
-            <View style={{ position: 'absolute', width: '100%', top: 0, left: 0, zIndex: 1 }}>
-              <Header nextPage="ReviewScreen" />
-            </View>
-            <View style={{ flex: 1, alignItems: 'center', marginTop: 20, backgroundColor: 'white' ,position: 'absolute', alignSelf: 'center',justifyContent: 'center', left: 0, right: 0, top: 0, bottom: 0 }}>
-              <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight, opacity: 0.5 }} />
+            <GoBack cocoa/>
+            <View style={{ width: screenWidth, height: resizeHeight, backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+              <Image source={{ uri: uri }} style={{ width: screenWidth, height: resizeHeight, opacity: 0.3, position: 'absolute', top: top, left: 0, right: 0, bottom:0 }} />
               <TouchableOpacity
                 onPress={() => setOnPress(true)}
-                style={{ position: 'absolute', alignSelf: 'center', alignItems: 'center', justifyContent: 'center', left: 0, right: 0, top: 0, bottom: 0 }}
               >
-                <MaterialIcons name="video-vintage" color="black" size={80} />
+                <MaterialCommunityIcons name="movie-open-play" color={theme.cocoa} size={80} />
               </TouchableOpacity>
             </View>
           </>
