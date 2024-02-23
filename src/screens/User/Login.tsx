@@ -23,7 +23,7 @@ const Login = () => {
     //   Alert.alert(id);
     // }
 
-    navigation.push('MainScreen');
+    navigation.push('HomeScreen');
     setId('');
     setPassword('')
   }

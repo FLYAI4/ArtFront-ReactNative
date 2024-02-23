@@ -1,9 +1,11 @@
-import { View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native'
+import { View, Image, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import AppText from '../../components/Common/Text/AppText'
 import { getStatusBarHeight } from 'rn-statusbar-height'
 import theme from '../../../theme'
 import Banner from '../../components/Main/Home/Banner'
+import { useNavigation } from '@react-navigation/native'
+import HomeButton from '../../components/Main/Home/HomeButton'
 
 
 const HomeScreen = () => {
@@ -15,6 +17,8 @@ const HomeScreen = () => {
     const image3 = require('../../assets/image/Popular/9.jpg');
     const image4 = require('../../assets/image/Popular/16.jpg');
     const image5 = require('../../assets/image/Popular/18.jpg');
+
+    const navigation = useNavigation
 
   return (
     <View style={{width: '100%', height: '100%', position: 'relative'}}>
@@ -46,13 +50,7 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      <View style={{ width: '100%', position: 'absolute', bottom: 43, left: 0, right: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center',}}>
-        <TouchableOpacity>
-          <View style={{ borderRadius: 55, overflow: 'hidden', borderWidth: 2, borderColor: theme.olive, }}>
-            <AppText style={{ width: 350, padding: 20,  backgroundColor: theme.olive, color: theme.backgroundWhite, fontWeight: '600', fontSize: 24, textAlign: 'center', }}>작품 감상하러 가기</AppText>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <HomeButton />
 
     </View>
   )

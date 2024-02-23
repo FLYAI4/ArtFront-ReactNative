@@ -1,20 +1,13 @@
 import { View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Common/Header'
-import Description from '../../components/Main/Description/Description'
+// import Description from '../../components/Main/Description/Description'
 import OpenCV from '../../components/Main/Loading/OpenCV'
 
 const imagePath = [
   require('../../assets/image/LoadingImage/Group3058.png'),
   require('../../assets/image/LoadingImage/Group3059.png'),
   require('../../assets/image/LoadingImage/Group3060.png'),
-  require('../../assets/image/LoadingImage/Group3061.png'),
-  require('../../assets/image/LoadingImage/Group3062.png'),
-  require('../../assets/image/LoadingImage/Group3063.png'),
-  require('../../assets/image/LoadingImage/Group3064.png'),
-  require('../../assets/image/LoadingImage/Group3065.png'),
-  require('../../assets/image/LoadingImage/Group3066.png'),
-  require('../../assets/image/LoadingImage/Group3067.png'),
 ]
 
 const DescriptionScreen = () => {
@@ -55,7 +48,7 @@ const DescriptionScreen = () => {
   return (
     <View style={{backgroundColor: 'white'}}>
         <Header nextPage='FocusPointingScreen' />
-        <Description /> 
+        {/* <Description />  */}
     </View>
   )
 }
