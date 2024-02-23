@@ -9,6 +9,7 @@ import theme from '../../../theme';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getStatusBarHeight } from 'rn-statusbar-height';
 import NextPage from '../../components/Common/NextPage';
+import VideoShare from '../../components/Main/Video/VideoShare';
 // import OpenCV from '../../components/Main/Loading/OpenCV';
 
 const Image2VideoScreen = () => {
@@ -64,6 +65,7 @@ const Image2VideoScreen = () => {
               >
                 <MaterialCommunityIcons name="movie-open-play" color={theme.cocoa} size={80} />
               </TouchableOpacity>
+              <VideoShare />
             </View>
             <NextPage nextPage='ReviewScreen' />
           </>
