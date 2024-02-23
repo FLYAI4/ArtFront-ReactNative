@@ -1,21 +1,23 @@
-import { View, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import Header from '../../components/Common/Header'
-// import Description from '../../components/Main/Description/Description'
+import { Image, StatusBar, TouchableOpacity, SafeAreaView } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import theme from '../../../theme'
+import Contents from '../../components/Main/Description/Contents'
+import GoBack from '../../components/Common/GoBack'
+import NextPage from '../../components/Common/NextPage'
 import OpenCV from '../../components/Main/Loading/OpenCV'
 
 const imagePath = [
   require('../../assets/image/LoadingImage/Group3058.png'),
-  require('../../assets/image/LoadingImage/Group3059.png'),
-  require('../../assets/image/LoadingImage/Group3060.png'),
+  require('../../assets/image/LoadingImage/Group3061.png'),
+  require('../../assets/image/LoadingImage/Group3062.png'),
+  require('../../assets/image/LoadingImage/Group3064.png'),
+  require('../../assets/image/LoadingImage/Group3067.png'),
 ]
 
 const DescriptionScreen = () => {
   const [firstLoading, setFirstLoading] = useState(true)
   const [secondLoading, setSecondLoading] = useState(true)
   const [imageNumber, setImageNumber] = useState(0)
-
-  const [play, setPlay] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -37,19 +39,20 @@ const DescriptionScreen = () => {
     return ()=>clearTimeout(timer);
   }, []);
 
-  if (firstLoading) {
-    return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
-  }
+  // if (firstLoading) {
+  //   return <Image source={imagePath[imageNumber]} style={{ width: '100%', height: '100%'}} />
+  // }
 
-  if (secondLoading) {
-    return <OpenCV setIsLoading={setSecondLoading} />
-  }
+  // if (secondLoading) {
+  //   return <OpenCV setIsLoading={setSecondLoading} />
+  // }
 
   return (
-    <View style={{backgroundColor: 'white'}}>
-        <Header nextPage='FocusPointingScreen' />
-        {/* <Description />  */}
-    </View>
+    <SafeAreaView style={{backgroundColor: theme.backgroundWhite}}>
+      <GoBack />
+      <Contents />
+      <NextPage nextPage='FocusPointingScreen' />
+    </SafeAreaView>
   )
 }
 

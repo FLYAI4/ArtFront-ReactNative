@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Common/Header'
 import Video from 'react-native-video';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { heightSelector, uriSelector, widthSelector } from '../../recoil/selector';

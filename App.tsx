@@ -6,8 +6,6 @@ import DescriptionScreen from './src/screens/Main/DescriptionScreen';
 import FocusPointingScreen from './src/screens/Main/FocusPointingScreen';
 import Image2VideoScreen from './src/screens/Main/Image2VideoScreen';
 import { RecoilRoot } from 'recoil';
-import ScanImage from './src/components/Main/Crop/ScanImage';
-import NDescriptionScreen from './src/screens/Main/NDescriptionScreen';
 import ReviewScreen from './src/screens/Main/ReviewScreen';
 import HomeScreen from './src/screens/Main/HomeScreen';
 
@@ -23,8 +21,7 @@ const App = () => {
            */}
 
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="ScanImage" component={ScanImage} /> 
-          <Stack.Screen name='NDescriptionScreen' component={NDescriptionScreen} />
+          <Stack.Screen name='DescriptionScreen' component={DescriptionScreen} />
           <Stack.Screen name="FocusPointingScreen" component={FocusPointingScreen} />
           <Stack.Screen name="Image2VideoScreen" component={Image2VideoScreen} />
           <Stack.Screen name="ReviewScreen" component={ReviewScreen} />
