@@ -1,22 +1,31 @@
 import { View, Image, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AppText from '../../components/Common/Text/AppText'
 import { getStatusBarHeight } from 'rn-statusbar-height'
 import theme from '../../../theme'
 import Banner from '../../components/Main/Home/Banner'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import HomeButton from '../../components/Main/Home/HomeButton'
-
+import Splash from '../../components/Main/Loading/Splash';
 
 const HomeScreen = () => {
   const logo = require('../../assets/image/acent.png');
   const top = getStatusBarHeight() + 20;
 
+  const [splash, setSplash] = useState(true);
+  
   const image1 = require('../../assets/image/Popular/5.jpg');
   const image2 = require('../../assets/image/Popular/6.jpg');
   const image3 = require('../../assets/image/Popular/9.jpg');
   const image4 = require('../../assets/image/Popular/16.jpg');
   const image5 = require('../../assets/image/Popular/18.jpg');
+
+  // FIXME 추후 로그인으로 이동
+  if (splash) {
+    return (
+      <Splash setSplash={setSplash} />
+    )
+  }
 
   return (
     <View style={{width: '100%', height: '100%', position: 'relative'}}>
@@ -32,7 +41,7 @@ const HomeScreen = () => {
         <View>
           <AppText style={{margin: 20, fontSize: 16}}>최근 가장 인기있는 작품 컬렉션</AppText>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-              <View style={{ flexDirection: 'row', marginLeft: 20}}>
+              <View style={{ flexDirection: 'row', marginLeft: 20, marginRight: 20}}>
                   <Image source={image4} style={{width: 160, height: 200, borderRadius: 20, marginRight: 20}} />
                   <Image source={image1} style={{width: 160, height: 200, borderRadius: 20, marginRight: 20}} />
                   <Image source={image2} style={{width: 160, height: 200, borderRadius: 20, marginRight: 20}} />

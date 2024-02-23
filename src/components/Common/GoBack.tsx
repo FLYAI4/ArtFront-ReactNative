@@ -5,7 +5,6 @@ import theme from '../../../theme'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { getStatusBarHeight } from 'rn-statusbar-height'
-import NextPage from './NextPage'
 
 type GoBackProps = {
     cocoa?: boolean

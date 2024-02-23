@@ -1,22 +1,34 @@
-import {  Image, Button, View, Text, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, } from 'react-native'
-import React,  { useEffect, useState, useRef }  from 'react'
+import {  Image, View, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, Platform, } from 'react-native'
+import React, { useEffect, useState, useRef }  from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
 import { useRecoilValue } from 'recoil';
-import { treeContent } from '../../../constants/imageInfo';
 import SoundPlayer from 'react-native-sound-player'
 import { useIsFocused } from '@react-navigation/native';
 import AppText from '../../Common/Text/AppText';
 import * as Progress from 'react-native-progress';
 import theme from '../../../../theme';
 import Feather from 'react-native-vector-icons/Feather'
+import RNFetchBlob from 'rn-fetch-blob';
+import { useQuery } from 'react-query';
+import { getContentText } from '../../../api/contents';
 
 const Contents = () => {
+    const { data, isLoading, isError } = useQuery('contentText', getContentText);
+    const [content, setContent] = useState('');
+    const [audio, setAudio] = useState('');
+
+    useEffect(()=>{
+      if (data && data.data) {
+        setContent(data.data.text_content);
+        setAudio(data.data.audio_content);
+      }
+      
+    }, [data])
+
     const uri = useRecoilValue(uriSelector);
     const originalWidth = useRecoilValue(widthSelector);
     const originalHeight = useRecoilValue(heightSelector);
-
-    const content = treeContent
 
     const screenWidth = Dimensions.get('window').width;
     const ratio = 1.0;
@@ -44,19 +56,21 @@ const Contents = () => {
     }, [isFocused, isEnd]);
 
     const scrollView = async () => {
-        if (isEnd && !play) {
-            return;
-        }
-        
-        if (scrollViewRef.current) {
-            const { duration } = await SoundPlayer.getInfo();
-            setDurationTime(duration);
+      if (isEnd && !play) {
+          return;
+      }
+      
+      if (scrollViewRef.current) {
+        const info = await SoundPlayer.getInfo();
+        if (info && info.duration) {
+            setDurationTime(info.duration);
 
-            const scrollY = (currentTime / durationTime) * height - 10
+            const scrollY = (currentTime / durationTime) * height - 30
             const scrollPosition = (scrollY > 0) ? scrollY : 0;
             scrollViewRef.current.scrollTo({ y:scrollPosition, animated: false });
         }
-    }
+      }
+  }
 
     useEffect(()=>{
         scrollView() 
@@ -64,15 +78,13 @@ const Contents = () => {
             setProgressTime(currentTime / durationTime);
         }
         
-    }, [play, currentTime]);
+    }, [play, currentTime, durationTime]);
 
     useEffect(()=>{
         const playSound = async () => {
-            try {
-                SoundPlayer.loadSoundFile('main', 'mp3')
-            } catch (e) {
-                console.log('사운드 파일 재생 오류', e)
-            }
+          const filePath = Platform.OS === 'ios' ? `${RNFetchBlob.fs.dirs.DocumentDir}/temp.mp3` : 'temp.mp3';
+          await RNFetchBlob.fs.writeFile(filePath, audio, 'base64');
+          SoundPlayer.loadSoundFile('temp', 'mp3');
         }
 
         playSound();
@@ -84,19 +96,11 @@ const Contents = () => {
             }
         });
 
-    // SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
-    //   console.log('finished loading', success)
-    // });
-
-    // SoundPlayer.addEventListener('FinishedLoadingFile', ({ success }) => {
-    //   console.log('finished loading file', success)
-    // });
-
     return () => {
       setPlay(false);
       SoundPlayer.pause();
     };
-  }, []);
+  }, [audio]);
 
   const onClickButton = () => {
     !play ? SoundPlayer.play() : SoundPlayer.pause()
@@ -105,12 +109,8 @@ const Contents = () => {
 
   useEffect(()=>{
     const updateCurrentTime = async () => {
-      try { 
-        const { currentTime } = await SoundPlayer.getInfo();
-        setCurrentTime(currentTime);
-      } catch (error) {
-        console.log(`currentTime error`, error);
-      }
+      const { currentTime } = await SoundPlayer.getInfo();
+      setCurrentTime(currentTime);
     };
 
     const interval = setInterval(updateCurrentTime, 100);
@@ -120,34 +120,47 @@ const Contents = () => {
     }
   });
 
+  if (isLoading  || !data?.data || !data.data.text_content) {
+    return (
+      <Image source={require('../../../assets/image/loading.png')} style={{ zIndex: 1, width: '100%', height: '100%'}} resizeMode='cover' />
+    )
+  }
+
+  if (isError) {
+    return <AppText>Error</AppText>
+  } 
+
+
   return (
-    <SafeAreaView>
-      <GestureHandlerRootView>
-        <View  style={{  zIndex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
-            <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
-            <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
-                <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-                    <Progress.Bar progress={progressTime} width={resizeWidth-75} height={15} color={theme.cocoa}/>
-                </View>
-                
-                <TouchableOpacity onPress={onClickButton}>
-                    <Feather name={play ? 'pause' : 'play'} size={35} color={theme.cocoa}/>
-                </TouchableOpacity>
+    <>
+      <SafeAreaView>
+        <GestureHandlerRootView>
+          <View  style={{  zIndex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
+              <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
+              <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
+                  <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+                      <Progress.Bar progress={progressTime} width={resizeWidth-75} height={15} color={theme.cocoa}/>
+                  </View>
+                  
+                  <TouchableOpacity onPress={onClickButton}>
+                      <Feather name={play ? 'pause' : 'play'} size={35} color={theme.cocoa}/>
+                  </TouchableOpacity>
+              </View>
+              <View> 
+                  <ScrollView 
+                  ref={scrollViewRef}
+                  contentContainerStyle={{ width: resizeWidth-40, height: content.length*2 + 400, }} 
+                  showsVerticalScrollIndicator={false}
+                  keyboardShouldPersistTaps="handled"
+                  >
+                  <AppText style={{ color: theme.olive, fontSize: 16 }} onLayout={measureTextLayout}>{content}</AppText>
+              </ScrollView>
             </View>
-            <View> 
-                <ScrollView 
-                ref={scrollViewRef}
-                contentContainerStyle={{ width: resizeWidth-40, height: 830}} 
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-                >
-                <AppText style={{ fontSize: 16 }} onLayout={measureTextLayout}>{content}</AppText>
-            </ScrollView>
           </View>
-        </View>
-        
-      </GestureHandlerRootView>
-    </SafeAreaView>
+          
+        </GestureHandlerRootView>
+      </SafeAreaView>
+    </>
   )
 }
 

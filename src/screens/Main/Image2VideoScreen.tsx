@@ -1,5 +1,5 @@
-import { View, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { View, TouchableOpacity, Dimensions, Image } from 'react-native'
+import React, { useState } from 'react'
 import Video from 'react-native-video';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { heightSelector, uriSelector, widthSelector } from '../../recoil/selector';
@@ -10,7 +10,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getStatusBarHeight } from 'rn-statusbar-height';
 import NextPage from '../../components/Common/NextPage';
 import VideoShare from '../../components/Main/Video/VideoShare';
-// import OpenCV from '../../components/Main/Loading/OpenCV';
 
 const Image2VideoScreen = () => {
   const video = require('../../assets/video/18.mp4');
