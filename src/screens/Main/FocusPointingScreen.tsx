@@ -1,6 +1,5 @@
 import { SafeAreaView, View } from 'react-native'
 import React from 'react'
-import Header from '../../components/Common/Header'
 import Coordinates from '../../components/Main/FocusPointing/Coordinates'
 import GoBack from '../../components/Common/GoBack'
 import NextPage from '../../components/Common/NextPage'

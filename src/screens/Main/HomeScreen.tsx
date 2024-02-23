@@ -9,16 +9,14 @@ import HomeButton from '../../components/Main/Home/HomeButton'
 
 
 const HomeScreen = () => {
-    const logo = require('../../assets/image/acent.png');
-    const top = getStatusBarHeight() + 20;
+  const logo = require('../../assets/image/acent.png');
+  const top = getStatusBarHeight() + 20;
 
-    const image1 = require('../../assets/image/Popular/5.jpg');
-    const image2 = require('../../assets/image/Popular/6.jpg');
-    const image3 = require('../../assets/image/Popular/9.jpg');
-    const image4 = require('../../assets/image/Popular/16.jpg');
-    const image5 = require('../../assets/image/Popular/18.jpg');
-
-    const navigation = useNavigation
+  const image1 = require('../../assets/image/Popular/5.jpg');
+  const image2 = require('../../assets/image/Popular/6.jpg');
+  const image3 = require('../../assets/image/Popular/9.jpg');
+  const image4 = require('../../assets/image/Popular/16.jpg');
+  const image5 = require('../../assets/image/Popular/18.jpg');
 
   return (
     <View style={{width: '100%', height: '100%', position: 'relative'}}>

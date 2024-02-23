@@ -12,7 +12,7 @@ type NextPageProps = {
 const NextPage = ({nextPage}:NextPageProps) => {
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
-    if (nextPage !== 'NDescriptionScreen') {
+    if (nextPage !== 'DescriptionScreen') {
         return (
             <TouchableOpacity 
                 style={{zIndex: 1, position: 'absolute', bottom: 20, right: 20}}

@@ -28,7 +28,7 @@ const Banner = () => {
 
         <TouchableOpacity onPress={()=>handleImagePress('https://www.skttechacademy.com/')}>
           <View>
-            <Image source={banner1} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+            <Image source={banner2} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
           </View>
         </TouchableOpacity>
 

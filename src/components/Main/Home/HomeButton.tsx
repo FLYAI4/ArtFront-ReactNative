@@ -44,7 +44,7 @@ const HomeButton = () => {
         }
         setSelectedImageUri(res.assets[0].uri);
         console.log('PickImage', res);
-        navigation.push('NDescriptionScreen')
+        navigation.push('DescriptionScreen')
     };
 
     useEffect(()=>{
