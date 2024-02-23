@@ -32,7 +32,7 @@ const HomeScreen = () => {
         </View>
 
         <View>
-          <AppText style={{margin: 20, fontSize: 16}}>최근 가장 인기 많은 작품 컬렉션</AppText>
+          <AppText style={{margin: 20, fontSize: 16}}>최근 가장 인기있는 작품 컬렉션</AppText>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <View style={{ flexDirection: 'row', marginLeft: 20}}>
                   <Image source={image4} style={{width: 160, height: 200, borderRadius: 20, marginRight: 20}} />
