@@ -145,7 +145,7 @@ const Coordinates = () => {
               {renderBoundingBoxes()}              
               <View style={{ marginHorizontal: 20, marginTop: 20}} >
                 <AppText style={{color: theme.olive, fontSize: 28, fontWeight: 600, marginBottom: 20 }}>{removeUnderScore({keyword: keyword})}</AppText>
-                <ScrollView style={{ height: 500 }}>
+                <ScrollView style={{ height: 600, width: screenWidth-90}}>
                   <AppText style={{ color: theme.olive, fontSize: 16}}>{context}</AppText>
                 </ScrollView>
               </View>

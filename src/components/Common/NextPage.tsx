@@ -4,6 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import theme from '../../../theme'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import SoundPlayer from 'react-native-sound-player'
 
 type NextPageProps = {
     nextPage: string;
@@ -11,6 +12,10 @@ type NextPageProps = {
 
 const NextPage = ({nextPage}:NextPageProps) => {
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
+    if (nextPage === 'Image2VideoScreen') {
+        SoundPlayer.pause();
+    }
 
     if (nextPage !== 'DescriptionScreen') {
         return (

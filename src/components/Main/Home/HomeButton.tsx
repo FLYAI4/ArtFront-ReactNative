@@ -85,7 +85,7 @@ const HomeButton = () => {
     <View style={{ width: '100%', position: 'absolute', bottom: 43, left: 0, right: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center',}}>
         <TouchableOpacity onPress={modalOpen}>
             <View style={{ borderRadius: 55, overflow: 'hidden', borderWidth: 2, borderColor: theme.olive, }}>
-                <AppText style={{ width: 350, padding: 20,  backgroundColor: theme.olive, color: theme.backgroundWhite, fontWeight: '600', fontSize: 24, textAlign: 'center', }}>작품2 감상하러 가기</AppText>
+                <AppText style={{ width: 350, padding: 15,  backgroundColor: theme.olive, color: theme.backgroundWhite, fontWeight: '600', fontSize: 24, textAlign: 'center', }}>작품 감상하러 가기</AppText>
             </View>
         </TouchableOpacity>
         <UploadModeModal
