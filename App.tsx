@@ -10,6 +10,7 @@ import { RecoilRoot } from 'recoil';
 import ScanImage from './src/components/Main/Crop/ScanImage';
 import NDescriptionScreen from './src/screens/Main/NDescriptionScreen';
 import ReviewScreen from './src/screens/Main/ReviewScreen';
+import HomeScreen from './src/screens/Main/HomeScreen';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -21,6 +22,8 @@ const App = () => {
           {/* <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />
            */}
+
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="MainScreen" component={MainScreen} />
           <Stack.Screen name="ScanImage" component={ScanImage} /> 
           <Stack.Screen name='NDescriptionScreen' component={NDescriptionScreen} />
