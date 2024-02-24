@@ -1,14 +1,16 @@
 import { View, TextInput, Button, Text, Platform, Alert, ToastAndroid, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native';
-import Header from '../../components/Common/Header';
+// import Header from '../../components/Common/Header';
 import TextInputBox from '../../components/User/TextInputBox';
 import PasswordInputBox from '../../components/User/PasswordInputBox';
 import GenderSelectBox from '../../components/User/GenderSelectBox';
 import AgeSelectBox from '../../components/User/AgeSelectBox';
 import AgreeBox from '../../components/User/AgreeBox';
+import { getStatusBarHeight } from 'rn-statusbar-height';
+import theme from '../../../theme';
 
-const Signup = () => {
+const SignupScreen = () => {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +23,8 @@ const Signup = () => {
 
   const [agree, setAgree] = useState([false, false, false]);
   const [buttonOpacity, setButtonOpacity] = useState(0.2);
+
+  const top = getStatusBarHeight();
 
   useEffect(() => {
     if (name && id && password && passwordCheck && gender && age && agree[0]) {
@@ -70,9 +74,8 @@ const Signup = () => {
   };
 
   return (
-    <>
-    <View style={{backgroundColor: '#ffffff', width: '100%', height: '100%'}}>
-      <Header nextPage='HomeScreen'/>
+    <View style={{backgroundColor: theme.backgroundWhite}}>
+    <View style={{ width: '100%', height: 'auto', marginTop: top}}>
       <ScrollView>
         <View style={{display: 'flex', flexDirection: 'column',marginTop:20,  marginLeft: 20, marginRight: 20}}>
           <View style={{marginBottom: 13}}>
@@ -81,7 +84,7 @@ const Signup = () => {
           </View>
 
           <TextInputBox text="닉네임" value={name} setValue={setName} />
-          <TextInputBox text="이메일" placeholder="artvisionxperience@gmail.com" value={id} setValue={setId} />
+          <TextInputBox text="이메일" placeholder="acent@gmail.com" value={id} setValue={setId} />
           <PasswordInputBox text="비밀번호" placeholder='6-12 자의 비밀번호 입력' value={password} setValue={setPassword} />
           <PasswordInputBox text="비밀번호" placeholder='6-12 자의 비밀번호 입력' value={passwordCheck} setValue={setPasswordCheck} />
           <GenderSelectBox setValue={setAge} selectedOption={selectedGenderOption} setSelectedOption={setSelectedGenderOption} />
@@ -89,16 +92,16 @@ const Signup = () => {
 
           <AgreeBox agree={agree} setAgree={setAgree} />
 
-          <TouchableOpacity style={{marginTop: 24, marginBottom: 27, borderRadius: 8, backgroundColor: '#333333', padding: 16, opacity: buttonOpacity, pointerEvents: buttonOpacity === 0.2 ? 'none' : 'auto',}} onPress={handleSubmit}>
+          <TouchableOpacity style={{marginTop: 24, marginBottom: 27, borderRadius: 8, backgroundColor: theme.cocoa, padding: 16, opacity: buttonOpacity, pointerEvents: buttonOpacity === 0.2 ? 'none' : 'auto',}} onPress={handleSubmit}>
             <Text style={{textAlign: 'center', width: '100%', fontSize: 18, color: '#FFFFFF'}}>회원가입</Text>
           </TouchableOpacity>
           
         </View>
       </ScrollView>
       </View>
-    </>
+    </View>
     
   )
 }
 
-export default Signup
+export default SignupScreen

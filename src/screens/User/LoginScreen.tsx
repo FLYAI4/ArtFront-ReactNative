@@ -7,14 +7,14 @@ import type {StackNavigationProp} from '@react-navigation/stack';
 import Splash from '../../components/Main/Loading/Splash';
 import AppText from '../../components/Common/Text/AppText';
 
-const Login = () => {
+const LoginScreen = () => {
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   
   const [splash, setSplash] = useState(true);
 
-  const logoSource = require('../../assets/image/logo-full-dark.png')
+  const logoSource = require('../../assets/image/acent.png')
 
   const handleLogin = () => {
     // if (Platform.OS === 'android') {
@@ -28,11 +28,11 @@ const Login = () => {
     setPassword('')
   }
 
-  if (splash) {
-    return (
-      <Splash setSplash={setSplash} />
-    )
-  }
+  // if (splash) {
+  //   return (
+  //     <Splash setSplash={setSplash} />
+  //   )
+  // }
 
   return (
     <View style={{ width:'100%', height:'100%', backgroundColor: 'black', display: 'flex', alignItems: 'center' }}>
@@ -50,7 +50,7 @@ const Login = () => {
 
         <TouchableOpacity 
           style={{marginTop: 17, borderRadius: 8, borderWidth: 1, borderColor: 'white', backgroundColor: 'white', padding: 16}} 
-          onPress={()=> navigation.push('Signup')}
+          onPress={()=> navigation.push('SignupScreen')}
           >
           <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>회원가입</Text>
         </TouchableOpacity>
@@ -59,4 +59,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginScreen

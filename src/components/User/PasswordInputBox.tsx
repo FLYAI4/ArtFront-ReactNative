@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import React, { useState } from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
+import theme from '../../../theme';
 
 export type PasswordInputBoxProps = {
   text: string;
@@ -23,7 +24,7 @@ const PasswordInputBox = ({text, placeholder, value, setValue}: PasswordInputBox
       <View>
         <TextInput 
           secureTextEntry={!showPassword} placeholder={placeholder || text} 
-          style={{ color: 'white', borderWidth: 1, borderColor: isFocused ? '#CECECE' : 'gray' , borderRadius: 8, padding: 13}}
+          style={{ color: theme.cocoa, borderWidth: 1, borderColor: isFocused ? theme.cocoa : 'lightgray' , borderRadius: 8, padding: 13}}
           value={value}
           onChangeText={setValue}
           onFocus={()=>setIsFocused(true)}

@@ -20,13 +20,6 @@ const HomeScreen = () => {
   const image4 = require('../../assets/image/Popular/16.jpg');
   const image5 = require('../../assets/image/Popular/18.jpg');
 
-  // FIXME 추후 로그인으로 이동
-  if (splash) {
-    return (
-      <Splash setSplash={setSplash} />
-    )
-  }
-
   return (
     <View style={{width: '100%', height: '100%', position: 'relative'}}>
       <ScrollView style={{backgroundColor: theme.backgroundWhite}}>
