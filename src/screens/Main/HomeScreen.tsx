@@ -1,18 +1,14 @@
 import { View, Image, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AppText from '../../components/Common/Text/AppText'
 import { getStatusBarHeight } from 'rn-statusbar-height'
 import theme from '../../../theme'
 import Banner from '../../components/Main/Home/Banner'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
 import HomeButton from '../../components/Main/Home/HomeButton'
-import Splash from '../../components/Main/Loading/Splash';
 
 const HomeScreen = () => {
   const logo = require('../../assets/image/acent.png');
   const top = getStatusBarHeight() + 20;
-
-  const [splash, setSplash] = useState(true);
   
   const image1 = require('../../assets/image/Popular/5.jpg');
   const image2 = require('../../assets/image/Popular/6.jpg');

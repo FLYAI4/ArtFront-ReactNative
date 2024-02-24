@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native';
+import React, { useEffect } from 'react'
 import Video from 'react-native-video';
 
 type SplashProps = {
@@ -7,15 +6,15 @@ type SplashProps = {
 }
 
 const Splash = ({setSplash}: SplashProps) => {
-    const splashScreen = require('../../../assets/video/splash.mp4');
+  const splashScreen = require('../../../assets/video/splash.mp4');
 
-    useEffect(()=>{
-        const timer = setTimeout(()=>{
-          setSplash(false);
-        }, 4000);
+  useEffect(()=>{
+      const timer = setTimeout(()=>{
+        setSplash(false);
+      }, 4000);
 
-    return ()=>clearTimeout(timer);
-    }, []);
+  return ()=>clearTimeout(timer);
+  }, []);
 
   return (
     <Video 

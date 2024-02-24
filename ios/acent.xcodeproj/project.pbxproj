@@ -17,8 +17,6 @@
 		7E917096055845F5ADDDECDA /* NanumMyeongjo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFB460E37E084202B05DCE0D /* NanumMyeongjo-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84CD9934E699414D970A45E3 /* NanumMyeongjo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D52A50ABD47447184A1D418 /* NanumMyeongjo-Bold.ttf */; };
-		BF03391C2B80928800577D62 /* main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BF03391B2B80928800577D62 /* main.mp3 */; };
-		BFF4721A2B88B6A2001D1FA2 /* main_content.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BFF472192B88B6A2001D1FA2 /* main_content.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,9 +48,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-acent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-acent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = acent/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-acent-acentTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-acent-acentTests.release.xcconfig"; path = "Target Support Files/Pods-acent-acentTests/Pods-acent-acentTests.release.xcconfig"; sourceTree = "<group>"; };
-		BF03391B2B80928800577D62 /* main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = main.mp3; path = ../src/assets/audio/main.mp3; sourceTree = "<group>"; };
 		BFB460E37E084202B05DCE0D /* NanumMyeongjo-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NanumMyeongjo-Regular.ttf"; path = "../src/assets/fonts/NanumMyeongjo-Regular.ttf"; sourceTree = "<group>"; };
-		BFF472192B88B6A2001D1FA2 /* main_content.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = main_content.mp3; path = ../../../Downloads/main_content.mp3; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -96,8 +92,6 @@
 		13B07FAE1A68108700A75B9A /* acent */ = {
 			isa = PBXGroup;
 			children = (
-				BFF472192B88B6A2001D1FA2 /* main_content.mp3 */,
-				BF03391B2B80928800577D62 /* main.mp3 */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -222,7 +216,8 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1210;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -266,8 +261,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				BF03391C2B80928800577D62 /* main.mp3 in Resources */,
-				BFF4721A2B88B6A2001D1FA2 /* main_content.mp3 in Resources */,
 				84CD9934E699414D970A45E3 /* NanumMyeongjo-Bold.ttf in Resources */,
 				6BF50B82B01743D4B871CFC8 /* NanumMyeongjo-ExtraBold.ttf in Resources */,
 				7E917096055845F5ADDDECDA /* NanumMyeongjo-Regular.ttf in Resources */,
@@ -440,6 +433,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-acent-acentTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -467,6 +461,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-acent-acentTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = acentTests/Info.plist;
@@ -498,6 +493,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = acent/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = acent;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -526,6 +522,7 @@
 				DEVELOPMENT_TEAM = 7NLNJ9YV87;
 				INFOPLIST_FILE = acent/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = acent;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -576,6 +573,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -592,7 +590,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -656,6 +654,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -665,7 +664,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
