@@ -5,7 +5,7 @@ import SignupScreen from './src/screens/User/SignupScreen'
 import DescriptionScreen from './src/screens/Main/DescriptionScreen';
 import FocusPointingScreen from './src/screens/Main/FocusPointingScreen';
 import Image2VideoScreen from './src/screens/Main/Image2VideoScreen';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilState } from 'recoil';
 import ReviewScreen from './src/screens/Main/ReviewScreen';
 import HomeScreen from './src/screens/Main/HomeScreen';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -21,6 +21,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
+
             <Stack.Screen name="StartScreen" component={StartScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
