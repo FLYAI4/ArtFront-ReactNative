@@ -17,12 +17,6 @@ const LoginScreen = () => {
   const logoSource = require('../../assets/image/acent.png')
 
   const handleLogin = () => {
-    // if (Platform.OS === 'android') {
-    //   ToastAndroid.show(id, ToastAndroid.SHORT);
-    // } else {
-    //   Alert.alert(id);
-    // }
-
     navigation.push('HomeScreen');
     setId('');
     setPassword('')

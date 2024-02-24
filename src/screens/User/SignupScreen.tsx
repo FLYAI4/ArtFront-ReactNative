@@ -1,7 +1,6 @@
 import { View, TextInput, Button, Text, Platform, Alert, ToastAndroid, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native';
-// import Header from '../../components/Common/Header';
 import TextInputBox from '../../components/User/TextInputBox';
 import PasswordInputBox from '../../components/User/PasswordInputBox';
 import GenderSelectBox from '../../components/User/GenderSelectBox';
@@ -9,6 +8,10 @@ import AgeSelectBox from '../../components/User/AgeSelectBox';
 import AgreeBox from '../../components/User/AgreeBox';
 import { getStatusBarHeight } from 'rn-statusbar-height';
 import theme from '../../../theme';
+import { useMutation } from 'react-query';
+import axios from 'axios';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const SignupScreen = () => {
   const [name, setName] = useState("");
@@ -25,6 +28,7 @@ const SignupScreen = () => {
   const [buttonOpacity, setButtonOpacity] = useState(0.2);
 
   const top = getStatusBarHeight();
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   useEffect(() => {
     if (name && id && password && passwordCheck && gender && age && agree[0]) {
@@ -34,8 +38,27 @@ const SignupScreen = () => {
     }
   }, [name, id, password, passwordCheck, gender, age, agree[0]]);
 
+  const signupMutation = useMutation(async () => {
+    const data = {
+      id: id,
+      password: password,
+      name: name,
+      gender: gender,
+      age: age
+    };
+
+    const response = await axios.post(`${process.env.BASE_URL}/account/signup`, data);
+    if (response.status === 401) {
+      Alert.alert('이미 가입하신 이메일입니다.')
+    } else if (response.status !== 200) {
+      Alert.alert('회원가입에 실패하셨습니다.')
+    }
+
+    return { data: response.data, status: response.status } ;
+  })
+
   // TODO 서버에 전송하는 함수로 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!id.includes('@') || !/^[a-zA-Z0-9@.]+$/.test(id)) {
       Alert.alert('이메일 형식이 올바르지 않습니다. 이메일 주소를 다시 확인해주세요.');
       return;
@@ -56,10 +79,11 @@ const SignupScreen = () => {
       return;
     }
 
-    if (Platform.OS === 'android') {
-      ToastAndroid.show(id, ToastAndroid.SHORT);
-    } else {
+    const response = await signupMutation.mutateAsync();
+    
+    if (response.status === 200) {
       Alert.alert(`${name}님 회원가입이 성공적으로 완료되었습니다!`);
+      navigation.push('LoginScreen');
     }
 
     setName("");
