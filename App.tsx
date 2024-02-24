@@ -10,6 +10,7 @@ import ReviewScreen from './src/screens/Main/ReviewScreen';
 import HomeScreen from './src/screens/Main/HomeScreen';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import StartScreen from './src/screens/User/StartScreen';
+import ScanImage from './src/components/Main/Crop/ScanImage';
 
 const queryClient = new QueryClient();
 
@@ -21,12 +22,12 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
-
-            <Stack.Screen name="StartScreen" component={StartScreen} />
+            {/* <Stack.Screen name="StartScreen" component={StartScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="SignupScreen" component={SignupScreen} />
+            <Stack.Screen name="SignupScreen" component={SignupScreen} /> */}
 
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="ScanImage" component={ScanImage} />
             <Stack.Screen name='DescriptionScreen' component={DescriptionScreen} />
             <Stack.Screen name="FocusPointingScreen" component={FocusPointingScreen} />
             <Stack.Screen name="Image2VideoScreen" component={Image2VideoScreen} />

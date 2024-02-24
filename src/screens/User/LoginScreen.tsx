@@ -4,8 +4,6 @@ import TextInputBox from '../../components/User/TextInputBox'
 import PasswordInputBox from '../../components/User/PasswordInputBox'
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import type {StackNavigationProp} from '@react-navigation/stack';
-import Splash from '../../components/Main/Loading/Splash';
-import AppText from '../../components/Common/Text/AppText';
 import theme from '../../../theme';
 import { useMutation } from 'react-query';
 import axios from 'axios';

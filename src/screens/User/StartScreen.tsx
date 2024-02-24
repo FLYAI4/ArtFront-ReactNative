@@ -1,12 +1,16 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Image, TouchableOpacity } from 'react-native'
+import React, {useState} from 'react'
 import AppText from '../../components/Common/Text/AppText'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import theme from '../../../theme'
+import Splash from '../../components/Main/Loading/Splash'
 
-const Start = () => {
+const StartScreen = () => {
+    const [splash, setSplash] = useState(true);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+    const imageSource = require('../../assets/image/landing.png');
 
     const handleNavigation = async () => {
       const userInfo = await AsyncStorage.getItem('userData');
@@ -18,14 +22,25 @@ const Start = () => {
       }
     }
 
+    if (splash) {
+      return (<Splash setSplash={setSplash} />)
+    }
+
   return (
-    <View>
-      <Text>Start</Text>
-      <TouchableOpacity onPress={handleNavigation} style={{marginTop:300}}>
-        <AppText>갤러리 방문하기</AppText>
+    <View style={{backgroundColor: theme.backgroundWhite, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <Image source={imageSource} style={{width: 250, height: 400, resizeMode: 'contain'}} />
+      
+      <View style={{marginVertical:40, display: 'flex', alignItems: 'center'}}>
+        <AppText style={{fontSize: 40, color: theme.olive, fontWeight: '700', marginBottom: 8, }}>Acent</AppText>
+        <AppText style={{fontSize: 16, color: theme.olive}}>당신만의 AI 도슨트를 만나보세요</AppText>
+      </View>
+      <TouchableOpacity onPress={handleNavigation}>
+          <View style={{borderRadius: 55, overflow: 'hidden'}}>
+              <AppText style={{ width: 'auto', paddingVertical: 12, paddingHorizontal:40, backgroundColor: theme.olive, color: theme.backgroundWhite, fontWeight: '600', fontSize: 20, textAlign: 'center', }}>갤러리 방문하기</AppText>
+          </View>
       </TouchableOpacity>
     </View>
   )
 }
 
-export default Start
+export default StartScreen
