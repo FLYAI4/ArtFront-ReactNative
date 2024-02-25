@@ -25,6 +25,7 @@ const Contents = () => {
       }
       
     }, [data])
+    // const content = treeContent
 
     const uri = useRecoilValue(uriSelector);
     const originalWidth = useRecoilValue(widthSelector);

@@ -17,6 +17,8 @@
 		7E917096055845F5ADDDECDA /* NanumMyeongjo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFB460E37E084202B05DCE0D /* NanumMyeongjo-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84CD9934E699414D970A45E3 /* NanumMyeongjo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D52A50ABD47447184A1D418 /* NanumMyeongjo-Bold.ttf */; };
+		BF9D05542B8B62A700AB1705 /* main_content.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BF9D05532B8B62A700AB1705 /* main_content.mp3 */; };
+		BF9D05552B8B62A700AB1705 /* main_content.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BF9D05532B8B62A700AB1705 /* main_content.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-acent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-acent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = acent/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-acent-acentTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-acent-acentTests.release.xcconfig"; path = "Target Support Files/Pods-acent-acentTests/Pods-acent-acentTests.release.xcconfig"; sourceTree = "<group>"; };
+		BF9D05532B8B62A700AB1705 /* main_content.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main_content.mp3; sourceTree = "<group>"; };
 		BFB460E37E084202B05DCE0D /* NanumMyeongjo-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NanumMyeongjo-Regular.ttf"; path = "../src/assets/fonts/NanumMyeongjo-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -132,6 +135,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BF9D05532B8B62A700AB1705 /* main_content.mp3 */,
 				13B07FAE1A68108700A75B9A /* acent */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* acentTests */,
@@ -252,6 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF9D05552B8B62A700AB1705 /* main_content.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				BF9D05542B8B62A700AB1705 /* main_content.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				84CD9934E699414D970A45E3 /* NanumMyeongjo-Bold.ttf in Resources */,
 				6BF50B82B01743D4B871CFC8 /* NanumMyeongjo-ExtraBold.ttf in Resources */,

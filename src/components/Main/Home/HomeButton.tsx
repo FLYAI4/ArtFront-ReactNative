@@ -23,16 +23,13 @@ const HomeButton = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
-    const originalWidth = width;
-    const originalHeight = height;
-
     const [image, setImage] = useRecoilState(imageState);
     const handleImageChange = () => {
       if (selectedImageUri) {
         setImage({
           uri: selectedImageUri,
-          width: originalWidth,
-          height: originalHeight
+          width: 510,
+          height: 680
         })
       }
     }

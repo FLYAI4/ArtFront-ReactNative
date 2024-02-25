@@ -11,11 +11,13 @@ import HomeScreen from './src/screens/Main/HomeScreen';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import StartScreen from './src/screens/User/StartScreen';
 import ScanImage from './src/components/Main/Crop/ScanImage';
+import { LogBox } from 'react-native';
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const Stack = createNativeStackNavigator();
+  LogBox.ignoreAllLogs();
 
   return (
     <RecoilRoot>
@@ -23,8 +25,8 @@ const App = () => {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="StartScreen" component={StartScreen} />
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="SignupScreen" component={SignupScreen} />
+            {/* <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="SignupScreen" component={SignupScreen} /> */}
 
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="ScanImage" component={ScanImage} />
