@@ -39,22 +39,29 @@ const SignupScreen = () => {
   }, [name, id, password, passwordCheck, gender, age, agree[0]]);
 
   const signupMutation = useMutation(async () => {
-    const data = {
-      id: id,
-      password: password,
-      name: name,
-      gender: gender,
-      age: age
-    };
+    try {
+      const data = {
+        id: id,
+        password: password,
+        name: name,
+        gender: gender,
+        age: age
+      };
 
-    const response = await axios.post(`${process.env.BASE_URL}/account/signup`, data);
-    if (response.status === 401) {
-      Alert.alert('이미 가입하신 이메일입니다.')
-    } else if (response.status !== 200) {
-      Alert.alert('회원가입에 실패하셨습니다.')
+      const response = await axios.post(`${process.env.BASE_URL}/account/signup`, data);
+
+      if (response.status === 401) {
+        Alert.alert('이미 가입하신 이메일입니다.');
+      } else if (response.status !== 200) {
+        Alert.alert('회원가입에 실패하셨습니다.');
+      }
+
+      return { data: response.data, status: response.status };
+    } catch (error) {
+      console.error(error);
+      Alert.alert(`${error}, API 호출 중에 오류가 발생했습니다.`);
+      throw error;
     }
-
-    return { data: response.data, status: response.status } ;
   })
 
   // TODO 서버에 전송하는 함수로 
