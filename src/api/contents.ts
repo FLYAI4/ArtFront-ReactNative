@@ -1,25 +1,42 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const BASE_URL = process.env.BASE_URL 
 
 export const getContentText = async () => {
-  const response = await fetch(`${BASE_URL}/user/content/text/demo?generated_id=demo`, {
-    headers: {
-      'id': '1',
-      'token': '1'
-    }
-  });
+  const userData = await AsyncStorage.getItem('userData');
+  if (userData !== null) {
+    const userInfo = JSON.parse(userData);
 
-  const data = await response.json();
-  return data;
+    const response = await fetch(`${process.env.BASE_URL}/user/content`, {
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'id': userInfo.id,
+        'generated-id': '4.jpg',
+        'token': userInfo.token
+      }
+    });
+
+    const data = await response.json();
+    return data;
+  }
 }
 
 export const getContentCoord = async () => {
-  const response = await fetch(`${BASE_URL}/user/content/coord/demo?generated_id=demo`, {
-    headers: {
-      'id': '1',
-      'token': '1'
-    }
-  });
+  const userData = await AsyncStorage.getItem('userData');
+  if (userData !== null) {
+    const userInfo = JSON.parse(userData);
+    const response = await fetch(`${BASE_URL}/user/content/coord`, {
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'id': userInfo.id,
+        'generated-id': '4.jpg',
+        'token': userInfo.token
+      }
+    });
 
-  const data = await response.json();
-  return data;
+    const data = await response.json();
+    return data;
+  }
 }

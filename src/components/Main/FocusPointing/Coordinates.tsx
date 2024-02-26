@@ -12,8 +12,8 @@ import { getContentCoord } from '../../../api/contents';
 
 type Dict = {
   [key: string]: {
-    내용: string;
-    좌표: number[];
+    content: string;
+    coord: number[];
   }
 }
 
@@ -22,8 +22,9 @@ const Coordinates = () => {
   const [dict, setDict] = useState<Dict>({});
 
   useEffect(()=>{
-    if (data && data.data) {
-      setDict(data.data)
+    if (data && data.data.coord_content) {
+      setDict(data.data.coord_content)
+      console.log(data.data.coord_content)
     }
   }, [data])
 
@@ -124,14 +125,14 @@ const Coordinates = () => {
   const handleClickBounding = (key: string, coordinates: number[]) => {
     setFocusBox(true);
     setKeyword(key);
-    setContext(dict[key as keyof typeof dict]['내용']); // TODO
+    setContext(dict[key as keyof typeof dict]['content']);
 
     cropImage(coordinates);
   };
 
   const renderBoundingBoxes = () => {
     return Object.keys(dict).map((key: string, index: number) => {
-        const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(dict[key as keyof typeof dict]['좌표']); // TOOD
+      const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(dict[key as keyof typeof dict]['coord']);
         return (
             <TouchableOpacity 
                 key={index}
