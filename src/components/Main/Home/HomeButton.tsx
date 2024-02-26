@@ -9,6 +9,9 @@ import { width, height } from '../../../constants/imageInfo'
 import { useRecoilState } from 'recoil'
 import { imageState } from '../../../recoil/atoms'
 import { launchImageLibrary, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
+import { useMutation } from 'react-query'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
     mediaType: 'photo',
@@ -33,6 +36,20 @@ const HomeButton = () => {
         })
       }
     }
+
+    // const postImage = useMutation(async()=> {
+    //   const userData = await AsyncStorage.getItem('userData');
+    //   if (userData !== null) {
+    //     const userInfo = JSON.parse(userData);
+
+    //     const data = {
+    //       file: image.uri
+    //       // TODO file 형식
+    //     }
+    //     const response = await axios.post(`${process.env.BASE_URL}/user/image`, data);
+    //   }
+      
+    // })
 
     // 선택 사진 또는 촬영된 사진 정보
     const onPickImage = (res: any) => {

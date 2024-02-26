@@ -9,6 +9,7 @@ import AppText from '../../Common/Text/AppText';
 import theme from '../../../../theme';
 import { useQuery } from 'react-query';
 import { getContentCoord } from '../../../api/contents';
+import { infoDict } from '../../../constants/imageInfo';
 
 type Dict = {
   [key: string]: {
@@ -19,14 +20,15 @@ type Dict = {
 
 const Coordinates = () => {
   const { data, isLoading, isError } = useQuery('contentCoord', getContentCoord);
-  const [dict, setDict] = useState<Dict>({});
+  // const [dict, setDict] = useState<Dict>({});
 
-  useEffect(()=>{
-    if (data && data.data.coord_content) {
-      setDict(data.data.coord_content)
-      console.log(data.data.coord_content)
-    }
-  }, [data])
+  // useEffect(()=>{
+  //   if (data && data.data.coord_content) {
+  //     setDict(data.data.coord_content)
+  //     console.log(data.data.coord_content)
+  //   }
+  // }, [data])
+  const dict = infoDict
 
   const uri = useRecoilValue(uriSelector);
   const originalWidth = useRecoilValue(widthSelector);
