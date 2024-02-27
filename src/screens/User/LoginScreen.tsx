@@ -52,8 +52,8 @@ const LoginScreen = () => {
 
   return (
     <View style={{ width:'100%', height:'100%', backgroundColor: theme.backgroundWhite, display: 'flex', alignItems: 'center' }}>
-      <View style={{marginTop: 100, marginBottom: 50} }>
-        <Image source={logoSource} style={{width: 250, height: 200}} resizeMode='contain'/>
+      <View style={{marginTop: 50, marginBottom: 50} }>
+        <Image source={logoSource} style={{width: 200, height: 150}} resizeMode='contain'/>
       </View>
       <View style={{width: '100%', display: 'flex', flexDirection:'column', paddingLeft: 20, paddingRight: 20}}>
         <TextInputBox text="이메일" placeholder="acent@gmail.com" value={id} setValue={setId} />

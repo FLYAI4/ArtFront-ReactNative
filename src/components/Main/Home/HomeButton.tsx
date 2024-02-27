@@ -79,9 +79,8 @@ const HomeButton = () => {
                 generated_id: data.generated_id
               })
             )
-          } 
-          
-          navigation.push('DescriptionScreen')
+            navigation.push('DescriptionScreen')
+          }
           
         } else {
           Alert.alert('Login을 먼저 해주세요!')
@@ -90,10 +89,6 @@ const HomeButton = () => {
 
         return res.assets[0].uri
     };
-
-    useEffect(()=>{
-        onPickImage(res)
-    }, [res])
 
     // 카메라 촬영
     const onLaunchCamera = () => {
