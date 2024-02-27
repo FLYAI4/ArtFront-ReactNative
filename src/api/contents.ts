@@ -31,7 +31,7 @@ export const getContentCoord = async () => {
     const userInfo = JSON.parse(userData)
     const imageInfo = JSON.parse(imageData)
 
-    const response = await fetch(`${process.env.BASE_URL}/user/coord`, {
+    const response = await fetch(`${process.env.BASE_URL}/user/content/coord`, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
