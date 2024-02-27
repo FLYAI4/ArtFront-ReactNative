@@ -1,18 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const BASE_URL = process.env.BASE_URL 
-
-export const getContentText = async () => {
+export const getContent = async () => {
   const userData = await AsyncStorage.getItem('userData');
-  if (userData !== null) {
-    const userInfo = JSON.parse(userData);
+  const imageData = await AsyncStorage.getItem('imageData')
+
+  if (userData !== null && imageData !== null) {
+    const userInfo = JSON.parse(userData)
+    const imageInfo = JSON.parse(imageData)
 
     const response = await fetch(`${process.env.BASE_URL}/user/content`, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'id': userInfo.id,
-        'generated-id': '4.jpg',
+        'generated-id': '4.jpg', // imageInfo
         'token': userInfo.token
       }
     });
@@ -24,14 +25,18 @@ export const getContentText = async () => {
 
 export const getContentCoord = async () => {
   const userData = await AsyncStorage.getItem('userData');
-  if (userData !== null) {
-    const userInfo = JSON.parse(userData);
-    const response = await fetch(`${BASE_URL}/user/content/coord`, {
+  const imageData = await AsyncStorage.getItem('imageData')
+
+  if (userData !== null && imageData !== null) {
+    const userInfo = JSON.parse(userData)
+    const imageInfo = JSON.parse(imageData)
+
+    const response = await fetch(`${process.env.BASE_URL}/user/content/coord`, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'id': userInfo.id,
-        'generated-id': '4.jpg',
+        'generated-id': '4.jpg', // imageInfo
         'token': userInfo.token
       }
     });

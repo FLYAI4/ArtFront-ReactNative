@@ -35,6 +35,17 @@ const LoginScreen = () => {
             token: response.data.token
         })
       )
+
+      setTimeout(()=>{
+        AsyncStorage.mergeItem(
+          'userData',
+          JSON.stringify({
+            id: '',
+            token: ''
+          })
+        )
+      }, 3600000); // 1시간 (3600000 밀리초)
+
       navigation.push('HomeScreen');
     }
   }

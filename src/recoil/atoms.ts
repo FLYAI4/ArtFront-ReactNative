@@ -4,7 +4,7 @@ export const imageState = atom({
   key: 'imageState',
   default: {
     uri: '',
-    width: 0,
-    height: 0,
+    width: 510,
+    height: 680,
   },
 });

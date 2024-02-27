@@ -1,8 +1,8 @@
 import {  Image, View, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, Platform, } from 'react-native'
 import React, { useEffect, useState, useRef }  from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
-import { useRecoilValue } from 'recoil';
+import { heightSelector, widthSelector } from '../../../recoil/selector';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import SoundPlayer from 'react-native-sound-player'
 import { useIsFocused } from '@react-navigation/native';
 import AppText from '../../Common/Text/AppText';
@@ -11,23 +11,38 @@ import theme from '../../../../theme';
 import Feather from 'react-native-vector-icons/Feather'
 import RNFetchBlob from 'rn-fetch-blob';
 import { useQuery } from 'react-query';
-import { getContentText } from '../../../api/contents';
+import { getContent } from '../../../api/contents';
+import { imageState } from '../../../recoil/atoms';
+import RNFS from 'react-native-fs';
+import { b64toBlob } from '../../../utils/utils';
 
 const Contents = () => {
-    const { data, isLoading, isError } = useQuery('contentText', getContentText);
+    const { data, isLoading, isError } = useQuery('content', getContent);
     const [content, setContent] = useState('');
     const [audio, setAudio] = useState('');
+    const [uri, setUri] = useState('')
+    const [image, setImage] = useRecoilState(imageState)
 
     useEffect(()=>{
       if (data && data.data) {
+        setUri(data.data.resize_image);
         setContent(data.data.text_content);
         setAudio(data.data.audio_content);
       }
       
     }, [data])
-    // const content = treeContent
 
-    const uri = useRecoilValue(uriSelector);
+    useEffect(()=>{
+      if (uri) {
+        setImage({
+          uri: `data:image/jpeg;base64,${uri}`,
+          width: originalWidth,
+          height: originalHeight
+        })
+      }
+    }, [uri])
+
+    // const uri = useRecoilValue(uriSelector);
     const originalWidth = useRecoilValue(widthSelector);
     const originalHeight = useRecoilValue(heightSelector);
 
@@ -137,7 +152,7 @@ const Contents = () => {
       <SafeAreaView>
         <GestureHandlerRootView>
           <View  style={{  zIndex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
-              <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
+              <Image source={{ uri: `data:image/jpeg;base64,${uri}` }} style={{ width: resizeWidth, height: resizeHeight }} />
               <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
                   <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
                       <Progress.Bar progress={progressTime} width={resizeWidth-75} height={15} color={theme.cocoa}/>

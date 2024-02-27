@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Platform, ActionSheetIOS } from 'react-native'
+import { Alert, View, TouchableOpacity, Platform, ActionSheetIOS } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import AppText from '../../Common/Text/AppText'
 import theme from '../../../../theme'
@@ -9,9 +9,10 @@ import { width, height } from '../../../constants/imageInfo'
 import { useRecoilState } from 'recoil'
 import { imageState } from '../../../recoil/atoms'
 import { launchImageLibrary, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import { getContent } from '../../../api/contents'
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
     mediaType: 'photo',
@@ -25,6 +26,8 @@ const HomeButton = () => {
     const [selectedImageUri, setSelectedImageUri] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+    const [res, setRes] = useState(null);
+    const [imageSrc, setImageSrc] = useState('')
 
     const [image, setImage] = useRecoilState(imageState);
     const handleImageChange = () => {
@@ -36,34 +39,61 @@ const HomeButton = () => {
         })
       }
     }
-
-    // const postImage = useMutation(async()=> {
-    //   const userData = await AsyncStorage.getItem('userData');
-    //   if (userData !== null) {
-    //     const userInfo = JSON.parse(userData);
-
-    //     const data = {
-    //       file: image.uri
-    //       // TODO file 형식
-    //     }
-    //     const response = await axios.post(`${process.env.BASE_URL}/user/image`, data);
-    //   }
-      
-    // })
-
+    
     // 선택 사진 또는 촬영된 사진 정보
-    const onPickImage = (res: any) => {
-        if (res.didCancel || !res) {
+    const onPickImage = async (res: any) => {
+      if (res.didCancel || !res) {
         return;
-        }
+      }
+        setRes(res)
         setSelectedImageUri(res.assets[0].uri);
-        console.log('PickImage', res);
-        navigation.push('DescriptionScreen')
+        handleImageChange()
+
+        const file = new FormData();
+      
+        file.append('file', {
+          uri: res.assets[0].uri,
+          type: res.assets[0].type,
+          name: res.assets[0].fileName
+        })
+
+        const userData = await AsyncStorage.getItem('userData');
+        if (userData !== null) {
+          const userInfo = JSON.parse(userData);
+          
+          const response = await axios.post(`${process.env.BASE_URL}/user/image`, file, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'id': userInfo.id,
+              'token': userInfo.token
+            }
+          });
+  
+          const data = response.data;
+  
+          if (data.meta.code === 200) {
+
+            AsyncStorage.setItem(
+              'imageData',
+              JSON.stringify({
+                generated_id: data.generated_id
+              })
+            )
+          } 
+          
+          navigation.push('DescriptionScreen')
+          
+        } else {
+          Alert.alert('Login을 먼저 해주세요!')
+          navigation.push('LoginScreen');
+        }
+
+        return res.assets[0].uri
     };
 
     useEffect(()=>{
-        handleImageChange()
-    }, [selectedImageUri])
+        onPickImage(res)
+    }, [res])
 
     // 카메라 촬영
     const onLaunchCamera = () => {
@@ -73,11 +103,14 @@ const HomeButton = () => {
     // 갤러리에서 사진 선택
     const onLaunchImageLibrary = () => {
         launchImageLibrary(imagePickerOption, onPickImage);
+        
+        // const generated_id = await userImageMutation.mutateAsync({image})
+        // console.log('generated_id', generated_id)
     };
 
     const modalOpen = () => {
         if (Platform.OS === 'android') { // 안드로이드
-        setModalVisible(true); // visible = true
+        setModalVisible(true);
         } else { // iOS
         ActionSheetIOS.showActionSheetWithOptions(
             {
