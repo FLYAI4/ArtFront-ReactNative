@@ -27,7 +27,7 @@ const SignupScreen = () => {
   const [agree, setAgree] = useState([false, false, false]);
   const [buttonOpacity, setButtonOpacity] = useState(0.2);
 
-  const top = getStatusBarHeight();
+  const top = getStatusBarHeight()+20;
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   useEffect(() => {

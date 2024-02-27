@@ -1,5 +1,5 @@
 import { View, TextInput } from 'react-native'
-import React, {useState} from 'react'
+import React from 'react'
 import theme from '../../../../theme'
 
 type ReviewTextProps = {
