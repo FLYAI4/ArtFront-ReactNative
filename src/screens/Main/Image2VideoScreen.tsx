@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Dimensions, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Video from 'react-native-video';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { heightSelector, uriSelector, widthSelector } from '../../recoil/selector';
@@ -10,9 +10,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getStatusBarHeight } from 'rn-statusbar-height';
 import NextPage from '../../components/Common/NextPage';
 import VideoShare from '../../components/Main/Video/VideoShare';
+import { useQuery } from 'react-query';
+import { getContentVideo } from '../../api/contents';
+import AppText from '../../components/Common/Text/AppText';
+import RNFS from 'react-native-fs';
 
 const Image2VideoScreen = () => {
-  const video = require('../../assets/video/18.mp4');
+  const { data, isLoading, isError } = useQuery('contentVideo', getContentVideo);
+  const [video, setVideo] = useState('');
   const [onPress, setOnPress] = useState(false);
 
   const uri = useRecoilValue(uriSelector);
@@ -23,6 +28,25 @@ const Image2VideoScreen = () => {
   const resizeHeight = (screenWidth*originalHeight) / originalWidth;
 
   const top = getStatusBarHeight();
+
+  useEffect(()=>{
+    if (data && data.data) {
+      setVideo(data.data.video_content)
+    }
+  }, [data]);
+
+  const filePath = `${RNFS.DocumentDirectoryPath}/video.mp4`;
+  RNFS.writeFile(filePath, video, 'base64');
+
+  if (isLoading  || !data?.data || !data.data.video_content) {
+    return (
+      <Image source={require('../../assets/image/image2.png')} style={{ zIndex: 1, width: '100%', height: '100%'}} resizeMode='cover' />
+    )
+  }
+
+  if (isError) {
+    return <AppText>Error</AppText>
+  } 
 
   return (
     <View style={{backgroundColor: theme.backgroundWhite}}>
@@ -40,17 +64,17 @@ const Image2VideoScreen = () => {
             </TouchableOpacity>
             <View style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <Video 
-              source={video}
-              style={{
-                  width: screenWidth,
-                  height: resizeHeight,
-              }}
-              resizeMode={'stretch'}
-              repeat={true}
-              controls={true} 
-              paused={false}
-              onEnd={()=>setOnPress(false)}
-              />
+                source={{uri: filePath}}
+                style={{
+                    width: screenWidth,
+                    height: resizeHeight,
+                }}
+                resizeMode={'stretch'}
+                repeat={true}
+                controls={true} 
+                paused={false}
+                onEnd={()=>setOnPress(false)}
+                />
             </View>
           </>
         ): (

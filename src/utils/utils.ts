@@ -25,18 +25,3 @@
 export const removeUnderScore = ({keyword}: {keyword: string}) => {
     return keyword.replace(/_/g, ' ');
 }
-
-export const b64toBlob = (b64Data: string) => {
-    const contentType = 'image/png';
-    const image_data = atob(b64Data);
-    const arraybuffer: any = new ArrayBuffer(image_data.length);
-    const view = new Uint8Array(arraybuffer);
-
-    for (let i=0; i<image_data.length; i++) {
-        view[i] = image_data.charCodeAt(i) & 0xff;
-    }
-
-    const blobOptions: BlobOptions = { type: contentType, lastModified: Date.now() };
-
-    return new Blob([arraybuffer], blobOptions);
-}
