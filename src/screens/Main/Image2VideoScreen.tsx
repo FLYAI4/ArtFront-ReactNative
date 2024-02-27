@@ -88,7 +88,7 @@ const Image2VideoScreen = () => {
               >
                 <MaterialCommunityIcons name="movie-open-play" color={theme.cocoa} size={80} />
               </TouchableOpacity>
-              <VideoShare />
+              <VideoShare filePath={filePath} />
             </View>
             <NextPage nextPage='ReviewScreen' />
           </>
