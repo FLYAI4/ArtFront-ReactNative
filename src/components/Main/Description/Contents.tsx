@@ -14,7 +14,6 @@ import { useQuery } from 'react-query';
 import { getContent } from '../../../api/contents';
 import { imageState } from '../../../recoil/atoms';
 import RNFS from 'react-native-fs';
-import { b64toBlob } from '../../../utils/utils';
 
 const Contents = () => {
     const { data, isLoading, isError } = useQuery('content', getContent);
