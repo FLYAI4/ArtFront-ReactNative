@@ -51,7 +51,7 @@ const LoginScreen = () => {
   }
 
   return (
-    <View style={{ width:'100%', height:'100%', backgroundColor: theme.backgroundWhite, display: 'flex', alignItems: 'center' }}>
+    <View style={{ width:'100%', height:'100%', backgroundColor: theme.backgroundWhite, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <View style={{marginTop: 50, marginBottom: 50} }>
         <Image source={logoSource} style={{width: 200, height: 150}} resizeMode='contain'/>
       </View>
