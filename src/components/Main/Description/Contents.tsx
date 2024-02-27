@@ -1,8 +1,8 @@
 import {  Image, View, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, Platform, } from 'react-native'
 import React, { useEffect, useState, useRef }  from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { heightSelector, uriSelector, widthSelector } from '../../../recoil/selector';
-import { useRecoilValue } from 'recoil';
+import { heightSelector, widthSelector } from '../../../recoil/selector';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import SoundPlayer from 'react-native-sound-player'
 import { useIsFocused } from '@react-navigation/native';
 import AppText from '../../Common/Text/AppText';
@@ -12,12 +12,16 @@ import Feather from 'react-native-vector-icons/Feather'
 import RNFetchBlob from 'rn-fetch-blob';
 import { useQuery } from 'react-query';
 import { getContent } from '../../../api/contents';
+import { imageState } from '../../../recoil/atoms';
+import RNFS from 'react-native-fs';
+import { b64toBlob } from '../../../utils/utils';
 
 const Contents = () => {
     const { data, isLoading, isError } = useQuery('content', getContent);
     const [content, setContent] = useState('');
     const [audio, setAudio] = useState('');
     const [uri, setUri] = useState('')
+    const [image, setImage] = useRecoilState(imageState)
 
     useEffect(()=>{
       if (data && data.data) {
@@ -27,6 +31,16 @@ const Contents = () => {
       }
       
     }, [data])
+
+    useEffect(()=>{
+      if (uri) {
+        setImage({
+          uri: `data:image/jpeg;base64,${uri}`,
+          width: originalWidth,
+          height: originalHeight
+        })
+      }
+    }, [uri])
 
     // const uri = useRecoilValue(uriSelector);
     const originalWidth = useRecoilValue(widthSelector);

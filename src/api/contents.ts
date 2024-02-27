@@ -25,14 +25,18 @@ export const getContent = async () => {
 
 export const getContentCoord = async () => {
   const userData = await AsyncStorage.getItem('userData');
-  if (userData !== null) {
-    const userInfo = JSON.parse(userData);
-    const response = await fetch(`${process.env.BASE_URL}/user/content/coord`, {
+  const imageData = await AsyncStorage.getItem('imageData')
+
+  if (userData !== null && imageData !== null) {
+    const userInfo = JSON.parse(userData)
+    const imageInfo = JSON.parse(imageData)
+
+    const response = await fetch(`${process.env.BASE_URL}/user/coord`, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'id': userInfo.id,
-        'generated-id': '4.jpg',
+        'generated-id': '4.jpg', // imageInfo
         'token': userInfo.token
       }
     });
