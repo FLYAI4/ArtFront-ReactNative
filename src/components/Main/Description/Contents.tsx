@@ -11,23 +11,24 @@ import theme from '../../../../theme';
 import Feather from 'react-native-vector-icons/Feather'
 import RNFetchBlob from 'rn-fetch-blob';
 import { useQuery } from 'react-query';
-import { getContentText } from '../../../api/contents';
+import { getContent } from '../../../api/contents';
 
 const Contents = () => {
-    const { data, isLoading, isError } = useQuery('contentText', getContentText);
+    const { data, isLoading, isError } = useQuery('content', getContent);
     const [content, setContent] = useState('');
     const [audio, setAudio] = useState('');
+    const [uri, setUri] = useState('')
 
     useEffect(()=>{
       if (data && data.data) {
+        setUri(data.data.resize_image);
         setContent(data.data.text_content);
         setAudio(data.data.audio_content);
       }
       
     }, [data])
-    // const content = treeContent
 
-    const uri = useRecoilValue(uriSelector);
+    // const uri = useRecoilValue(uriSelector);
     const originalWidth = useRecoilValue(widthSelector);
     const originalHeight = useRecoilValue(heightSelector);
 
@@ -137,7 +138,7 @@ const Contents = () => {
       <SafeAreaView>
         <GestureHandlerRootView>
           <View  style={{  zIndex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
-              <Image source={{ uri: uri }} style={{ width: resizeWidth, height: resizeHeight }} />
+              <Image source={{ uri: `data:image/jpeg;base64,${uri}` }} style={{ width: resizeWidth, height: resizeHeight }} />
               <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
                   <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
                       <Progress.Bar progress={progressTime} width={resizeWidth-75} height={15} color={theme.cocoa}/>
