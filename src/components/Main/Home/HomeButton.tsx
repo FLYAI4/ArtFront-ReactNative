@@ -25,6 +25,7 @@ const HomeButton = () => {
     const [selectedImageUri, setSelectedImageUri] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+    const [res, setRes] = useState(null);
 
     const [image, setImage] = useRecoilState(imageState);
     const handleImageChange = () => {
@@ -36,33 +37,50 @@ const HomeButton = () => {
         })
       }
     }
-
-    // const postImage = useMutation(async()=> {
-    //   const userData = await AsyncStorage.getItem('userData');
-    //   if (userData !== null) {
-    //     const userInfo = JSON.parse(userData);
-
-    //     const data = {
-    //       file: image.uri
-    //       // TODO file 형식
-    //     }
-    //     const response = await axios.post(`${process.env.BASE_URL}/user/image`, data);
-    //   }
-      
-    // })
+    
+    
 
     // 선택 사진 또는 촬영된 사진 정보
-    const onPickImage = (res: any) => {
-        if (res.didCancel || !res) {
+    const onPickImage = async (res: any) => {
+      if (res.didCancel || !res) {
         return;
-        }
+      }
+        setRes(res)
         setSelectedImageUri(res.assets[0].uri);
-        console.log('PickImage', res);
+        handleImageChange()
+        console.log('1')
+
+        console.log('2')
+        const formData = new FormData();
+      
+        console.log('3')
+        formData.append('file', {
+          uri: res.assets[0].uri,
+          type: res.assets[0].type,
+          name: res.assets[0].fileName
+        })
+
+        console.log('4')
+        const response = await axios.post(`${process.env.BASE_URL}/user/image`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'id': 'test1234@naver.com',
+            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QxMjM0QG5hdmVyLmNvbSIsImV4cCI6MTcwOTAxNTE5N30.1U8Zn0QzR6oa2aMhonMRyVK5UU682WvnuQDk7fc0rIw'
+          }
+        });
+
+        console.log('5')
+        const data = response.data;
+        console.log('6', data)
+      
         navigation.push('DescriptionScreen')
+
+        console.log('7')
+        return res.assets[0].uri
     };
 
     useEffect(()=>{
-        handleImageChange()
+        onPickImage(res)
     }, [selectedImageUri])
 
     // 카메라 촬영
@@ -73,11 +91,14 @@ const HomeButton = () => {
     // 갤러리에서 사진 선택
     const onLaunchImageLibrary = () => {
         launchImageLibrary(imagePickerOption, onPickImage);
+        
+        // const generated_id = await userImageMutation.mutateAsync({image})
+        // console.log('generated_id', generated_id)
     };
 
     const modalOpen = () => {
         if (Platform.OS === 'android') { // 안드로이드
-        setModalVisible(true); // visible = true
+        setModalVisible(true);
         } else { // iOS
         ActionSheetIOS.showActionSheetWithOptions(
             {
