@@ -1,4 +1,4 @@
-import { Alert, TouchableOpacity, ScrollView, SafeAreaView, Dimensions } from 'react-native'
+import { Alert, TouchableOpacity, View, SafeAreaView, Dimensions } from 'react-native'
 import React, {useState} from 'react'
 import ReviewImage from './ReviewImage'
 import ReviewButton from './ReviewButton'
@@ -65,7 +65,7 @@ const Review = () => {
 
   return (
     <SafeAreaView>
-        <ScrollView style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column'}}>
+        <View style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column'}}>
             <ReviewImage uri={uri} resizeWidth={resizeWidth} resizeHeight={resizeHeight}/>
             <ReviewButton like={like} setLike={setLike} />
             <ReviewText content={content} setContent={setContent}/>
@@ -74,7 +74,7 @@ const Review = () => {
                 onPress={handleSubmit}>
                 <AppText style={{ padding: 15, fontWeight: '800', fontSize: 18, color: theme.backgroundWhite,  textAlign: 'center'}}>소감 남기기</AppText>
             </TouchableOpacity>
-        </ScrollView>
+        </View>
     </SafeAreaView>
   )
 }

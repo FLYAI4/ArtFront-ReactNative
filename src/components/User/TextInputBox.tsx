@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native'
 import React, {useState} from 'react'
 import theme from '../../../theme';
 
@@ -13,7 +13,7 @@ const TextInputBox = ({text, placeholder, value, setValue}: TextInputBoxProps) =
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View style={{marginTop: 16}}>
+    <KeyboardAvoidingView style={{marginTop: 16}}>
       <Text style={{fontSize: 16, marginBottom: 8}}>{text}</Text>
       <TextInput 
         placeholder={placeholder || text} 
@@ -23,7 +23,7 @@ const TextInputBox = ({text, placeholder, value, setValue}: TextInputBoxProps) =
         onFocus={()=>setIsFocused(true)}
         onBlur={()=>setIsFocused(false)}
       />
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

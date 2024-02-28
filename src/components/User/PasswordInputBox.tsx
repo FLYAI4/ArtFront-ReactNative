@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Keyboard } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Keyboard, KeyboardAvoidingView } from 'react-native';
 import React, { useState } from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import theme from '../../../theme';
@@ -19,7 +19,7 @@ const PasswordInputBox = ({text, placeholder, value, setValue}: PasswordInputBox
   }
 
   return (
-    <View style={{marginTop: 16}}>
+    <KeyboardAvoidingView style={{marginTop: 16}}>
       <Text style={{fontSize: 16, marginBottom: 8}}>{text}</Text>
       <View>
         <TextInput 
@@ -40,7 +40,7 @@ const PasswordInputBox = ({text, placeholder, value, setValue}: PasswordInputBox
           )}
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
