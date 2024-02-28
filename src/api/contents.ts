@@ -7,13 +7,14 @@ export const getContent = async () => {
   if (userData !== null && imageData !== null) {
     const userInfo = JSON.parse(userData)
     const imageInfo = JSON.parse(imageData)
+    console.log(imageInfo)
 
     const response = await fetch(`${process.env.BASE_URL}/user/content`, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'id': userInfo.id,
-        'generated-id': '4.jpg', // imageInfo
+        'generated-id': imageInfo.generated_id,
         'token': userInfo.token
       }
     });
@@ -36,7 +37,7 @@ export const getContentCoord = async () => {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'id': userInfo.id,
-        'generated-id': '4.jpg', // imageInfo
+        'generated-id': imageInfo.generated_id,
         'token': userInfo.token
       }
     });
@@ -59,7 +60,7 @@ export const getContentVideo = async () => {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'id': userInfo.id,
-        'generated-id': '4.jpg', // imageInfo
+        'generated-id': imageInfo.generated_id,
         'token': userInfo.token
       }
     });

@@ -13,22 +13,21 @@ import { infoDict } from '../../../constants/imageInfo';
 
 type Dict = {
   [key: string]: {
+    coord: [number, number, number, number];
     content: string;
-    coord: number[];
-  }
-}
+  };
+};
 
 const Coordinates = () => {
   const { data, isLoading, isError } = useQuery('contentCoord', getContentCoord);
-  // const [dict, setDict] = useState<Dict>({});
 
-  // useEffect(()=>{
-  //   if (data && data.data.coord_content) {
-  //     setDict(data.data.coord_content)
-  //     console.log(data.data.coord_content)
-  //   }
-  // }, [data])
-  const dict = infoDict
+  const [coordDict, setCoordDict] = useState<Dict>({});
+  useEffect(() => {
+    if (data && data.data.coord_content) {
+      setCoordDict(JSON.parse(data.data.coord_content));
+      console.log(data.data.coord_content)
+    }
+  }, [data]);
 
   const uri = useRecoilValue(uriSelector);
   const originalWidth = useRecoilValue(widthSelector);
@@ -59,15 +58,16 @@ const Coordinates = () => {
     setImageSize({ x, y, width, height });
   }
 
-  const calculateCoordinates = (list: number[]) => {
-    const [x1, y1, x2, y2] = list;
-    
+  const calculateCoordinates = (coordinates: number[]) => {
+    const [x1, y1, x2, y2] = coordinates;
+  
     const x1_ = imageSize.width / originalWidth * x1 + imageSize.x;
     const y1_ = imageSize.height / originalHeight * y1 + imageSize.y;
     const x2_ = imageSize.width / originalWidth * x2 + imageSize.x;
     const y2_ = imageSize.height / originalHeight * y2 + imageSize.y;
     return [x1_, y1_, x2_, y2_];
   };
+
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -124,27 +124,32 @@ const Coordinates = () => {
   
   }, [cropData, uri])
   
-  const handleClickBounding = (key: string, coordinates: number[]) => {
-    setFocusBox(true);
-    setKeyword(key);
-    setContext(dict[key as keyof typeof dict]['content']);
-
-    cropImage(coordinates);
+  const handleClickBounding = (key: string, coordinates: number[]) => { 
+    if (coordDict) {
+      setFocusBox(true);
+      setKeyword(key);
+      setContext(coordDict[key as keyof typeof coordDict]['content']);
+  
+      cropImage(coordinates);
+    }
   };
 
   const renderBoundingBoxes = () => {
-    return Object.keys(dict).map((key: string, index: number) => {
-      const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(dict[key as keyof typeof dict]['coord']);
+    if (coordDict) {
+      return Object.keys(coordDict).map((key: string, index: number) => {
+        const coordinates: ReturnType<typeof calculateCoordinates> = calculateCoordinates(coordDict[key]['coord']);
         return (
-            <TouchableOpacity 
-                key={index}
-                style={{position: 'absolute',left: coordinates[0], top: coordinates[1], width: coordinates[2] - coordinates[0], height: coordinates[3] - coordinates[1], borderWidth: 3, borderColor: getRandomColor(),  opacity: focusBox ? 0.2 : 1.0 }}
-                onPress={()=> handleClickBounding(key, coordinates)}>
-                <View key={index}/>
-            </TouchableOpacity>
-        )
-    })
+          <TouchableOpacity 
+            key={index}
+            style={{position: 'absolute',left: coordinates[0], top: coordinates[1], width: coordinates[2] - coordinates[0], height: coordinates[3] - coordinates[1], borderWidth: 3, borderColor: getRandomColor(),  opacity: focusBox ? 0.2 : 1.0 }}
+            onPress={() => handleClickBounding(key, coordinates)}>
+            <View key={index}/>
+          </TouchableOpacity>
+        );
+      });
+    }
   }
+
 
   if (isLoading  || !data ) {
     return (
@@ -154,28 +159,31 @@ const Coordinates = () => {
 
   if (isError) {
     return <AppText>Error</AppText>
-  } 
+} 
 
-  return (
-    <SafeAreaView>
-        <GestureHandlerRootView>
-          <View 
-            style={{width: '100%', height: '100%' }}>
-              { cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
-              <TouchableOpacity onPress={()=>setFocusBox(false)} activeOpacity={1}>
-                <Image source={{uri: uri}} style={{  width: screenWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
-              </TouchableOpacity>
-              {renderBoundingBoxes()}              
-              <View style={{ marginHorizontal: 20, marginTop: 20}} >
-                <AppText style={{color: theme.olive, fontSize: 28, fontWeight: 600, marginBottom: 20 }}>{removeUnderScore({keyword: keyword})}</AppText>
-                <ScrollView style={{ height: 600, width: screenWidth-40}}>
-                  <AppText style={{ color: theme.olive, fontSize: 16}}>{context}</AppText>
-                </ScrollView>
-              </View>
-          </View>
-        </GestureHandlerRootView>
-    </SafeAreaView>
-  );
+  if (coordDict) {
+    return (
+      <SafeAreaView>
+          <GestureHandlerRootView>
+            <View 
+              style={{width: '100%', height: '100%' }}>
+                { cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
+                <TouchableOpacity onPress={()=>setFocusBox(false)} activeOpacity={1}>
+                  <Image source={{uri: uri}} style={{  width: screenWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
+                </TouchableOpacity>
+                {renderBoundingBoxes()}           
+                <View style={{ marginHorizontal: 20, marginTop: 20}} >
+                  <AppText style={{color: theme.olive, fontSize: 28, fontWeight: 600, marginBottom: 20 }}>{removeUnderScore({keyword: keyword})}</AppText>
+                  <ScrollView style={{ height: 600, width: screenWidth-40}}>
+                    <AppText style={{ color: theme.olive, fontSize: 16}}>{context}</AppText>
+                  </ScrollView>
+                </View>
+            </View>
+          </GestureHandlerRootView>
+      </SafeAreaView>
+    );
+  }
+  
 }
 
 export default Coordinates;

@@ -27,6 +27,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     const response = await loginMutation.mutateAsync();
+
     if (response.meta.code === 200) {
       AsyncStorage.setItem(
         'userData',
@@ -37,14 +38,14 @@ const LoginScreen = () => {
       )
 
       setTimeout(()=>{
-        AsyncStorage.mergeItem(
+        AsyncStorage.setItem(
           'userData',
           JSON.stringify({
             id: '',
             token: ''
           })
         )
-      }, 3600000); // 1시간 (3600000 밀리초)
+      }, 3600000);
 
       navigation.push('HomeScreen');
     }
