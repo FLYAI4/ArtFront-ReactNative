@@ -5,7 +5,6 @@ import theme from '../../../../theme'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import UploadModeModal from '../../Common/UploadModeModal'
-import { width, height } from '../../../constants/imageInfo'
 import { useRecoilState } from 'recoil'
 import { imageState } from '../../../recoil/atoms'
 import { launchImageLibrary, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
