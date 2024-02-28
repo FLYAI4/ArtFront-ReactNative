@@ -24,25 +24,25 @@ const Banner = () => {
     <Swiper loop autoplay autoplayTimeout={3} dotColor={theme.backgroundWhite} activeDotColor={theme.olive} >
       <TouchableOpacity onPress={()=>handleImagePress(url)}>
         <View>
-          <Image source={banner1} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+          <Image source={banner1} style={{width: screenWidth, height: '100%', backgroundColor: 'lightgray'}} resizeMode={resizeMode}/>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=>handleImagePress('https://www.skttechacademy.com/')}>
         <View>
-          <Image source={banner2} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+          <Image source={banner2} style={{width: screenWidth, height: '100%', backgroundColor: 'lightgray'}} resizeMode={resizeMode} />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=>handleImagePress(url)}>
         <View>
-          <Image source={banner3} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+          <Image source={banner3} style={{width: screenWidth, height: '100%', backgroundColor: 'lightgray'}} resizeMode={resizeMode} />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=>handleImagePress(url)}>
         <View>
-          <Image source={banner4} style={{width: screenWidth, height: '100%'}} resizeMode={resizeMode} />
+          <Image source={banner4} style={{width: screenWidth, height: '100%', backgroundColor: 'lightgray'}} resizeMode={resizeMode} />
         </View>
       </TouchableOpacity>
     </Swiper>

@@ -38,15 +38,15 @@ const LoginScreen = () => {
         })
       )
 
-      setTimeout(()=>{
-        AsyncStorage.setItem(
-          'userData',
-          JSON.stringify({
-            id: '',
-            token: ''
-          })
-        )
-      }, 3600000);
+      // setTimeout(()=>{
+      //   AsyncStorage.setItem(
+      //     'userData',
+      //     JSON.stringify({
+      //       id: '',
+      //       token: ''
+      //     })
+      //   )
+      // }, 3600000);
 
       navigation.push('HomeScreen');
     }
