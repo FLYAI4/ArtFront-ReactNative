@@ -1,4 +1,4 @@
-import { Alert, View, TouchableOpacity, Platform, ActionSheetIOS } from 'react-native'
+import { Alert, View, TouchableOpacity, Platform, ActionSheetIOS, ActivityIndicator } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import AppText from '../../Common/Text/AppText'
 import theme from '../../../../theme'
@@ -13,6 +13,7 @@ import { useMutation, useQuery } from 'react-query'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { getContent } from '../../../api/contents'
+import Loading from '../Loading/Loading'
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
     mediaType: 'photo',
@@ -26,10 +27,9 @@ const HomeButton = () => {
     const [selectedImageUri, setSelectedImageUri] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-    const [res, setRes] = useState(null);
-    const [imageSrc, setImageSrc] = useState('')
-
+    const [isLoading, setIsLoading] = useState(false)
     const [image, setImage] = useRecoilState(imageState);
+
     const handleImageChange = () => {
       if (selectedImageUri) {
         setImage({
@@ -45,48 +45,48 @@ const HomeButton = () => {
       if (res.didCancel || !res) {
         return;
       }
-        setRes(res)
-        setSelectedImageUri(res.assets[0].uri);
-        handleImageChange()
+      setIsLoading(true)
+        
+      setSelectedImageUri(res.assets[0].uri);
+      handleImageChange()
 
-        const file = new FormData();
-      
-        file.append('file', {
-          uri: res.assets[0].uri,
-          type: res.assets[0].type,
-          name: res.assets[0].fileName
-        })
+      const file = new FormData();
+    
+      file.append('file', {
+        uri: res.assets[0].uri,
+        type: res.assets[0].type,
+        name: res.assets[0].fileName
+      })
 
-        const userData = await AsyncStorage.getItem('userData');
-        if (userData !== null) {
-          const userInfo = JSON.parse(userData);
-          
-          const response = await axios.post(`${process.env.BASE_URL}/user/image`, file, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'id': userInfo.id,
-              'token': userInfo.token
-            }
-          });
-  
-          const data = response.data;
-          
-          if (data.meta.code === 200) {
-            AsyncStorage.setItem(
-              'imageData',
-              JSON.stringify({
-                generated_id: data.data.generated_id
-              })
-            )
-            navigation.push('DescriptionScreen')
+      const userData = await AsyncStorage.getItem('userData');
+      if (userData !== null) {
+        const userInfo = JSON.parse(userData);
+        
+        const response = await axios.post(`${process.env.BASE_URL}/user/image`, file, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'id': userInfo.id,
+            'token': userInfo.token
           }
-          
-        } else {
-          Alert.alert('Login을 먼저 해주세요!')
-          navigation.push('LoginScreen');
-        }
+        });
 
-        return res.assets[0].uri
+        const data = response.data;
+        
+        if (data.meta.code === 200) {
+          AsyncStorage.setItem(
+            'imageData',
+            JSON.stringify({
+              generated_id: data.data.generated_id
+            })
+          )
+          navigation.push('DescriptionScreen')
+        }
+        
+      } else {
+        Alert.alert('Login을 먼저 해주세요!')
+        navigation.push('LoginScreen');
+      }
+      return res.assets[0].uri
     };
 
     // 카메라 촬영
@@ -96,10 +96,7 @@ const HomeButton = () => {
 
     // 갤러리에서 사진 선택
     const onLaunchImageLibrary = () => {
-        launchImageLibrary(imagePickerOption, onPickImage);
-        
-        // const generated_id = await userImageMutation.mutateAsync({image})
-        // console.log('generated_id', generated_id)
+      launchImageLibrary(imagePickerOption, onPickImage);
     };
 
     const modalOpen = () => {
@@ -121,6 +118,10 @@ const HomeButton = () => {
         );
         }
     };
+
+    if (isLoading) {
+      return (<Loading setIsLoading={setIsLoading}/>)
+    }
 
   return (
     <View style={{ width: '100%', position: 'absolute', bottom: 43, left: 0, right: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center',}}>

@@ -5,7 +5,9 @@ import Contents from '../../components/Main/Description/Contents'
 import GoBack from '../../components/Common/GoBack'
 import NextPage from '../../components/Common/NextPage'
 
-const DescriptionScreen = () => {  return (
+const DescriptionScreen = () => {  
+  
+  return (
     <SafeAreaView style={{backgroundColor: theme.backgroundWhite}}>
       <GoBack />
       <Contents />
