@@ -18,7 +18,18 @@ type Dict = {
 };
 
 const Coordinates = () => {
-  const { data, isLoading, isError } = useQuery('contentCoord', getContentCoord);
+  const { data, isLoading, isError, isSuccess } = useQuery('contentCoord', getContentCoord);
+  const [load, setLoad] = useState(false)
+
+  useEffect(()=>{
+    if (isSuccess) {
+      const timer = setTimeout(()=>{
+        setLoad(true);
+      }, 1000);
+      return ()=>clearTimeout(timer);
+    }
+  }, [isSuccess])
+
 
   const [coordDict, setCoordDict] = useState<Dict>({});
   useEffect(() => {
@@ -147,7 +158,7 @@ const Coordinates = () => {
   }
 
 
-  if (isLoading  || !data ) {
+  if (isLoading || !load) {
     return (
       <View style={{backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
         <ActivityIndicator size="large" />
@@ -159,7 +170,7 @@ const Coordinates = () => {
     return <AppText>Error</AppText>
 } 
 
-  if (coordDict) {
+  if (isSuccess && load) {
     return (
       <SafeAreaView>
           <GestureHandlerRootView>

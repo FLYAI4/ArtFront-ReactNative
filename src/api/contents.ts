@@ -7,9 +7,6 @@ export const getContent = async () => {
   if (userData !== null && imageData !== null) {
     const userInfo = JSON.parse(userData)
     const imageInfo = JSON.parse(imageData)
-
-    console.log(userInfo)
-    console.log(imageInfo)
     
     const response = await fetch(`${process.env.BASE_URL}/user/content`, {
       headers: {
