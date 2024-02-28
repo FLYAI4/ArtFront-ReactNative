@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
+    "@codler/react-native-keyboard-aware-scroll-view": "^2.0.1",
     "@react-native-async-storage/async-storage": "^1.22.2",
     "@react-native-community/audio-toolkit": "^2.0.3",
     "@react-native-community/image-editor": "^3.1.1",

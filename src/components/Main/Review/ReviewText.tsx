@@ -1,6 +1,8 @@
 import { View, TextInput } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import theme from '../../../../theme'
+import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view'
+
 
 type ReviewTextProps = {
     content: string;
@@ -8,7 +10,6 @@ type ReviewTextProps = {
 }
 
 const ReviewText = ({content, setContent}: ReviewTextProps) => {
-
   return (
     <View style={{ margin:20, borderWidth: 2, borderColor: theme.olive, borderRadius: 20}}>
       <TextInput 
