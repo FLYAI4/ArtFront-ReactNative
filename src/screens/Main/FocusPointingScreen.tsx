@@ -1,4 +1,4 @@
-import { SafeAreaView, View } from 'react-native'
+import { SafeAreaView } from 'react-native'
 import React from 'react'
 import Coordinates from '../../components/Main/FocusPointing/Coordinates'
 import GoBack from '../../components/Common/GoBack'

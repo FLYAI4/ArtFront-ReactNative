@@ -14,14 +14,14 @@ const Loading = ({setIsLoading}: LoadingProps) => {
     const randomSource = sources[Math.floor(Math.random() * sources.length)]
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-          setIsLoading(false);
-        }, 5000);
-    
-        return () => {
-          clearTimeout(timer);
-        };
-      }, []);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 5000);
+  
+      return () => {
+        clearTimeout(timer);
+      };
+    }, []);
 
   return (
     <View>

@@ -1,4 +1,4 @@
-import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native'
+import { Text, TextInput, KeyboardAvoidingView } from 'react-native'
 import React, {useState} from 'react'
 import theme from '../../../theme';
 

@@ -19,7 +19,6 @@ const Banner = () => {
 
   const url = 'https://www.sktelecom.com/';
 
-
   return (
     <Swiper loop autoplay autoplayTimeout={3} dotColor={theme.backgroundWhite} activeDotColor={theme.olive} >
       <TouchableOpacity onPress={()=>handleImagePress(url)}>
