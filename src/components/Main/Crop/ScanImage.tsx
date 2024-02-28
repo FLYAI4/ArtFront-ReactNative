@@ -5,7 +5,6 @@ import { useRecoilState } from 'recoil';
 import { imageState } from '../../../recoil/atoms';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { height, width } from '../../../constants/imageInfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
@@ -13,8 +12,8 @@ import Loading from '../Loading/Loading';
 const ScanImage = () => {
     const [image, setImage] = useRecoilState(imageState);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-    const originalWidth = width;
-    const originalHeight = height;
+    const originalWidth = 510;
+    const originalHeight = 680;
     const [isLoading, setIsLoading] = useState(false)
 
     const scanDocument = async () => {

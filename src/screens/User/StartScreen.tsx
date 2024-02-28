@@ -13,17 +13,6 @@ const StartScreen = () => {
     const imageSource = require('../../assets/image/landing.png');
 
     const handleNavigation = async () => {
-      const userData = await AsyncStorage.getItem('userData');
-      if (userData !== null) {
-        const userInfo = JSON.parse(userData)
-        if (userInfo && userInfo.id && userInfo.token) {
-          navigation.push('HomeScreen');
-          return;
-        }
-      } else {
-        navigation.push('LoginScreen')
-      }
-      
       navigation.push('LoginScreen')
     }
 
