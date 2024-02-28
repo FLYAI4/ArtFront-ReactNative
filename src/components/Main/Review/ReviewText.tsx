@@ -1,8 +1,6 @@
 import { View, TextInput } from 'react-native'
-import React, { useRef } from 'react'
+import React from 'react'
 import theme from '../../../../theme'
-import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view'
-
 
 type ReviewTextProps = {
     content: string;

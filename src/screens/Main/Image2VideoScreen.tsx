@@ -78,6 +78,7 @@ const Image2VideoScreen = () => {
                 onEnd={()=>setOnPress(false)}
                 />
             </View>
+            <NextPage nextPage='ReviewScreen' />
           </>
         ): (
           <>

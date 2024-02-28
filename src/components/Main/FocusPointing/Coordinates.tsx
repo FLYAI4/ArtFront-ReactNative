@@ -34,13 +34,12 @@ const Coordinates = () => {
   // image resize 
   const [imageSize, setImageSize] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
   const resizeHeight = (screenWidth*originalHeight) / originalWidth;
   const [position, setPosition] = useState({left: 0, top: 0});
 
   // keyword, context 
-  const [keyword, setKeyword] = useState("Box를 클릭해주세요!");
-  const [context, setContext] = useState("ArtVisionXperience이 선정한 핵심포인트입니다");
+  const [keyword, setKeyword] = useState('');
+  const [context, setContext] = useState('');
 
   const [cropPath, setCropPath] = useState("");
   const [cropData, setCropData] = useState({
@@ -65,7 +64,6 @@ const Coordinates = () => {
     const y2_ = imageSize.height / originalHeight * y2 + imageSize.y;
     return [x1_, y1_, x2_, y2_];
   };
-
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -183,7 +181,6 @@ const Coordinates = () => {
       </SafeAreaView>
     );
   }
-  
 }
 
 export default Coordinates;
