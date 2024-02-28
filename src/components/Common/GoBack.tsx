@@ -16,7 +16,7 @@ const GoBack = ({cocoa}:GoBackProps) => {
 
     return (
         <TouchableOpacity 
-            style={{ zIndex:1, position: 'absolute', top: top, left :15, }} 
+            style={{ zIndex:2, position: 'absolute', top: top, left :15, }} 
             onPress={()=>navigation.goBack()}
         >
             <AntDesign name="arrowleft" size={30} color={cocoa ? theme.cocoa : theme.backgroundWhite} />

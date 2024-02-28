@@ -1,4 +1,4 @@
-import {  Image, View, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, Platform, } from 'react-native'
+import {  Image, View, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpacity, ScrollView, Platform, ActivityIndicator, } from 'react-native'
 import React, { useEffect, useState, useRef }  from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { heightSelector, widthSelector } from '../../../recoil/selector';
@@ -13,7 +13,6 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { useQuery } from 'react-query';
 import { getContent } from '../../../api/contents';
 import { imageState } from '../../../recoil/atoms';
-import RNFS from 'react-native-fs';
 
 const Contents = () => {
     const { data, isLoading, isError } = useQuery('content', getContent);
@@ -46,6 +45,7 @@ const Contents = () => {
     const originalHeight = useRecoilValue(heightSelector);
 
     const screenWidth = Dimensions.get('window').width;
+
     const ratio = 1.0;
     const resizeWidth = screenWidth*ratio;
     const resizeHeight = (screenWidth*originalHeight*ratio) / originalWidth;
@@ -137,7 +137,9 @@ const Contents = () => {
 
   if (isLoading  || !data?.data || !data.data.text_content) {
     return (
-      <Image source={require('../../../assets/image/loading.png')} style={{ zIndex: 1, width: '100%', height: '100%'}} resizeMode='cover' />
+      <View style={{backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
+        <ActivityIndicator size="large" />
+      </View>
     )
   }
 

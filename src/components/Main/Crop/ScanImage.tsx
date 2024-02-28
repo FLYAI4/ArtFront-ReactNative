@@ -1,5 +1,5 @@
-import { View, Alert } from 'react-native';
-import React, { useEffect } from 'react';
+import { View, Alert, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import DocumentScanner from 'react-native-document-scanner-plugin';
 import { useRecoilState } from 'recoil';
 import { imageState } from '../../../recoil/atoms';
@@ -8,12 +8,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { height, width } from '../../../constants/imageInfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Loading from '../Loading/Loading';
 
 const ScanImage = () => {
     const [image, setImage] = useRecoilState(imageState);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
     const originalWidth = width;
     const originalHeight = height;
+    const [isLoading, setIsLoading] = useState(false)
 
     const scanDocument = async () => {
       const { scannedImages }: any  = await DocumentScanner.scanDocument({
@@ -21,9 +23,8 @@ const ScanImage = () => {
       });
 
       if (scannedImages.length > 0) {
-        
+        setIsLoading(true)
         const scannedImage = scannedImages[scannedImages.length-1];
-        console.log(scannedImage)
 
         // 서버 
         setImage(({
@@ -59,11 +60,11 @@ const ScanImage = () => {
             AsyncStorage.setItem(
               'imageData',
               JSON.stringify({
-                generated_id: data.generated_id
+                generated_id: data.data.generated_id
               })
             )
-
-            navigation.push('DescriptionScreen');
+            
+            navigation.push('DescriptionScreen');            
           } 
         } catch (error) {
             Alert.alert('작품을 좀 더 정확하게 찍어주세요!', '', [
@@ -85,6 +86,10 @@ const ScanImage = () => {
     useEffect(() => {
       scanDocument();
     }, []);
+
+    if (isLoading) {
+      return (<Loading setIsLoading={setIsLoading} />)
+    }
 
     return (
       <View />

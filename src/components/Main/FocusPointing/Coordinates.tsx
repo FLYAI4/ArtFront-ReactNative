@@ -1,4 +1,4 @@
-import { View, Image, Dimensions, SafeAreaView, LayoutChangeEvent, TouchableOpacity } from 'react-native';
+import { View, Image, Dimensions, SafeAreaView, LayoutChangeEvent, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import ImageEditor from "@react-native-community/image-editor";
@@ -9,7 +9,6 @@ import AppText from '../../Common/Text/AppText';
 import theme from '../../../../theme';
 import { useQuery } from 'react-query';
 import { getContentCoord } from '../../../api/contents';
-import { infoDict } from '../../../constants/imageInfo';
 
 type Dict = {
   [key: string]: {
@@ -25,7 +24,6 @@ const Coordinates = () => {
   useEffect(() => {
     if (data && data.data.coord_content) {
       setCoordDict(JSON.parse(data.data.coord_content));
-      console.log(data.data.coord_content)
     }
   }, [data]);
 
@@ -153,7 +151,9 @@ const Coordinates = () => {
 
   if (isLoading  || !data ) {
     return (
-      <Image source={require('../../../assets/image/loading.png')} style={{ zIndex: 1, width: '100%', height: '100%'}} resizeMode='cover' />
+      <View style={{backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
+        <ActivityIndicator size="large" />
+      </View>
     )
   }
 

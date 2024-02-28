@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Dimensions, Image } from 'react-native'
+import { View, TouchableOpacity, Dimensions, Image, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Video from 'react-native-video';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -40,7 +40,9 @@ const Image2VideoScreen = () => {
 
   if (isLoading  || !data?.data || !data.data.video_content) {
     return (
-      <Image source={require('../../assets/image/image2.png')} style={{ zIndex: 1, width: '100%', height: '100%'}} resizeMode='cover' />
+      <View style={{backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
+        <ActivityIndicator size="large" />
+      </View>
     )
   }
 
