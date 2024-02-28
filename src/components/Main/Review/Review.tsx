@@ -34,14 +34,18 @@ const Review = () => {
         review_content: content
       }
       const userData = await AsyncStorage.getItem('userData');
-      if (userData !== null) {
+      const imageData = await AsyncStorage.getItem('imageData');
+
+      if (userData !== null && imageData !== null) {
         const userInfo = JSON.parse(userData);
+        const imageInfo = JSON.parse(imageData);
+
         const response = await axios.post(`${process.env.BASE_URL}/user/content/review`, data, {
           headers: {
             'accept': 'application/json',
             'Content-Type': 'application/json',
             'id': userInfo.id,
-            'generated-id': '4.jpg',
+            'generated-id': imageInfo.generated_id,
             'token': userInfo.token
           }
         })

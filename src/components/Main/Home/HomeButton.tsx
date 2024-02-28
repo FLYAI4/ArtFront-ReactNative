@@ -70,13 +70,12 @@ const HomeButton = () => {
           });
   
           const data = response.data;
-  
+          
           if (data.meta.code === 200) {
-
             AsyncStorage.setItem(
               'imageData',
               JSON.stringify({
-                generated_id: data.generated_id
+                generated_id: data.data.generated_id
               })
             )
             navigation.push('DescriptionScreen')
