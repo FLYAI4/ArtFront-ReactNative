@@ -20,6 +20,7 @@ type Dict = {
 const Coordinates = () => {
   const { data, isLoading, isError, isSuccess } = useQuery('contentCoord', getContentCoord);
   const [load, setLoad] = useState(false)
+  const [isCropped, setIsCropped] = useState(false)
 
   useEffect(()=>{
     if (isSuccess) {
@@ -85,7 +86,13 @@ const Coordinates = () => {
     return color;
   };
 
-  const cropImage = async (coordinates: number[]) => {
+  const cropImage = (coordinates: number[]) => {
+    setCropData({
+      offset: { x: 0, y: 0 },
+      size: { width: 0, height: 0 },
+      displaySize: { width: 0, height: 0 },
+    });
+
     const left = coordinates[0]
     const top =  coordinates[1]
     setPosition({left, top});
@@ -125,6 +132,7 @@ const Coordinates = () => {
     const fetchData = async () => {
       const url = await ImageEditor.cropImage(uri, cropData);
       setCropPath(url);
+      setIsCropped(true)
     }
 
     fetchData();
@@ -133,11 +141,11 @@ const Coordinates = () => {
   
   const handleClickBounding = (key: string, coordinates: number[]) => { 
     if (coordDict) {
+      setIsCropped(false);
+      cropImage(coordinates);
       setFocusBox(true);
       setKeyword(key);
       setContext(coordDict[key as keyof typeof coordDict]['content']);
-  
-      cropImage(coordinates);
     }
   };
 
@@ -176,7 +184,7 @@ const Coordinates = () => {
           <GestureHandlerRootView>
             <View 
               style={{width: '100%', height: '100%' }}>
-                { cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
+                { isCropped && cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
                 <TouchableOpacity onPress={()=>setFocusBox(false)} activeOpacity={1}>
                   <Image source={{uri: uri}} style={{  width: screenWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
                 </TouchableOpacity>
