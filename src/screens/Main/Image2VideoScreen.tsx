@@ -16,7 +16,7 @@ import AppText from '../../components/Common/Text/AppText';
 import RNFS from 'react-native-fs';
 
 const Image2VideoScreen = () => {
-  const { data, isLoading, isError } = useQuery('contentVideo', getContentVideo);
+  const { data, isLoading, isError, isSuccess } = useQuery('contentVideo', getContentVideo);
   const [video, setVideo] = useState('');
   const [onPress, setOnPress] = useState(false);
 
@@ -26,19 +26,34 @@ const Image2VideoScreen = () => {
 
   const screenWidth = Dimensions.get('window').width;
   const resizeHeight = (screenWidth*originalHeight) / originalWidth;
+  const [load, setLoad] = useState(false);
 
   const top = getStatusBarHeight();
-
-  useEffect(()=>{
-    if (data && data.data) {
-      setVideo(data.data.video_content)
-    }
-  }, [data]);
 
   const filePath = `${RNFS.DocumentDirectoryPath}/video.mp4`;
   RNFS.writeFile(filePath, video, 'base64');
 
-  if (isLoading  || !data?.data || !data.data.video_content) {
+  useEffect(()=>{
+    const convertVideo = async () => {
+      if (data && data.data) {
+        await RNFS.writeFile(filePath, data.data.video_content, 'base64');
+        setVideo(data.data.video_content);
+      }
+    };
+    convertVideo();
+  }, [data]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setLoad(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
+
+  
+  if (isLoading || !load) {
     return (
       <View style={{backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
         <ActivityIndicator size="large" />
@@ -50,54 +65,57 @@ const Image2VideoScreen = () => {
     return <AppText>Error</AppText>
   } 
 
-  return (
-    <View style={{backgroundColor: theme.backgroundWhite}}>
-
-      <View style={{
-          position: 'relative', width: '100%', height: '100%', backgroundColor: theme.backgroundWhite
-        }}>
-        { onPress ? (
-          <>
-            <TouchableOpacity 
-                style={{ zIndex:1, position: 'absolute', top: top+10, left :15, }} 
-                onPress={()=>setOnPress(false)}
-            >
-              <AntDesign name="arrowleft" size={30} color={theme.cocoa} />
-            </TouchableOpacity>
-            <View style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <Video 
-                source={{uri: filePath}}
-                style={{
-                    width: screenWidth,
-                    height: resizeHeight,
-                }}
-                resizeMode={'stretch'}
-                repeat={true}
-                controls={true} 
-                paused={false}
-                onEnd={()=>setOnPress(false)}
-                />
-            </View>
-          </>
-        ): (
-          <>
-            <GoBack cocoa/>
-            <View style={{ width: '100%', height: '100%', backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
-              <Image source={{ uri: uri }} style={{ width: screenWidth, height: resizeHeight, opacity: 0.3, display:'flex', justifyContent: 'center', alignItems: 'center'}} />
-              <TouchableOpacity
-                onPress={() => setOnPress(true)}
-                style={{position: 'absolute' }}
+  if (isSuccess && load) {
+    return (
+      <View style={{backgroundColor: theme.backgroundWhite}}>
+  
+        <View style={{
+            position: 'relative', width: '100%', height: '100%', backgroundColor: theme.backgroundWhite
+          }}>
+          { onPress ? (
+            <>
+              <TouchableOpacity 
+                  style={{ zIndex:1, position: 'absolute', top: top+10, left :15, }} 
+                  onPress={()=>setOnPress(false)}
               >
-                <MaterialCommunityIcons name="movie-open-play" color={theme.cocoa} size={80} />
+                <AntDesign name="arrowleft" size={30} color={theme.cocoa} />
               </TouchableOpacity>
-              <VideoShare filePath={filePath} />
-            </View>
-            <NextPage nextPage='ReviewScreen' />
-          </>
-      )}
+              <View style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Video 
+                  source={{uri: filePath}}
+                  style={{
+                      width: screenWidth,
+                      height: resizeHeight,
+                  }}
+                  resizeMode={'stretch'}
+                  repeat={true}
+                  controls={true} 
+                  paused={false}
+                  onEnd={()=>setOnPress(false)}
+                  />
+              </View>
+              <NextPage nextPage='ReviewScreen' />
+            </>
+          ): (
+            <>
+              <GoBack cocoa/>
+              <View style={{ width: '100%', height: '100%', backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+                <Image source={{ uri: uri }} style={{ width: screenWidth, height: resizeHeight, opacity: 0.3, display:'flex', justifyContent: 'center', alignItems: 'center'}} />
+                <TouchableOpacity
+                  onPress={() => setOnPress(true)}
+                  style={{position: 'absolute' }}
+                >
+                  <MaterialCommunityIcons name="movie-open-play" color={theme.cocoa} size={80} />
+                </TouchableOpacity>
+                <VideoShare filePath={filePath} />
+              </View>
+              <NextPage nextPage='ReviewScreen' />
+            </>
+        )}
+        </View>
       </View>
-    </View>
-  )
+    )
+  }
 }
 
 export default Image2VideoScreen

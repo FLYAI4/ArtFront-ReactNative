@@ -15,11 +15,23 @@ import { getContent } from '../../../api/contents';
 import { imageState } from '../../../recoil/atoms';
 
 const Contents = () => {
-    const { data, isLoading, isError } = useQuery('content', getContent);
+    const { data, isLoading, isError, isSuccess } = useQuery('content', getContent);
+    const [load, setLoad] = useState(false);
+    const [audioSaved, setAudioSaved] = useState(false)
+
     const [content, setContent] = useState('');
     const [audio, setAudio] = useState('');
     const [uri, setUri] = useState('')
     const [image, setImage] = useRecoilState(imageState)
+
+    useEffect(()=>{
+      if (isSuccess) {
+        const timer = setTimeout(()=>{
+          setLoad(true);
+        }, 2000);
+        return ()=>clearTimeout(timer);
+      }
+    }, [isSuccess])
 
     useEffect(()=>{
       if (data && data.data) {
@@ -100,6 +112,7 @@ const Contents = () => {
           const filePath = Platform.OS === 'ios' ? `${RNFetchBlob.fs.dirs.DocumentDir}/temp.mp3` : 'temp.mp3';
           await RNFetchBlob.fs.writeFile(filePath, audio, 'base64');
           SoundPlayer.loadSoundFile('temp', 'mp3');
+          setAudioSaved(true)
         }
 
         playSound();
@@ -135,7 +148,7 @@ const Contents = () => {
     }
   });
 
-  if (isLoading  || !data?.data || !data.data.text_content) {
+  if (isLoading || !load) {
     return (
       <View style={{backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
         <ActivityIndicator size="large" />
@@ -147,38 +160,39 @@ const Contents = () => {
     return <AppText>Error</AppText>
   } 
 
-
-  return (
-    <>
-      <SafeAreaView>
-        <GestureHandlerRootView>
-          <View  style={{  zIndex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
-              <Image source={{ uri: `data:image/jpeg;base64,${uri}` }} style={{ width: resizeWidth, height: resizeHeight }} />
-              <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
-                  <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-                      <Progress.Bar progress={progressTime} width={resizeWidth-75} height={15} color={theme.cocoa}/>
-                  </View>
-                  
-                  <TouchableOpacity onPress={onClickButton}>
-                      <Feather name={play ? 'pause' : 'play'} size={35} color={theme.cocoa}/>
-                  </TouchableOpacity>
+  if (isSuccess && load && audioSaved) {
+    return (
+      <>
+        <SafeAreaView>
+          <GestureHandlerRootView>
+            <View  style={{  zIndex: 1, width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
+                <Image source={{ uri: `data:image/jpeg;base64,${uri}` }} style={{ width: resizeWidth, height: resizeHeight }} />
+                <View style={{ display: 'flex', flexDirection: 'row', margin: 20, alignContent:'center'}}>
+                    <View style={{ marginRight: 10, display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+                        <Progress.Bar progress={progressTime} width={resizeWidth-75} height={15} color={theme.cocoa}/>
+                    </View>
+                    
+                    <TouchableOpacity onPress={onClickButton}>
+                        <Feather name={play ? 'pause' : 'play'} size={35} color={theme.cocoa}/>
+                    </TouchableOpacity>
+                </View>
+                <View> 
+                    <ScrollView 
+                    ref={scrollViewRef}
+                    contentContainerStyle={{ width: resizeWidth-40, height: content.length*2 + 400, }} 
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
+                    >
+                    <AppText style={{ color: theme.olive, fontSize: 16 }} onLayout={measureTextLayout}>{content}</AppText>
+                </ScrollView>
               </View>
-              <View> 
-                  <ScrollView 
-                  ref={scrollViewRef}
-                  contentContainerStyle={{ width: resizeWidth-40, height: content.length*2 + 400, }} 
-                  showsVerticalScrollIndicator={false}
-                  keyboardShouldPersistTaps="handled"
-                  >
-                  <AppText style={{ color: theme.olive, fontSize: 16 }} onLayout={measureTextLayout}>{content}</AppText>
-              </ScrollView>
             </View>
-          </View>
-          
-        </GestureHandlerRootView>
-      </SafeAreaView>
-    </>
-  )
+            
+          </GestureHandlerRootView>
+        </SafeAreaView>
+      </>
+    )
+  }
 }
 
 export default Contents

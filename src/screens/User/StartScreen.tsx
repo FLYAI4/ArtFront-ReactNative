@@ -27,9 +27,9 @@ const StartScreen = () => {
       navigation.push('LoginScreen')
     }
 
-    // if (splash) {
-    //   return (<Splash setSplash={setSplash} />)
-    // }
+    if (splash) {
+      return (<Splash setSplash={setSplash} />)
+    }
 
   return (
     <View style={{backgroundColor: theme.backgroundWhite, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>

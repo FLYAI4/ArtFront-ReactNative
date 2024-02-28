@@ -18,7 +18,19 @@ type Dict = {
 };
 
 const Coordinates = () => {
-  const { data, isLoading, isError } = useQuery('contentCoord', getContentCoord);
+  const { data, isLoading, isError, isSuccess } = useQuery('contentCoord', getContentCoord);
+  const [load, setLoad] = useState(false)
+  const [isCropped, setIsCropped] = useState(false)
+
+  useEffect(()=>{
+    if (isSuccess) {
+      const timer = setTimeout(()=>{
+        setLoad(true);
+      }, 1000);
+      return ()=>clearTimeout(timer);
+    }
+  }, [isSuccess])
+
 
   const [coordDict, setCoordDict] = useState<Dict>({});
   useEffect(() => {
@@ -34,13 +46,12 @@ const Coordinates = () => {
   // image resize 
   const [imageSize, setImageSize] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
   const resizeHeight = (screenWidth*originalHeight) / originalWidth;
   const [position, setPosition] = useState({left: 0, top: 0});
 
   // keyword, context 
-  const [keyword, setKeyword] = useState("Box를 클릭해주세요!");
-  const [context, setContext] = useState("ArtVisionXperience이 선정한 핵심포인트입니다");
+  const [keyword, setKeyword] = useState('');
+  const [context, setContext] = useState('');
 
   const [cropPath, setCropPath] = useState("");
   const [cropData, setCropData] = useState({
@@ -66,7 +77,6 @@ const Coordinates = () => {
     return [x1_, y1_, x2_, y2_];
   };
 
-
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -76,7 +86,13 @@ const Coordinates = () => {
     return color;
   };
 
-  const cropImage = async (coordinates: number[]) => {
+  const cropImage = (coordinates: number[]) => {
+    setCropData({
+      offset: { x: 0, y: 0 },
+      size: { width: 0, height: 0 },
+      displaySize: { width: 0, height: 0 },
+    });
+
     const left = coordinates[0]
     const top =  coordinates[1]
     setPosition({left, top});
@@ -116,6 +132,7 @@ const Coordinates = () => {
     const fetchData = async () => {
       const url = await ImageEditor.cropImage(uri, cropData);
       setCropPath(url);
+      setIsCropped(true)
     }
 
     fetchData();
@@ -124,11 +141,11 @@ const Coordinates = () => {
   
   const handleClickBounding = (key: string, coordinates: number[]) => { 
     if (coordDict) {
+      setIsCropped(false);
+      cropImage(coordinates);
       setFocusBox(true);
       setKeyword(key);
       setContext(coordDict[key as keyof typeof coordDict]['content']);
-  
-      cropImage(coordinates);
     }
   };
 
@@ -149,7 +166,7 @@ const Coordinates = () => {
   }
 
 
-  if (isLoading  || !data ) {
+  if (isLoading || !load) {
     return (
       <View style={{backgroundColor: theme.backgroundWhite, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
         <ActivityIndicator size="large" />
@@ -161,13 +178,13 @@ const Coordinates = () => {
     return <AppText>Error</AppText>
 } 
 
-  if (coordDict) {
+  if (isSuccess && load) {
     return (
       <SafeAreaView>
           <GestureHandlerRootView>
             <View 
               style={{width: '100%', height: '100%' }}>
-                { cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
+                { isCropped && cropPath && <Image source={{uri: cropPath}} style={{position: 'absolute', zIndex: 1, width: cropData.displaySize.width, height: cropData.displaySize.height,  left: position.left, top: position.top }} />}
                 <TouchableOpacity onPress={()=>setFocusBox(false)} activeOpacity={1}>
                   <Image source={{uri: uri}} style={{  width: screenWidth, height: resizeHeight, opacity: focusBox ? 0.2 : 1.0 }} onLayout={handleImageLayout}/>
                 </TouchableOpacity>
@@ -183,7 +200,6 @@ const Coordinates = () => {
       </SafeAreaView>
     );
   }
-  
 }
 
 export default Coordinates;
