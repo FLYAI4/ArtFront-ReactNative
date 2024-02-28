@@ -6,7 +6,12 @@ type LoadingProps = {
 }
 
 const Loading = ({setIsLoading}: LoadingProps) => {
-    const source = require('../../../assets/image/loading.png')
+    const source1 = require('../../../assets/image/loading1.png')
+    const source2 = require('../../../assets/image/loading2.png')
+    const source3 = require('../../../assets/image/loading3.png')
+
+    const sources = [source1, source2, source3]
+    const randomSource = sources[Math.floor(Math.random() * sources.length)]
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -20,7 +25,7 @@ const Loading = ({setIsLoading}: LoadingProps) => {
 
   return (
     <View>
-      <Image source={source} resizeMode='cover' style={{ width:'100%', height: '100%'}}/>
+      <Image source={randomSource} resizeMode='cover' style={{ width:'100%', height: '100%'}}/>
     </View>
   )
 }
