@@ -3,7 +3,6 @@ import React, {useState} from 'react'
 import AppText from '../../components/Common/Text/AppText'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import theme from '../../../theme'
 import Splash from '../../components/Main/Loading/Splash'
 

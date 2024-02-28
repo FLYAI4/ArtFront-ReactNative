@@ -1,4 +1,4 @@
-import { View, SafeAreaView } from 'react-native'
+import { SafeAreaView } from 'react-native'
 import React from 'react'
 import GoBack from '../../components/Common/GoBack'
 import theme from '../../../theme'

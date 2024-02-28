@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Platform, ToastAndroid, Alert, Image, KeyboardAvoidingView } from 'react-native'
+import { View, Text, TouchableOpacity, Image} from 'react-native'
 import React, { useState } from 'react'
 import TextInputBox from '../../components/User/TextInputBox'
 import PasswordInputBox from '../../components/User/PasswordInputBox'

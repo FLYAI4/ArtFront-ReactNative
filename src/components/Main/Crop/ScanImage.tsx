@@ -1,7 +1,7 @@
-import { View, Alert, ActivityIndicator } from 'react-native';
+import { View, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import DocumentScanner from 'react-native-document-scanner-plugin';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { imageState } from '../../../recoil/atoms';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,7 +10,7 @@ import axios from 'axios';
 import Loading from '../Loading/Loading';
 
 const ScanImage = () => {
-    const [image, setImage] = useRecoilState(imageState);
+    const setImage = useSetRecoilState(imageState);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
     const originalWidth = 510;
     const originalHeight = 680;

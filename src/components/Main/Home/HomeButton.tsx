@@ -1,17 +1,15 @@
-import { Alert, View, TouchableOpacity, Platform, ActionSheetIOS, ActivityIndicator } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import { Alert, View, TouchableOpacity, Platform, ActionSheetIOS } from 'react-native'
+import React, {useState } from 'react'
 import AppText from '../../Common/Text/AppText'
 import theme from '../../../../theme'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import UploadModeModal from '../../Common/UploadModeModal'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { imageState } from '../../../recoil/atoms'
 import { launchImageLibrary, ImageLibraryOptions, CameraOptions } from 'react-native-image-picker';
-import { useMutation, useQuery } from 'react-query'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import { getContent } from '../../../api/contents'
 import Loading from '../Loading/Loading'
 
 const imagePickerOption: ImageLibraryOptions & CameraOptions = {
@@ -27,7 +25,7 @@ const HomeButton = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
     const [isLoading, setIsLoading] = useState(false)
-    const [image, setImage] = useRecoilState(imageState);
+    const setImage = useSetRecoilState(imageState);
 
     const handleImageChange = () => {
       if (selectedImageUri) {
@@ -103,16 +101,16 @@ const HomeButton = () => {
         setModalVisible(true);
         } else { // iOS
         ActionSheetIOS.showActionSheetWithOptions(
-            {
-            options: ['카메라로 촬영하기', '사진 선택하기', '취소'],
-            cancelButtonIndex: 2,
-            },
-            (buttonIndex) => {
-            if (buttonIndex === 0) {
-                onLaunchCamera();
-            } else if (buttonIndex === 1) {
-                onLaunchImageLibrary();
-            }
+          {
+          options: ['카메라로 촬영하기', '사진 선택하기', '취소'],
+          cancelButtonIndex: 2,
+          },
+          (buttonIndex) => {
+          if (buttonIndex === 0) {
+              onLaunchCamera();
+          } else if (buttonIndex === 1) {
+              onLaunchImageLibrary();
+          }
             },
         );
         }
@@ -124,16 +122,16 @@ const HomeButton = () => {
 
   return (
     <View style={{ width: '100%', position: 'absolute', bottom: 43, left: 0, right: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center',}}>
-        <TouchableOpacity onPress={modalOpen}>
-            <View style={{ borderRadius: 55, overflow: 'hidden', borderWidth: 2, borderColor: theme.olive, }}>
-                <AppText style={{ width: 350, padding: 15,  backgroundColor: theme.olive, color: theme.backgroundWhite, fontWeight: '600', fontSize: 24, textAlign: 'center', }}>작품 감상하러 가기</AppText>
-            </View>
-        </TouchableOpacity>
-        <UploadModeModal
-            visible={modalVisible}
-            onClose={() => setModalVisible(false)}
-            onLaunchCamera={onLaunchCamera}
-            onLaunchImageLibrary={onLaunchImageLibrary} />
+      <TouchableOpacity onPress={modalOpen}>
+        <View style={{ borderRadius: 55, overflow: 'hidden', borderWidth: 2, borderColor: theme.olive, }}>
+          <AppText style={{ width: 350, padding: 15,  backgroundColor: theme.olive, color: theme.backgroundWhite, fontWeight: '600', fontSize: 24, textAlign: 'center', }}>작품 감상하러 가기</AppText>
+        </View>
+      </TouchableOpacity>
+      <UploadModeModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onLaunchCamera={onLaunchCamera}
+        onLaunchImageLibrary={onLaunchImageLibrary} />
     </View>
   )
 }

@@ -4,11 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import theme from '../../../../theme'
 import AppText from '../../Common/Text/AppText'
 
-type VideoShareProps = {
-  filePath: string;
-}
-
-const VideoShare = ({filePath}: VideoShareProps) => {
+const VideoShare = () => {
   const handleDownloadVideo = () => {
     Alert.alert('비디오가 저장되었습니다!')
   }

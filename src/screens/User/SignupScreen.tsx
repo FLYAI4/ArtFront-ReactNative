@@ -1,4 +1,4 @@
-import { View, TextInput, Button, Text, Platform, Alert, ToastAndroid, ScrollView } from 'react-native'
+import { View, Text, Alert, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native';
 import TextInputBox from '../../components/User/TextInputBox';
@@ -64,7 +64,6 @@ const SignupScreen = () => {
     }
   })
 
-  // TODO 서버에 전송하는 함수로 
   const handleSubmit = async () => {
     if (!id.includes('@') || !/^[a-zA-Z0-9@.]+$/.test(id)) {
       Alert.alert('이메일 형식이 올바르지 않습니다. 이메일 주소를 다시 확인해주세요.');

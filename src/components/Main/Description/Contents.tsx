@@ -2,7 +2,7 @@ import {  Image, View, Dimensions, LayoutChangeEvent, SafeAreaView, TouchableOpa
 import React, { useEffect, useState, useRef }  from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { heightSelector, widthSelector } from '../../../recoil/selector';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import SoundPlayer from 'react-native-sound-player'
 import { useIsFocused } from '@react-navigation/native';
 import AppText from '../../Common/Text/AppText';
@@ -22,7 +22,7 @@ const Contents = () => {
     const [content, setContent] = useState('');
     const [audio, setAudio] = useState('');
     const [uri, setUri] = useState('')
-    const [image, setImage] = useRecoilState(imageState)
+    const setImage = useSetRecoilState(imageState)
 
     useEffect(()=>{
       if (isSuccess) {
@@ -52,15 +52,13 @@ const Contents = () => {
       }
     }, [uri])
 
-    // const uri = useRecoilValue(uriSelector);
     const originalWidth = useRecoilValue(widthSelector);
     const originalHeight = useRecoilValue(heightSelector);
 
     const screenWidth = Dimensions.get('window').width;
 
-    const ratio = 1.0;
-    const resizeWidth = screenWidth*ratio;
-    const resizeHeight = (screenWidth*originalHeight*ratio) / originalWidth;
+    const resizeWidth = screenWidth;
+    const resizeHeight = (screenWidth*originalHeight) / originalWidth;
     const [play, setPlay] = useState(false);
     const scrollViewRef = useRef<ScrollView>(null); 
     const [currentTime, setCurrentTime] = useState(0);

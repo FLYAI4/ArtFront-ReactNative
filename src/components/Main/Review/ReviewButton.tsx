@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import { View, TouchableOpacity } from 'react-native'
+import React from 'react'
 import AppText from '../../Common/Text/AppText'
 import theme from '../../../../theme'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
