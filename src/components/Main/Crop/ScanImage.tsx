@@ -17,9 +17,13 @@ const ScanImage = () => {
     const [isLoading, setIsLoading] = useState(false)
 
     const scanDocument = async () => {
-      const { scannedImages }: any  = await DocumentScanner.scanDocument({
+      const { scannedImages, status }: any  = await DocumentScanner.scanDocument({
         maxNumDocuments: 1
       });
+
+      if (status === 'cancel') {
+        navigation.reset({routes: [{name: "HomeScreen"}]})
+      }
 
       if (scannedImages.length > 0) {
         setIsLoading(true)
@@ -69,7 +73,7 @@ const ScanImage = () => {
             Alert.alert('작품을 좀 더 정확하게 찍어주세요!', '', [
               {
                 text: 'OK',
-                onPress: () => { navigation.push('ScanImage'); }
+                onPress: () => { navigation.reset({routes: [{name: "ScanImage"}]}) }
               }
             ])
 
@@ -77,9 +81,9 @@ const ScanImage = () => {
           
         } else {
           Alert.alert('Login을 먼저 해주세요!')
-          navigation.push('LoginScreen');
+          navigation.reset({routes: [{name: "HomeScreen"}]})
         }
-      }
+      } 
     };
 
     useEffect(() => {

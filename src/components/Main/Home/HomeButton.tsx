@@ -59,29 +59,39 @@ const HomeButton = () => {
       if (userData !== null) {
         const userInfo = JSON.parse(userData);
         
-        const response = await axios.post(`${process.env.BASE_URL}/user/image`, file, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'id': userInfo.id,
-            'token': userInfo.token
+        try {
+          const response = await axios.post(`${process.env.BASE_URL}/user/image`, file, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'id': userInfo.id,
+              'token': userInfo.token
+            }
+          });
+  
+          const data = response.data;
+          
+          if (data.meta.code === 200) {
+            AsyncStorage.setItem(
+              'imageData',
+              JSON.stringify({
+                generated_id: data.data.generated_id
+              })
+            )
+            navigation.push('DescriptionScreen')
           }
-        });
-
-        const data = response.data;
-        
-        if (data.meta.code === 200) {
-          AsyncStorage.setItem(
-            'imageData',
-            JSON.stringify({
-              generated_id: data.data.generated_id
-            })
-          )
-          navigation.push('DescriptionScreen')
+        } catch (error) {
+          Alert.alert('좀 더 정확하게 찍은 작품의 사진을 선택해주세요!', '카메라로 촬영하기 기능을 사용하시면\n 객체인식과 모서리 조정으로 더 쉬운 작품 촬영이 가능합니다.', [
+            { 
+              text: 'OK',
+              onPress: () => { navigation.reset({routes: [{name: "HomeScreen"}]}); }
+            }
+          ])
         }
+        
         
       } else {
         Alert.alert('Login을 먼저 해주세요!')
-        navigation.push('LoginScreen');
+        navigation.reset({routes: [{name: "LoginScreen"}]})
       }
       return res.assets[0].uri
     };
