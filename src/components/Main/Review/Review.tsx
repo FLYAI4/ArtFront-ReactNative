@@ -58,7 +58,7 @@ const Review = () => {
 
     if (response.data.id) {
       Alert.alert('Acent를 통해 작품을 감상해주셔서 감사합니다. 다른 작품도 감상해보세요!')
-      navigation.push('HomeScreen');
+      navigation.reset({routes: [{name: "HomeScreen"}]})
     }
     
   }

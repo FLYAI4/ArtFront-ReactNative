@@ -9,7 +9,7 @@ const DescriptionScreen = () => {
   
   return (
     <SafeAreaView style={{backgroundColor: theme.backgroundWhite}}>
-      <GoBack />
+      <GoBack isDescription />
       <Contents />
       <NextPage nextPage='FocusPointingScreen' />
     </SafeAreaView>
