@@ -23,8 +23,8 @@ https://github.com/FLYAI4/ArtFront-ReactNative/assets/76530562/c0faba05-66f5-43b
 > 사용자는 작품의 중요한 요소들을 시각적, 청각적으로 확인할 수 있습니다. <br />작품을 영상으로 변환하여 미술 작품을 풍부하고 생동감있게 감상할 수 있습니다.
 
 
+https://github.com/heehminh/ArtFront-ReactNative/assets/76530562/14f547a6-a7ab-4c55-a03b-b7d2f7d34fa6
 
-https://github.com/FLYAI4/ArtFront-ReactNative/assets/76530562/0884d8e5-c6a9-414c-abd2-00a78bf35012
 
 <img src="https://github.com/FLYAI4/ArtFront-ReactNative/assets/76530562/1055cbbc-c1bd-4a24-bbd6-97a35b2dc7c4" width="30%" />
 <img src="https://github.com/FLYAI4/ArtFront-ReactNative/assets/76530562/22cca5a5-64a0-43b6-b2ab-f5ce8f65ad45" width="30%" />
