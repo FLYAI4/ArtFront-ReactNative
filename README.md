@@ -2,6 +2,10 @@
   <img src="https://github.com/FLYAI4/ArtFront-ReactNative/assets/76530562/20326850-aa80-4398-a2a2-c47542a3890c" width="100px" />
   <img src="https://github.com/FLYAI4/ArtFront-ReactNative/assets/76530562/c1ab3a54-cb31-4849-b9c7-53271119e623" width="180px" />
 </div>
+<br /> 
+
+> 개발기간: 2024.01.23 - 2024.02.29 <br /> 
+> 개발인원: 프론트엔드 1, 백엔드 1, 인공지능 2
 
 # Åcent <img src="https://github.com/FLYAI4/ArtFront-ReactNative/assets/76530562/f2c36d79-cf38-48c4-a919-2b0a9d31f1d3" align=left width=100>
 
