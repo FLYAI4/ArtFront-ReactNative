@@ -1,7 +1,8 @@
 import { View, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import DocumentScanner from 'react-native-document-scanner-plugin';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import ScanDocumentResponse from 'react-native-document-scanner-plugin';
+import { useSetRecoilState } from 'recoil';
 import { imageState } from '../../../recoil/atoms';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
